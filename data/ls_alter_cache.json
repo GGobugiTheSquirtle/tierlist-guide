@@ -1,0 +1,2774 @@
+{
+  "dark devourer": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Mighty (Alter),Dark Devourer",
+    "free": "Dream",
+    "buddy": true
+  },
+  "mighty": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Mighty",
+    "free": "Dream",
+    "buddy": false
+  },
+  "mare": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Mare",
+    "free": "Dream",
+    "buddy": true
+  },
+  "spirika": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Spirika",
+    "free": "Free",
+    "buddy": false
+  },
+  "violet lancer (another style)": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Toova (Alter) (Another Style),Violet Lancer (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "toova": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Toova",
+    "free": "Dream",
+    "buddy": false
+  },
+  "violet lancer": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Toova (Alter),Violet Lancer",
+    "free": "Dream",
+    "buddy": false
+  },
+  "glenn": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Glenn",
+    "free": "Free",
+    "buddy": false
+  },
+  "noble specturr": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nekoko,Noble Specturr",
+    "free": "Dream",
+    "buddy": false
+  },
+  "nekoko": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nekoko,Noble Specturr",
+    "free": "Dream",
+    "buddy": false
+  },
+  "lovinia (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Lovinia (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "lovinia": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Lovinia",
+    "free": "Dream",
+    "buddy": false
+  },
+  "meryt": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Meryt",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cerius (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Cerius (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cerius": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Cerius",
+    "free": "Dream",
+    "buddy": false
+  },
+  "hismena (extra style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Hismena (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "hismena": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Hismena",
+    "free": "Dream",
+    "buddy": false
+  },
+  "porcelain pixie (another style)": {
+    "ls": "light",
+    "alter": true,
+    "data_name": "Myunfa (Alter) (Another Style),Porcelain Pixie (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "myunfa": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Myunfa",
+    "free": "Dream",
+    "buddy": false
+  },
+  "porcelain pixie": {
+    "ls": "light",
+    "alter": true,
+    "data_name": "Myunfa (Alter),Porcelain Pixie",
+    "free": "Dream",
+    "buddy": false
+  },
+  "garnet": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Garnet",
+    "free": "Free",
+    "buddy": false
+  },
+  "steiner": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Steiner",
+    "free": "Free",
+    "buddy": false
+  },
+  "verdanta": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Verdanta",
+    "free": "Dream",
+    "buddy": false
+  },
+  "vivi": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Vivi",
+    "free": "Free",
+    "buddy": false
+  },
+  "zidane": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Zidane",
+    "free": "Free",
+    "buddy": false
+  },
+  "silver striker (another style)": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Premaya (Alter) (Another Style),Silver Striker (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "premaya": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Premaya",
+    "free": "Dream",
+    "buddy": false
+  },
+  "silver striker": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Premaya (Alter),Silver Striker",
+    "free": "Dream",
+    "buddy": false
+  },
+  "clughorn": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Clughorn",
+    "free": "Dream",
+    "buddy": false
+  },
+  "mildy": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Mildy",
+    "free": "Dream",
+    "buddy": false
+  },
+  "dream weaver (another style)": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Dunarith (Alter) (Another Style),Dream Weaver (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "dunarith": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Dunarith",
+    "free": "Dream",
+    "buddy": false
+  },
+  "dream weaver": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Dunarith (Alter),Dream Weaver",
+    "free": "Dream",
+    "buddy": false
+  },
+  "nina": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nina",
+    "free": "Dream",
+    "buddy": false
+  },
+  "azure retainer": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Vares,Azure Retainer",
+    "free": "Dream",
+    "buddy": false
+  },
+  "vares": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Vares,Azure Retainer",
+    "free": "Dream",
+    "buddy": false
+  },
+  "myrus (extra style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Myrus (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "myrus": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Myrus",
+    "free": "Dream",
+    "buddy": false
+  },
+  "black clad sw. (another style)": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Isuka (Alter) (Another Style),Black Clad Sw. (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "isuka": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Isuka",
+    "free": "Dream",
+    "buddy": false
+  },
+  "black clad sw.": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Isuka (Alter),Black Clad Sw.",
+    "free": "Dream",
+    "buddy": false
+  },
+  "raven (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Raven (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "raven": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Raven",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ruby-sleeved merchant": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Shigure (Alter),Ruby-Sleeved Merchant",
+    "free": "Dream",
+    "buddy": false
+  },
+  "shigure": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Shigure",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cyan scyther (another style)": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Suzette (Alter) (Another Style),Cyan Scyther (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "suzette": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Suzette",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cyan scyther": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Suzette (Alter),Cyan Scyther",
+    "free": "Dream",
+    "buddy": false
+  },
+  "linaria": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Linaria",
+    "free": "Dream",
+    "buddy": false
+  },
+  "selfless seeker": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Laclair (Alter),Selfless Seeker",
+    "free": "Dream",
+    "buddy": false
+  },
+  "laclair": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Laclair",
+    "free": "Dream",
+    "buddy": false
+  },
+  "red clad flam. (another style)": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Dewey (Alter) (Another Style),Red Clad Flam. (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "dewey": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Dewey",
+    "free": "Dream",
+    "buddy": false
+  },
+  "red clad flam.": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Dewey (Alter),Red Clad Flam.",
+    "free": "Dream",
+    "buddy": false
+  },
+  "velette (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Velette (Another Style)",
+    "free": "Dream",
+    "buddy": true
+  },
+  "velette": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Velette",
+    "free": "Dream",
+    "buddy": true
+  },
+  "gunce (another style)": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Gunce (Another Style)",
+    "free": "Dream",
+    "buddy": true
+  },
+  "gunce": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Gunce",
+    "free": "Dream",
+    "buddy": true
+  },
+  "aldo (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Aldo (Another Style)",
+    "free": "Free",
+    "buddy": false
+  },
+  "aldo": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Aldo",
+    "free": "Free",
+    "buddy": false
+  },
+  "nilya": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nilya",
+    "free": "Dream",
+    "buddy": true
+  },
+  "jilya": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Jilya",
+    "free": "Dream",
+    "buddy": true
+  },
+  "shion (extra style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Shion (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "shion": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Shion",
+    "free": "Dream",
+    "buddy": false
+  },
+  "laika": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Laika",
+    "free": "Free",
+    "buddy": true
+  },
+  "senya (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Senya (Another Style)",
+    "free": "Free",
+    "buddy": true
+  },
+  "senya": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Senya",
+    "free": "Free",
+    "buddy": false
+  },
+  "jet tactician (another style)": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Shion (Alter) (Another Style),Jet Tactician (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "jet tactician": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Shion (Alter),Jet Tactician",
+    "free": "Dream",
+    "buddy": false
+  },
+  "kuramaru": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Kuramaru",
+    "free": "Free",
+    "buddy": true
+  },
+  "komachi (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Komachi (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "komachi": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Komachi",
+    "free": "Dream",
+    "buddy": false
+  },
+  "hoarfrost songstress": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Yukino (Alter),Hoarfrost Songstress",
+    "free": "Dream",
+    "buddy": false
+  },
+  "yukino": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Yukino",
+    "free": "Dream",
+    "buddy": false
+  },
+  "krervo (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Krervo (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "krervo": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Krervo",
+    "free": "Dream",
+    "buddy": false
+  },
+  "kagurame": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Kagurame",
+    "free": "Dream",
+    "buddy": false
+  },
+  "forlorn thespian": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Lokido (Alter),Forlorn Thespian",
+    "free": "Dream",
+    "buddy": false
+  },
+  "lokido": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Lokido",
+    "free": "Dream",
+    "buddy": false
+  },
+  "necoco (extra style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Necoco (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "necoco": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Necoco",
+    "free": "Dream",
+    "buddy": false
+  },
+  "elseal (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Elseal (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "elseal": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Elseal",
+    "free": "Dream",
+    "buddy": false
+  },
+  "empel": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Empel",
+    "free": "Free",
+    "buddy": false
+  },
+  "id": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Id",
+    "free": "Dream",
+    "buddy": true
+  },
+  "hazama": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Hazama",
+    "free": "Dream",
+    "buddy": true
+  },
+  "klaudia": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Klaudia",
+    "free": "Free",
+    "buddy": false
+  },
+  "ryza": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Ryza",
+    "free": "Free",
+    "buddy": false
+  },
+  "izuna": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Izuna",
+    "free": "Dream",
+    "buddy": false
+  },
+  "rufus (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Rufus (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "rufus": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Rufus",
+    "free": "Dream",
+    "buddy": false
+  },
+  "nocturne ninja": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Tsubame (Alter),Nocturne Ninja",
+    "free": "Dream",
+    "buddy": false
+  },
+  "tsubame": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Tsubame",
+    "free": "Dream",
+    "buddy": false
+  },
+  "sesta (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Sesta (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "sesta": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Sesta",
+    "free": "Dream",
+    "buddy": false
+  },
+  "shigure (extra style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Shigure (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "lingli (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Lingli (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "lingli": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Lingli",
+    "free": "Dream",
+    "buddy": false
+  },
+  "kula": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Kula",
+    "free": "Free",
+    "buddy": false
+  },
+  "kyo": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Kyo",
+    "free": "Free",
+    "buddy": false
+  },
+  "mai": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Mai",
+    "free": "Free",
+    "buddy": false
+  },
+  "thornbound witch": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Shanie (Alter),Thornbound Witch",
+    "free": "Dream",
+    "buddy": false
+  },
+  "shanie": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Shanie",
+    "free": "Dream",
+    "buddy": false
+  },
+  "terry": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Terry",
+    "free": "Free",
+    "buddy": false
+  },
+  "zilva (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Zilva (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "zilva": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Zilva",
+    "free": "Dream",
+    "buddy": false
+  },
+  "utpalaka": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Utpalaka",
+    "free": "Dream",
+    "buddy": false
+  },
+  "undercover scribe": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Renri (Alter),Undercover Scribe",
+    "free": "Dream",
+    "buddy": false
+  },
+  "renri": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Renri",
+    "free": "Dream",
+    "buddy": false
+  },
+  "minalca (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Minalca (Another Style)",
+    "free": "Dream",
+    "buddy": true
+  },
+  "minalca": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Minalca",
+    "free": "Dream",
+    "buddy": true
+  },
+  "tetra (another style)": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Tetra (Another Style)",
+    "free": "Dream",
+    "buddy": true
+  },
+  "tetra": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Tetra",
+    "free": "Dream",
+    "buddy": true
+  },
+  "feinne (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Feinne (Another Style)",
+    "free": "Free",
+    "buddy": false
+  },
+  "feinne": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Feinne",
+    "free": "Free",
+    "buddy": false
+  },
+  "jillfunny": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Jillfunny",
+    "free": "Dream",
+    "buddy": true
+  },
+  "pyggie": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Pyggie",
+    "free": "Dream",
+    "buddy": true
+  },
+  "thysía": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Thysía",
+    "free": "Free",
+    "buddy": true
+  },
+  "mazrika": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Mazrika",
+    "free": "Dream",
+    "buddy": false
+  },
+  "yakumo (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Yakumo (Another Style)",
+    "free": "Dream",
+    "buddy": true
+  },
+  "yakumo": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Yakumo",
+    "free": "Dream",
+    "buddy": true
+  },
+  "kumos (another style)": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Kumos (Another Style)",
+    "free": "Dream",
+    "buddy": true
+  },
+  "kumos": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Kumos",
+    "free": "Dream",
+    "buddy": true
+  },
+  "virtual reflection": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Ciel (Alter),Virtual Reflection",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ciel": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Ciel",
+    "free": "Dream",
+    "buddy": false
+  },
+  "anabel (extra style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Anabel (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "anabel": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Anabel",
+    "free": "Dream",
+    "buddy": false
+  },
+  "xianhua": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Xianhua",
+    "free": "Dream",
+    "buddy": false
+  },
+  "kuchinawa": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Kuchinawa",
+    "free": "Dream",
+    "buddy": false
+  },
+  "daisy (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Daisy (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "daisy": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Daisy",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ewella (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Ewella (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ewella": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Ewella",
+    "free": "Dream",
+    "buddy": false
+  },
+  "sazanca": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Sazanca",
+    "free": "Dream",
+    "buddy": false
+  },
+  "melpiphia": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Melpiphia",
+    "free": "Dream",
+    "buddy": false
+  },
+  "iridian (attack)": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Iridian (Attack)",
+    "free": "Free",
+    "buddy": true
+  },
+  "iridian (defense)": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Iridian (Defense)",
+    "free": "Free",
+    "buddy": true
+  },
+  "iridian (heal)": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Iridian (Heal)",
+    "free": "Free",
+    "buddy": true
+  },
+  "blooming blade": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Akane (Alter),Blooming Blade",
+    "free": "Dream",
+    "buddy": false
+  },
+  "akane": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Akane",
+    "free": "Dream",
+    "buddy": false
+  },
+  "thillelille (extra style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Thillelille (Extra Style)",
+    "free": "Dream",
+    "buddy": true
+  },
+  "thillelille": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Thillelille",
+    "free": "Dream",
+    "buddy": false
+  },
+  "moke": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Moke",
+    "free": "Dream",
+    "buddy": true
+  },
+  "alma (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Alma (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "alma": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Alma",
+    "free": "Dream",
+    "buddy": false
+  },
+  "wenefica": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Wenefica",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cyrus albright": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Cyrus Albright",
+    "free": "Free",
+    "buddy": false
+  },
+  "oboro": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Oboro",
+    "free": "Dream",
+    "buddy": false
+  },
+  "partitio": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Partitio",
+    "free": "Free",
+    "buddy": false
+  },
+  "tithi": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Tithi",
+    "free": "Free",
+    "buddy": false
+  },
+  "wryz": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Wryz",
+    "free": "Free",
+    "buddy": true
+  },
+  "pom (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Pom (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "pom": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Pom",
+    "free": "Dream",
+    "buddy": false
+  },
+  "orleya (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Orleya (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "orleya": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Orleya",
+    "free": "Dream",
+    "buddy": false
+  },
+  "kamlanage": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Kamlanage",
+    "free": "Free",
+    "buddy": false
+  },
+  "hyuga": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Hyuga",
+    "free": "Free",
+    "buddy": true
+  },
+  "parisa (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Parisa (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "parisa": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Parisa",
+    "free": "Dream",
+    "buddy": false
+  },
+  "melody (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Melody (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "melody": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Melody",
+    "free": "Dream",
+    "buddy": false
+  },
+  "noahxis (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Noahxis (Another Style)",
+    "free": "Free",
+    "buddy": false
+  },
+  "noahxis": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Noahxis",
+    "free": "Free",
+    "buddy": false
+  },
+  "felmina (extra style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Felmina (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "felmina": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Felmina",
+    "free": "Dream",
+    "buddy": false
+  },
+  "premaya (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Premaya (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "crimson reaper": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Ilulu (Alter),Crimson Reaper",
+    "free": "Dream",
+    "buddy": true
+  },
+  "ilulu": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Ilulu",
+    "free": "Dream",
+    "buddy": false
+  },
+  "limil": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Limil",
+    "free": "Dream",
+    "buddy": true
+  },
+  "pizzica (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Pizzica (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "pizzica": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Pizzica",
+    "free": "Dream",
+    "buddy": false
+  },
+  "pisce": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Pisce",
+    "free": "Free",
+    "buddy": true
+  },
+  "nona (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nona (Another Style)",
+    "free": "Free",
+    "buddy": false
+  },
+  "nona": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nona",
+    "free": "Free",
+    "buddy": false
+  },
+  "toova (extra style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Toova (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "lovely (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Lovely (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "lovely": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Lovely",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cerrine (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Cerrine (Another Style)",
+    "free": "Free",
+    "buddy": false
+  },
+  "cerrine": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Cerrine",
+    "free": "Free",
+    "buddy": false
+  },
+  "beautiful stranger": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Shannon (Alter),Beautiful Stranger",
+    "free": "Dream",
+    "buddy": false
+  },
+  "shannon": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Shannon",
+    "free": "Dream",
+    "buddy": false
+  },
+  "dewey (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Dewey (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "vermillion whip": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Hozuki (Alter),Vermillion Whip",
+    "free": "Dream",
+    "buddy": false
+  },
+  "hozuki": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Hozuki",
+    "free": "Dream",
+    "buddy": false
+  },
+  "mariel (extra style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Mariel (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "mariel": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Mariel",
+    "free": "Dream",
+    "buddy": false
+  },
+  "heena (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Heena (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "heena": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Heena",
+    "free": "Dream",
+    "buddy": false
+  },
+  "garambarrel (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Garambarrel (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "garambarrel": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Garambarrel",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ashtear": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Ashtear",
+    "free": "Free",
+    "buddy": true
+  },
+  "korobo": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Korobo",
+    "free": "Free",
+    "buddy": true
+  },
+  "mordy": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Mordy",
+    "free": "Free",
+    "buddy": true
+  },
+  "minimander": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Minimander",
+    "free": "Free",
+    "buddy": true
+  },
+  "lord ukulele": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Lord Ukulele",
+    "free": "Free",
+    "buddy": true
+  },
+  "flammelapis (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Flammelapis (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "flammelapis": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Flammelapis",
+    "free": "Dream",
+    "buddy": false
+  },
+  "iphi": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Iphi",
+    "free": "Dream",
+    "buddy": false
+  },
+  "noble blossom": {
+    "ls": "light",
+    "alter": true,
+    "data_name": "Tsukiha (Alter),Noble Blossom",
+    "free": "Dream",
+    "buddy": false
+  },
+  "tsukiha": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Tsukiha",
+    "free": "Dream",
+    "buddy": false
+  },
+  "necoco (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Necoco (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "alphen": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Alphen",
+    "free": "Free",
+    "buddy": false
+  },
+  "colette": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Colette",
+    "free": "Free",
+    "buddy": false
+  },
+  "moonlight flower": {
+    "ls": "shadow",
+    "alter": true,
+    "data_name": "Hismena (Alter),Moonlight Flower",
+    "free": "Dream",
+    "buddy": false
+  },
+  "lloyd": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Lloyd",
+    "free": "Free",
+    "buddy": false
+  },
+  "shionne": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Shionne",
+    "free": "Free",
+    "buddy": false
+  },
+  "biaka (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Biaka (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "biaka": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Biaka",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cynthia (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Cynthia (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cynthia": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Cynthia",
+    "free": "Dream",
+    "buddy": false
+  },
+  "claude (extra style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Claude (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "claude": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Claude",
+    "free": "Dream",
+    "buddy": false
+  },
+  "aisha": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Aisha",
+    "free": "Free",
+    "buddy": false
+  },
+  "soira (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Soira (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "soira": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Soira",
+    "free": "Dream",
+    "buddy": false
+  },
+  "uquaji": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Uquaji",
+    "free": "Free",
+    "buddy": false
+  },
+  "yukino (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Yukino (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "lele (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Lele (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "lele": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Lele",
+    "free": "Dream",
+    "buddy": false
+  },
+  "yipha (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Yipha (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "yipha": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Yipha",
+    "free": "Dream",
+    "buddy": false
+  },
+  "azami (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Azami (Another Style)",
+    "free": "Free",
+    "buddy": false
+  },
+  "azami": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Azami",
+    "free": "Free",
+    "buddy": false
+  },
+  "radias (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Radias (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "radias": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Radias",
+    "free": "Dream",
+    "buddy": false
+  },
+  "miyu (extra style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Miyu (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "miyu": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Miyu",
+    "free": "Dream",
+    "buddy": false
+  },
+  "milsha (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Milsha (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "milsha": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Milsha",
+    "free": "Dream",
+    "buddy": false
+  },
+  "philo (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Philo (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "philo": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Philo",
+    "free": "Dream",
+    "buddy": false
+  },
+  "otoha (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Otoha (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "otoha": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Otoha",
+    "free": "Dream",
+    "buddy": false
+  },
+  "mayu": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Mayu",
+    "free": "Free",
+    "buddy": false
+  },
+  "suzette (extra style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Suzette (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "starky": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Starky",
+    "free": "Free",
+    "buddy": false
+  },
+  "mistrare (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Mistrare (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "mistrare": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Mistrare",
+    "free": "Dream",
+    "buddy": false
+  },
+  "zeviro (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Zeviro (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "zeviro": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Zeviro",
+    "free": "Dream",
+    "buddy": false
+  },
+  "eva": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Eva",
+    "free": "Dream",
+    "buddy": false
+  },
+  "curio": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Curio",
+    "free": "Free",
+    "buddy": false
+  },
+  "isuka (extra style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Isuka (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "levia (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Levia (Another Style)",
+    "free": "Free",
+    "buddy": false
+  },
+  "levia": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Levia",
+    "free": "Free",
+    "buddy": false
+  },
+  "nagi (extra style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nagi (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "nagi": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nagi",
+    "free": "Dream",
+    "buddy": false
+  },
+  "harle": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Harle",
+    "free": "Free",
+    "buddy": false
+  },
+  "kid": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Kid",
+    "free": "Free",
+    "buddy": false
+  },
+  "kikyo (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Kikyo (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "kikyo": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Kikyo",
+    "free": "Dream",
+    "buddy": false
+  },
+  "serge": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Serge",
+    "free": "Free",
+    "buddy": false
+  },
+  "sheila (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Sheila (Another Style)",
+    "free": "Free",
+    "buddy": false
+  },
+  "sheila": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Sheila",
+    "free": "Free",
+    "buddy": false
+  },
+  "hardy (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Hardy (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "hardy": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Hardy",
+    "free": "Dream",
+    "buddy": false
+  },
+  "chiyo (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Chiyo (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "chiyo": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Chiyo",
+    "free": "Dream",
+    "buddy": false
+  },
+  "victor (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Victor (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "victor": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Victor",
+    "free": "Dream",
+    "buddy": false
+  },
+  "myunfa (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Myunfa (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "tsukiha (extra style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Tsukiha (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "tsubame (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Tsubame (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "clarte (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Clarte (Another Style)",
+    "free": "Free",
+    "buddy": false
+  },
+  "clarte": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Clarte",
+    "free": "Free",
+    "buddy": false
+  },
+  "thillelille (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Thillelille (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "tiramisu (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Tiramisu (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "tiramisu": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Tiramisu",
+    "free": "Dream",
+    "buddy": false
+  },
+  "shigure (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Shigure (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "melina (extra style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Melina (Extra Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "melina": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Melina",
+    "free": "Dream",
+    "buddy": false
+  },
+  "dunarith (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Dunarith (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "miyu (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Miyu (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "radica (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Radica (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "radica": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Radica",
+    "free": "Dream",
+    "buddy": false
+  },
+  "hismena (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Hismena (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ewan (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Ewan (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ewan": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Ewan",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ilulu (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Ilulu (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "hozuki (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Hozuki (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "rosetta (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Rosetta (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "rosetta": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Rosetta",
+    "free": "Dream",
+    "buddy": false
+  },
+  "melissa": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Melissa",
+    "free": "Dream",
+    "buddy": false
+  },
+  "tsukiha (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Tsukiha (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "bertrand (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Bertrand (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "bertrand": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Bertrand",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cress": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Cress",
+    "free": "Free",
+    "buddy": false
+  },
+  "milla": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Milla",
+    "free": "Free",
+    "buddy": false
+  },
+  "velvet": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Velvet",
+    "free": "Free",
+    "buddy": false
+  },
+  "yuri": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Yuri",
+    "free": "Free",
+    "buddy": false
+  },
+  "skull": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Skull",
+    "free": "Free",
+    "buddy": false
+  },
+  "violet": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Violet",
+    "free": "Free",
+    "buddy": false
+  },
+  "foran (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Foran (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "foran": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Foran",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ciel (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Ciel (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "shannon (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Shannon (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "sophia": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Sophia",
+    "free": "Free",
+    "buddy": false
+  },
+  "veina (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Veina (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "veina": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Veina",
+    "free": "Dream",
+    "buddy": false
+  },
+  "anabel (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Anabel (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "myrus (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Myrus (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "renri (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Renri (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "elga (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Elga (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "elga": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Elga",
+    "free": "Dream",
+    "buddy": false
+  },
+  "felmina (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Felmina (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cetie (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Cetie (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cetie": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Cetie",
+    "free": "Dream",
+    "buddy": false
+  },
+  "altena": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Altena",
+    "free": "Free",
+    "buddy": false
+  },
+  "nikeh (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nikeh (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "nikeh": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nikeh",
+    "free": "Dream",
+    "buddy": false
+  },
+  "strawboy": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Strawboy",
+    "free": "Free",
+    "buddy": false
+  },
+  "claude (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Claude (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "gariyu (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Gariyu (Another Style)",
+    "free": "Free",
+    "buddy": true
+  },
+  "gariyu": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Gariyu",
+    "free": "Free",
+    "buddy": false
+  },
+  "yuna (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Yuna (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "yuna": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Yuna",
+    "free": "Dream",
+    "buddy": false
+  },
+  "shanie (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Shanie (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ruina (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Ruina (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ruina": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Ruina",
+    "free": "Dream",
+    "buddy": false
+  },
+  "mana": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Mana",
+    "free": "Free",
+    "buddy": false
+  },
+  "mariel (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Mariel (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "lokido (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Lokido (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "nagi (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nagi (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "akane (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Akane (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "joker": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Joker",
+    "free": "Free",
+    "buddy": false
+  },
+  "morgana": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Morgana",
+    "free": "Free",
+    "buddy": false
+  },
+  "melina (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Melina (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "galliard": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Galliard",
+    "free": "Free",
+    "buddy": false
+  },
+  "laclair (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Laclair (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "nopaew": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Poporo,Nopaew",
+    "free": "Free",
+    "buddy": false
+  },
+  "poporo": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Poporo,Nopaew",
+    "free": "Free",
+    "buddy": false
+  },
+  "shion (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Shion (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "toova (another style)": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Toova (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "isuka (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Isuka (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "saki (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Saki (Another Style)",
+    "free": "Free",
+    "buddy": false
+  },
+  "saki": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Saki",
+    "free": "Free",
+    "buddy": false
+  },
+  "mighty (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Mighty (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "guildna": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Guildna",
+    "free": "Free",
+    "buddy": false
+  },
+  "suzette (another style)": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Suzette (Another Style)",
+    "free": "Dream",
+    "buddy": false
+  },
+  "good macky": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Good Macky",
+    "free": "Free",
+    "buddy": false
+  },
+  "nonold": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Nonold",
+    "free": "Dream",
+    "buddy": false
+  },
+  "yazuki": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Yazuki",
+    "free": "Dream",
+    "buddy": false
+  },
+  "erina": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Erina",
+    "free": "Dream",
+    "buddy": false
+  },
+  "jade": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Jade",
+    "free": "Free",
+    "buddy": false
+  },
+  "samora": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Samora",
+    "free": "Dream",
+    "buddy": false
+  },
+  "deirdre": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Deirdre",
+    "free": "Free",
+    "buddy": false
+  },
+  "nero": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Nero",
+    "free": "Dream",
+    "buddy": false
+  },
+  "amy": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Amy",
+    "free": "Free",
+    "buddy": false
+  },
+  "benedict": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Benedict",
+    "free": "Dream",
+    "buddy": false
+  },
+  "bivette": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Bivette",
+    "free": "Dream",
+    "buddy": false
+  },
+  "bria": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Bria",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cyrus": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Cyrus",
+    "free": "Free",
+    "buddy": false
+  },
+  "helena": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Helena",
+    "free": "Free",
+    "buddy": false
+  },
+  "may": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "May",
+    "free": "Dream",
+    "buddy": false
+  },
+  "prai": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Prai",
+    "free": "Dream",
+    "buddy": false
+  },
+  "riica": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Riica",
+    "free": "Free",
+    "buddy": false
+  },
+  "sevyn": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Sevyn",
+    "free": "Dream",
+    "buddy": false
+  },
+  "breeno": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Breeno",
+    "free": "Dream",
+    "buddy": false
+  },
+  "cyuca": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Cyuca",
+    "free": "Dream",
+    "buddy": false
+  },
+  "darunis": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Darunis",
+    "free": "Dream",
+    "buddy": false
+  },
+  "denny": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Denny",
+    "free": "Dream",
+    "buddy": false
+  },
+  "miranda": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Miranda",
+    "free": "Dream",
+    "buddy": false
+  },
+  "myron": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Myron",
+    "free": "Dream",
+    "buddy": false
+  },
+  "nomar": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Nomar",
+    "free": "Dream",
+    "buddy": false
+  },
+  "rovella": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Rovella",
+    "free": "Dream",
+    "buddy": false
+  },
+  "yio": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Yio",
+    "free": "Dream",
+    "buddy": false
+  },
+  "asia": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Asia",
+    "free": "Dream",
+    "buddy": false
+  },
+  "ctos": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Ctos",
+    "free": "Dream",
+    "buddy": false
+  },
+  "een": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Een",
+    "free": "Dream",
+    "buddy": false
+  },
+  "emms": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Emms",
+    "free": "Dream",
+    "buddy": false
+  },
+  "esta": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Esta",
+    "free": "Dream",
+    "buddy": false
+  },
+  "kilqia": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Kilqia",
+    "free": "Dream",
+    "buddy": false
+  },
+  "koot": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Koot",
+    "free": "Dream",
+    "buddy": false
+  },
+  "menesia": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Menesia",
+    "free": "Dream",
+    "buddy": false
+  },
+  "natore": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Natore",
+    "free": "Dream",
+    "buddy": false
+  },
+  "naylia": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Naylia",
+    "free": "Dream",
+    "buddy": false
+  },
+  "nixa": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Nixa",
+    "free": "Dream",
+    "buddy": false
+  },
+  "noome": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Noome",
+    "free": "Dream",
+    "buddy": false
+  },
+  "oor": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Oor",
+    "free": "Dream",
+    "buddy": false
+  },
+  "pasia": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Pasia",
+    "free": "Dream",
+    "buddy": false
+  },
+  "rodeia": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Rodeia",
+    "free": "Dream",
+    "buddy": false
+  },
+  "saithe": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Saithe",
+    "free": "Dream",
+    "buddy": false
+  },
+  "sauria": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Sauria",
+    "free": "Dream",
+    "buddy": false
+  },
+  "tayme": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Tayme",
+    "free": "Dream",
+    "buddy": false
+  },
+  "tohme": {
+    "ls": "shadow",
+    "alter": false,
+    "data_name": "Tohme",
+    "free": "Dream",
+    "buddy": false
+  },
+  "toole": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Toole",
+    "free": "Dream",
+    "buddy": false
+  },
+  "urania": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Urania",
+    "free": "Dream",
+    "buddy": false
+  },
+  "uuo": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Uuo",
+    "free": "Dream",
+    "buddy": false
+  },
+  "yssis": {
+    "ls": "light",
+    "alter": false,
+    "data_name": "Yssis",
+    "free": "Dream",
+    "buddy": false
+  },
+  "caromina": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Caromina",
+    "free": "Free",
+    "buddy": false
+  },
+  "80px": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Moyna",
+    "free": "Free",
+    "buddy": false
+  },
+  "kekelle": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Kekelle",
+    "free": "Free",
+    "buddy": false
+  },
+  "miriam": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Miriam",
+    "free": "Free",
+    "buddy": false
+  },
+  "misner": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Misner",
+    "free": "Free",
+    "buddy": false
+  },
+  "moyna": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Moyna",
+    "free": "Free",
+    "buddy": false
+  },
+  "rajah": {
+    "ls": "",
+    "alter": false,
+    "data_name": "Rajah",
+    "free": "Free",
+    "buddy": false
+  }
+}

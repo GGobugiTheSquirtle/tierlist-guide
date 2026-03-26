@@ -15,7 +15,7 @@
   --el-fire:#e74c3c;--el-water:#3498db;--el-earth:#8B6914;
   --el-wind:#2ecc71;--el-thunder:#f1c40f;--el-shade:#9b59b6;
   --el-crystal:#00bcd4;--el-null:#95a5a6;
-  --style-ns:transparent;--style-as:#c0c0c0;--style-es:#50c878;--style-alter:#ff6b6b;
+  --style-as:#c0c0c0;--style-es:#50c878;--style-alter:#ff6b6b;
   --ls-light:#ffeaa7;--ls-shadow:#636e72;
   --radius:6px;--card-w:88px;
 }
@@ -34,9 +34,9 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .btn-sm{padding:3px 8px;font-size:0.75rem}
 .btn-danger{color:#e74c3c;border-color:#e74c3c}.btn-danger:hover{background:#e74c3c;color:#fff}
 
-/* ─── Mode Toggle ─── */
-.mode-toggle{display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.mode-toggle button{padding:5px 14px;font-size:0.8rem}.mode-toggle button.active{background:var(--accent);color:#111}
+/* ─── Toggle Group (mode, view, lang) ─── */
+.toggle-group{display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.toggle-group button{padding:5px 12px;font-size:0.78rem}.toggle-group button.active{background:var(--accent);color:#111}
 
 /* ─── Category Tabs ─── */
 .cat-bar{display:flex;align-items:center;gap:4px;padding:8px 16px;background:var(--bg-secondary);border-bottom:1px solid var(--border);overflow-x:auto;flex-wrap:nowrap}
@@ -63,7 +63,7 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .card-name{display:block;font-size:0.78rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;font-weight:500}
 .card-meta{display:flex;justify-content:center;align-items:center;gap:2px;margin-top:2px}
 .card-meta .st-badge{font-size:0.58rem;padding:1px 4px;border-radius:3px;font-weight:600;line-height:1.4}
-.st-NS{display:none}.st-AS{background:var(--style-as);color:#111}.st-ES{background:var(--style-es);color:#111}.st-Alter{background:var(--style-alter);color:#fff}
+.st-NS{background:#555;color:#ddd}.st-AS{background:var(--style-as);color:#111}.st-ES{background:var(--style-es);color:#111}.st-Alter{background:var(--style-alter);color:#fff}
 .card-sub{display:flex;justify-content:center;align-items:center;gap:3px;margin-top:2px;font-size:0.68rem;color:var(--text-dim)}
 .ls-badge{font-weight:700;font-size:0.62rem;padding:1px 4px;border-radius:3px;line-height:1.4}
 .ls-light{background:rgba(255,234,167,0.2);color:var(--ls-light)}
@@ -72,10 +72,6 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .r5{color:#f1c40f}.r4{color:#c0c0c0}.r3{color:#cd7f32}
 .sa-badge{color:var(--accent);font-weight:700;font-size:0.62rem;background:rgba(212,164,74,0.2);padding:1px 4px;border-radius:3px;line-height:1.4}
 
-/* Element colors */
-.el-fire{background:var(--el-fire)}.el-water{background:var(--el-water)}.el-earth{background:var(--el-earth)}
-.el-wind{background:var(--el-wind)}.el-thunder{background:var(--el-thunder)}.el-shade{background:var(--el-shade)}
-.el-crystal{background:var(--el-crystal)}.el-null{background:var(--el-null)}
 
 /* ─── Filter Bar ─── */
 .filter-bar{padding:12px 16px;background:var(--bg-pool);border-top:2px solid var(--border)}
@@ -138,13 +134,24 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .tv .tv-name{font-weight:600}
 .tv .tv-name-en{color:var(--text-dim);font-size:0.7rem;margin-left:4px}
 
+/* ─── Multi-Category View (Accordion) ─── */
+.multi-cat{padding:8px 16px}
+.mcat-section{margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.mcat-header{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg-secondary);cursor:pointer;user-select:none;font-weight:600;font-size:0.85rem;color:var(--accent)}
+.mcat-header:hover{background:rgba(212,164,74,0.08)}
+.mcat-header .mcat-arrow{transition:transform .2s;font-size:0.7rem}
+.mcat-header .mcat-arrow.open{transform:rotate(90deg)}
+.mcat-header .mcat-count{font-weight:400;font-size:0.72rem;color:var(--text-dim);margin-left:auto}
+.mcat-body{display:none}
+.mcat-body.open{display:block}
+.mcat-tier-row{display:flex;align-items:stretch;min-height:60px;border-top:1px solid var(--border)}
+.mcat-tier-label{width:48px;min-width:48px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;border-right:1px solid var(--border);padding:4px}
+.mcat-tier-cards{flex:1;display:flex;flex-wrap:wrap;gap:4px;padding:4px 6px;align-content:flex-start}
+
 /* ─── Credits ─── */
 .credits{padding:8px 16px;text-align:center;font-size:0.7rem;color:var(--text-dim);border-top:1px solid var(--border);background:var(--bg-primary)}
 .credits a{color:var(--accent);text-decoration:none}
 
-/* ─── View Toggle ─── */
-.view-toggle{display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-left:4px}
-.view-toggle button{padding:5px 10px;font-size:0.75rem}.view-toggle button.active{background:var(--accent);color:#111}
 
 /* ─── Responsive ─── */
 @media(max-width:1024px){
@@ -189,7 +196,7 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .acm-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
 
 /* Hide in viewer/builder */
-.mode-viewer .cat-del,.mode-viewer .cat-add,.mode-viewer .tier-actions{display:none}
+.mode-viewer .cat-del,.mode-viewer .cat-add,.mode-viewer .tier-actions,.mode-viewer .btn-add-char{display:none}
 .mode-viewer .pool-area,.mode-viewer .filter-bar{display:none}
 .mode-viewer .tier-label{cursor:default}
 </style>
@@ -210,19 +217,20 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 <header class="header">
   <h1>AE Tier List Builder</h1>
   <div class="header-actions">
-    <div class="mode-toggle">
+    <div class="toggle-group">
       <button id="btn-viewer" onclick="setMode('viewer')">Viewer</button>
       <button id="btn-builder" class="active" onclick="setMode('builder')">Builder</button>
     </div>
-    <div class="view-toggle">
+    <div class="toggle-group">
       <button id="btn-tier" class="active" onclick="setView('tier')">Tier</button>
+      <button id="btn-all" onclick="setView('all')">All</button>
       <button id="btn-table" onclick="setView('table')">Table</button>
     </div>
-    <div class="view-toggle">
+    <div class="toggle-group">
       <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
       <button id="btn-en" onclick="setLang('en')">EN</button>
     </div>
-    <button class="btn btn-outline btn-sm" onclick="showAddCharModal()">+ Char</button>
+    <button class="btn btn-outline btn-sm btn-add-char" onclick="showAddCharModal()">+ Char</button>
     <button class="btn btn-outline btn-sm" onclick="showPresetModal()">Template</button>
     <button class="btn btn-outline btn-sm" onclick="shareURL()">Share</button>
     <button class="btn btn-outline btn-sm" onclick="exportJSON()">Export</button>
@@ -238,10 +246,13 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 
 <!-- ─── Filter + Pool ─── -->
 <div class="filter-bar" id="filter-bar"></div>
-<div class="pool-area">
+<div class="pool-area" id="pool-area">
   <div class="pool-header" id="pool-header">Unranked</div>
   <div class="pool-grid" id="pool-grid"></div>
 </div>
+
+<!-- ─── Multi-Category View ─── -->
+<div class="multi-cat" id="multi-cat-view" style="display:none"></div>
 
 <!-- ─── Table View ─── -->
 <div class="table-view" id="table-view" style="display:none"></div>
@@ -376,7 +387,7 @@ let S = {
   workspace: {
     name: '', author: '', categories: [], tierDefs: [], placements: {}, activeCategory: null
   },
-  ui: { query: '', filters: { elements:[], weapons:[], styles:[], rarities:[], sa:null, ls:null, acq:[], excludeBuddy:false }, filterTiers:false }
+  ui: { query: '', filters: { elements:[], weapons:[], styles:[], rarities:[], sa:null, ls:null, acq:[], excludeBuddy:false } }
 };
 
 const STORAGE_KEY = 'ae_tierlist_workspace';
@@ -583,30 +594,31 @@ function renderAll() {
   if (dv) dv.textContent = DB.meta.version || '-';
   if (dt) dt.textContent = DB.meta.total || DB.characters.length;
 
+  const elTier = document.getElementById('tier-area');
+  const elCat = document.getElementById('cat-bar');
+  const elPool = document.getElementById('pool-area');
+  const elTable = document.getElementById('table-view');
+  const elMulti = document.getElementById('multi-cat-view');
+
+  // Hide all first
+  [elTier,elCat,elPool,elTable,elMulti].forEach(e => e.style.display = 'none');
+
   if (currentView === 'table') {
-    document.getElementById('table-view').style.display = '';
-    document.getElementById('tier-area').style.display = 'none';
-    document.getElementById('cat-bar').style.display = 'none';
-    document.querySelector('.pool-area').style.display = 'none';
-    renderFilterBar();
-    renderTableView();
-    renderStats();
+    elTable.style.display = '';
+    renderFilterBar(); renderTableView(); renderStats();
+  } else if (currentView === 'all') {
+    elMulti.style.display = '';
+    renderFilterBar(); renderMultiCatView(); renderStats();
   } else {
-    document.getElementById('table-view').style.display = 'none';
-    document.getElementById('tier-area').style.display = '';
-    document.getElementById('cat-bar').style.display = '';
-    document.querySelector('.pool-area').style.display = '';
-    renderCategoryTabs();
-    renderTierRows();
-    renderFilterBar();
-    renderPool();
-    renderStats();
+    [elTier,elCat,elPool].forEach(e => e.style.display = '');
+    renderCategoryTabs(); renderTierRows(); renderFilterBar(); renderPool(); renderStats();
   }
 }
 
 function setView(v) {
   currentView = v;
   document.getElementById('btn-tier').className = v==='tier'?'active':'';
+  document.getElementById('btn-all').className = v==='all'?'active':'';
   document.getElementById('btn-table').className = v==='table'?'active':'';
   renderAll();
 }
@@ -734,8 +746,8 @@ function showTierEdit(e, td, idx) {
   closeAllPopups();
   const pop = document.createElement('div');
   pop.className = 'edit-pop';
-  pop.style.left = (e.clientX + 10) + 'px';
-  pop.style.top = (e.clientY - 10) + 'px';
+  pop.style.left = Math.min(e.clientX + 10, window.innerWidth - 220) + 'px';
+  pop.style.top = Math.min(e.clientY - 10, window.innerHeight - 200) + 'px';
 
   const colors = ['#ffd700','#ff4444','#ff8c00','#ffdd00','#44bb44','#888888','#5dade2','#af7ac5','#e74c3c','#1abc9c'];
   pop.innerHTML = `
@@ -818,7 +830,7 @@ function makeCard(c) {
     `<span class="card-meta">` +
       (elSrc ? `<img src="${elSrc}" alt="${c.elementKo}">` : '') +
       (wpSrc ? `<img src="${wpSrc}" alt="${c.weaponKo}">` : '') +
-      `<span class="st-badge ${stClass}">${c.style !== 'NS' ? c.style : ''}</span>` +
+      `<span class="st-badge ${stClass}">${c.style}</span>` +
     `</span>` +
     `<span class="card-sub">` +
       (c.ls ? `<span class="ls-badge ls-${c.ls}">${c.ls==='light'?'L':'S'}</span>` : '') +
@@ -869,8 +881,8 @@ function showMoveMenu(c, e) {
   closeAllPopups();
   const pop = document.createElement('div');
   pop.className = 'edit-pop';
-  pop.style.left = (e.clientX) + 'px';
-  pop.style.top = (e.clientY) + 'px';
+  pop.style.left = Math.min(e.clientX, window.innerWidth - 180) + 'px';
+  pop.style.top = Math.min(e.clientY, window.innerHeight - 250) + 'px';
   const catId = S.workspace.activeCategory;
 
   let html = `<div style="margin-bottom:6px;font-size:0.8rem;color:var(--accent)">${esc(c.nameKo)}</div>`;
@@ -975,6 +987,62 @@ function renderPool() {
   });
 
   header.textContent = `Unranked: ${shown}/${total} shown (${DB.characters.length} total)`;
+}
+
+/* ─── Multi-Category (All) View ─── */
+function renderMultiCatView() {
+  const container = document.getElementById('multi-cat-view');
+  if (!S.workspace.categories.length) {
+    container.innerHTML = '<p style="padding:20px;color:var(--text-dim)">No categories. Switch to Tier view and add some.</p>';
+    return;
+  }
+
+  let html = '';
+  S.workspace.categories.forEach(cat => {
+    const placements = S.workspace.placements[cat.id] || {};
+    const totalPlaced = Object.values(placements).reduce((sum, arr) => sum + arr.length, 0);
+
+    html += `<div class="mcat-section">`;
+    html += `<div class="mcat-header" onclick="toggleMcat(this)">`;
+    html += `<span class="mcat-arrow open">&#9654;</span> ${esc(cat.name)}`;
+    html += `<span class="mcat-count">${totalPlaced} chars</span></div>`;
+    html += `<div class="mcat-body open">`;
+
+    S.workspace.tierDefs.forEach(td => {
+      const chars = placements[td.id] || [];
+      if (!chars.length) return; // skip empty tiers
+      html += `<div class="mcat-tier-row">`;
+      html += `<div class="mcat-tier-label" style="background:${td.color}22;color:${td.color}">${esc(td.label)}</div>`;
+      html += `<div class="mcat-tier-cards">`;
+      chars.forEach(cid => {
+        const c = charById(cid);
+        if (!c || !charMatchesFilter(c)) return;
+        const elSrc = c.element && EL_ICON[c.element] ? `images/elements/${EL_ICON[c.element]}` : '';
+        const wpSrc = c.weapon && WP_ICON[c.weapon] ? `images/weapons/${WP_ICON[c.weapon]}` : '';
+        // Compact mini card for multi view
+        html += `<div class="char-card" style="width:72px;padding:2px" title="${esc(c.nameEn)}">`;
+        html += `<img class="card-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy" style="width:48px;height:48px">`;
+        html += `<span class="card-name" style="font-size:0.68rem">${esc(charName(c))}</span>`;
+        html += `<span class="card-meta" style="gap:1px">`;
+        if (elSrc) html += `<img src="${elSrc}" style="width:12px;height:12px">`;
+        if (wpSrc) html += `<img src="${wpSrc}" style="width:12px;height:12px">`;
+        html += `<span class="st-badge st-${c.style}" style="font-size:0.5rem;padding:0 2px">${c.style}</span>`;
+        html += `</span></div>`;
+      });
+      html += `</div></div>`;
+    });
+
+    html += `</div></div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function toggleMcat(header) {
+  const arrow = header.querySelector('.mcat-arrow');
+  const body = header.nextElementSibling;
+  arrow.classList.toggle('open');
+  body.classList.toggle('open');
 }
 
 /* ─── Table View ─── */
