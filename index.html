@@ -271,6 +271,66 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
   </div>
 </div>
 
+<!-- ─── Add Character Modal ─── -->
+<div class="modal-overlay" id="add-char-modal" style="display:none">
+  <div class="modal add-char-modal">
+    <h2>Add Custom Character</h2>
+    <div style="display:flex;gap:16px">
+      <div class="acm-img-drop" id="acm-img-drop" title="Drop image or click to paste">
+        <span id="acm-img-placeholder">Drop / Paste<br>Image</span>
+      </div>
+      <div style="flex:1">
+        <div class="acm-row"><label>Name</label><input id="acm-name" placeholder="Character name"></div>
+        <div class="acm-row"><label>EN Name</label><input id="acm-name-en" placeholder="English name (optional)"></div>
+      </div>
+    </div>
+    <div class="acm-row">
+      <label>Element</label>
+      <select id="acm-element">
+        <option value="">-- Select --</option>
+        <option value="fire">불 Fire</option><option value="water">물 Water</option>
+        <option value="earth">땅 Earth</option><option value="wind">바람 Wind</option>
+        <option value="thunder">뇌 Thunder</option><option value="shade">그림자 Shade</option>
+        <option value="crystal">결정 Crystal</option><option value="null">무 None</option>
+      </select>
+    </div>
+    <div class="acm-row">
+      <label>Weapon</label>
+      <select id="acm-weapon">
+        <option value="">-- Select --</option>
+        <option value="sword">검 Sword</option><option value="katana">도 Katana</option>
+        <option value="axe">도끼 Axe</option><option value="lance">창 Lance</option>
+        <option value="bow">활 Bow</option><option value="fist">권갑 Fist</option>
+        <option value="hammer">망치 Hammer</option><option value="staff">지팡이 Staff</option>
+      </select>
+    </div>
+    <div class="acm-row">
+      <label>Style</label>
+      <select id="acm-style">
+        <option value="NS">NS</option><option value="AS">AS</option>
+        <option value="ES">ES</option><option value="Alter">Alter</option>
+      </select>
+      <label style="min-width:auto">Rarity</label>
+      <select id="acm-rarity">
+        <option value="5">5★</option><option value="4">4★</option><option value="3">3★</option>
+      </select>
+    </div>
+    <div class="acm-row">
+      <label>L/S</label>
+      <select id="acm-ls">
+        <option value="">Unknown</option><option value="light">Light</option><option value="shadow">Shadow</option>
+      </select>
+      <label style="min-width:auto;margin-left:8px">
+        <input type="checkbox" id="acm-sa"> SA
+      </label>
+    </div>
+    <div class="acm-actions">
+      <button class="btn btn-outline" onclick="closeAddChar()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCustomChar()">Add Character</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ═══════════════════════════════════════════
    DATA + STATE
@@ -329,7 +389,8 @@ async function init() {
     const res = await fetch('data/characters.json');
     DB = await res.json();
     DB.characters.forEach(c => DB_MAP[c.id] = c);
-    console.log(`Loaded ${DB.characters.length} characters`);
+    restoreCustomChars();
+    console.log(`Loaded ${DB.characters.length} characters (incl. custom)`);
   } catch(e) {
     console.error('Failed to load characters.json', e);
     document.body.innerHTML = '<p style="padding:40px;color:#e74c3c">Failed to load character data. Make sure data/characters.json exists.</p>';
@@ -752,7 +813,7 @@ function makeCard(c) {
   const wpSrc = c.weapon && WP_ICON[c.weapon] ? `images/weapons/${WP_ICON[c.weapon]}` : '';
 
   card.innerHTML =
-    `<img class="card-icon" src="images/icons/${c.icon}" alt="${esc(charName(c))}" loading="lazy">` +
+    `<img class="card-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy">` +
     `<span class="card-name">${esc(charName(c))}</span>` +
     `<span class="card-meta">` +
       (elSrc ? `<img src="${elSrc}" alt="${c.elementKo}">` : '') +
@@ -876,8 +937,8 @@ function renderFilterBar() {
     </div>
     <div class="filter-row">
       <label>Acquire</label>
-      ${['free','gacha','buddy'].map(a =>
-        `<button class="ftag ${f.acq.includes(a)?'on':''}" onclick="toggleFilter('acq','${a}')">${a==='free'?'Free':a==='gacha'?'Gacha':a==='buddy'?'Buddy':a}</button>`
+      ${['free','gacha','buddy','custom'].map(a =>
+        `<button class="ftag ${f.acq.includes(a)?'on':''}" onclick="toggleFilter('acq','${a}')">${{free:'Free',gacha:'Gacha',buddy:'Buddy',custom:'Custom'}[a]}</button>`
       ).join('')}
       <button class="ftag ${f.excludeBuddy?'on':''}" onclick="S.ui.filters.excludeBuddy=!S.ui.filters.excludeBuddy;renderAll()" style="${f.excludeBuddy?'border-color:#e74c3c;color:#e74c3c':''}">Buddy &#10005;</button>
     </div>`;
@@ -960,7 +1021,7 @@ function renderTableView() {
     const stColor = c.style==='AS'?'var(--style-as)':c.style==='ES'?'var(--style-es)':c.style==='Alter'?'var(--style-alter)':'inherit';
 
     html += `<tr>
-      <td><img class="tv-icon" src="images/icons/${c.icon}" alt="${esc(c.nameKo)}" loading="lazy"></td>
+      <td><img class="tv-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy"></td>
       <td class="tv-name">${esc(charName(c))}</td>
       <td style="color:var(--text-dim)">${esc(lang==='ko'?c.nameEn:c.nameKo)}</td>
       <td>${elIcon}</td>
@@ -1100,9 +1161,181 @@ function esc(s) { if(!s)return''; const d=document.createElement('div'); d.textC
 var LZString=function(){function o(o,r){if(!t[o]){t[o]={};for(var n=0;n<o.length;n++)t[o][o.charAt(n)]=n}return t[o][r]}var r=String.fromCharCode,n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$",t={},e={compressToEncodedURIComponent:function(o){return null==o?"":e._compress(o,6,function(o){return n.charAt(o)})},decompressFromEncodedURIComponent:function(r){return null==r?"":""==r?null:(r=r.replace(/ /g,"+"),e._decompress(r.length,32,function(n){return o(e.keyStrUriSafe,r.charAt(n))}))},_compress:function(o,n,t){if(null==o)return"";var e,i,s,p={},u={},a="",c="",l="",f=2,d=3,h=2,g=[],w=0,v=0;for(s=0;s<o.length;s+=1)if(a=o.charAt(s),Object.prototype.hasOwnProperty.call(p,a)||(p[a]=d++,u[a]=!0),c=l+a,Object.prototype.hasOwnProperty.call(p,c))l=c;else{if(Object.prototype.hasOwnProperty.call(u,l)){if(l.charCodeAt(0)<256){for(e=0;e<h;e++)w<<=1,v==n-1?(v=0,g.push(t(w)),w=0):v++;for(i=l.charCodeAt(0),e=0;e<8;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1}else{for(i=1,e=0;e<h;e++)w=w<<1|i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i=0;for(i=l.charCodeAt(0),e=0;e<16;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1}0==--f&&(f=Math.pow(2,h),h++),delete u[l]}else for(i=p[l],e=0;e<h;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1;0==--f&&(f=Math.pow(2,h),h++),p[c]=d++,l=String(a)}if(""!==l){if(Object.prototype.hasOwnProperty.call(u,l)){if(l.charCodeAt(0)<256){for(e=0;e<h;e++)w<<=1,v==n-1?(v=0,g.push(t(w)),w=0):v++;for(i=l.charCodeAt(0),e=0;e<8;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1}else{for(i=1,e=0;e<h;e++)w=w<<1|i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i=0;for(i=l.charCodeAt(0),e=0;e<16;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1}0==--f&&(f=Math.pow(2,h),h++),delete u[l]}else for(i=p[l],e=0;e<h;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1;0==--f&&(f=Math.pow(2,h),h++)}for(i=2,e=0;e<h;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1;for(;;){if(w<<=1,v==n-1){g.push(t(w));break}v++}return g.join("")},_decompress:function(o,n,t){var e,i,s,p,u,a,c,l=[],f=4,d=4,h=3,g="",w=[],v={val:t(0),position:n,index:1};for(e=0;e<3;e+=1)l[e]=e;for(s=0,u=Math.pow(2,2),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;switch(s){case 0:for(s=0,u=Math.pow(2,8),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;c=r(s);break;case 1:for(s=0,u=Math.pow(2,16),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;c=r(s);break;case 2:return""}for(l[3]=c,i=c,w.push(c);;){if(v.index>o)return"";for(s=0,u=Math.pow(2,h),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;switch(c=s){case 0:for(s=0,u=Math.pow(2,8),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;l[d++]=r(s),c=d-1,f--;break;case 1:for(s=0,u=Math.pow(2,16),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;l[d++]=r(s),c=d-1,f--;break;case 2:return w.join("")}if(0==f&&(f=Math.pow(2,h),h++),l[c])g=l[c];else{if(c!==d)return null;g=i+i.charAt(0)}w.push(g),l[d++]=i+g.charAt(0),i=g,0==--f&&(f=Math.pow(2,h),h++)}}};return e.keyStrUriSafe=n,e}();
 
 /* ═══════════════════════════════════════════
+   INTRO SCREEN
+   ═══════════════════════════════════════════ */
+const WIKI_UPDATE_IMG = 'https://anothereden.wiki/w/Special:FilePath/';
+const WIKI_MAIN_URL = 'https://anothereden.wiki';
+let gameVersion = '';
+
+function loadIntroBanner() {
+  // Try to fetch wiki main page for current key visual
+  const banner = document.getElementById('intro-banner');
+  const verEl = document.getElementById('intro-ver');
+  const gvEl = document.getElementById('game-version');
+
+  // Use known URL pattern — will update if wiki changes
+  const imgUrl = 'https://anothereden.wiki/images/e/e3/An_Ode_to_Origin_Act_4_3.14.50.png';
+  banner.src = imgUrl;
+
+  // Try to extract version from wiki
+  fetch('https://anothereden.wiki', {mode:'cors'}).then(r => r.text()).then(html => {
+    // Find version from image filename pattern: Act_N_X.Y.Z.png
+    const m = html.match(/An_Ode_to_\w+_Act_\d+_(\d+\.\d+\.\d+)\.png/);
+    if (m) {
+      gameVersion = m[1];
+      verEl.textContent = 'Game Version: ' + gameVersion;
+      if (gvEl) gvEl.textContent = gameVersion;
+      // Update banner with latest
+      const imgMatch = html.match(/(\/images\/[^"]+An_Ode_to_\w+_Act_\d+_\d+\.\d+\.\d+\.png)/);
+      if (imgMatch) banner.src = WIKI_MAIN_URL + imgMatch[1];
+    }
+  }).catch(() => {
+    verEl.textContent = 'Game Version: 3.14.50+';
+    if (gvEl) gvEl.textContent = '3.14.50+';
+  });
+}
+
+function dismissIntro() {
+  const intro = document.getElementById('intro-screen');
+  intro.classList.add('hidden');
+  setTimeout(() => intro.style.display = 'none', 500);
+  sessionStorage.setItem('ae_intro_dismissed', '1');
+}
+
+/* ═══════════════════════════════════════════
+   CUSTOM CHARACTER
+   ═══════════════════════════════════════════ */
+const CUSTOM_CHARS_KEY = 'ae_tierlist_custom_chars';
+let customCharImage = null; // base64 data URL
+
+function showAddCharModal() {
+  document.getElementById('add-char-modal').style.display = 'flex';
+  // Reset form
+  ['acm-name','acm-name-en'].forEach(id => document.getElementById(id).value = '');
+  ['acm-element','acm-weapon'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('acm-style').value = 'NS';
+  document.getElementById('acm-rarity').value = '5';
+  document.getElementById('acm-ls').value = '';
+  document.getElementById('acm-sa').checked = false;
+  customCharImage = null;
+  const drop = document.getElementById('acm-img-drop');
+  drop.innerHTML = '<span id="acm-img-placeholder">Drop / Paste<br>Image</span>';
+  setupImageDrop();
+}
+
+function closeAddChar() {
+  document.getElementById('add-char-modal').style.display = 'none';
+}
+
+function setupImageDrop() {
+  const drop = document.getElementById('acm-img-drop');
+
+  // Drag & drop
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('drag-over'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('drag-over'));
+  drop.addEventListener('drop', e => {
+    e.preventDefault(); drop.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) readImageFile(file);
+  });
+
+  // Click to trigger file input
+  drop.addEventListener('click', () => {
+    const inp = document.createElement('input');
+    inp.type = 'file'; inp.accept = 'image/*';
+    inp.onchange = () => { if (inp.files[0]) readImageFile(inp.files[0]); };
+    inp.click();
+  });
+
+  // Paste
+  document.addEventListener('paste', e => {
+    if (document.getElementById('add-char-modal').style.display === 'none') return;
+    const items = e.clipboardData.items;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        readImageFile(item.getAsFile());
+        break;
+      }
+    }
+  });
+}
+
+function readImageFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    customCharImage = e.target.result;
+    const drop = document.getElementById('acm-img-drop');
+    drop.innerHTML = `<img src="${customCharImage}" alt="preview">`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveCustomChar() {
+  const name = document.getElementById('acm-name').value.trim();
+  if (!name) { alert('Name is required'); return; }
+
+  const nameEn = document.getElementById('acm-name-en').value.trim() || name;
+  const element = document.getElementById('acm-element').value;
+  const weapon = document.getElementById('acm-weapon').value;
+  const style = document.getElementById('acm-style').value;
+  const rarity = parseInt(document.getElementById('acm-rarity').value);
+  const ls = document.getElementById('acm-ls').value;
+  const sa = document.getElementById('acm-sa').checked;
+
+  const id = 'custom_' + Date.now();
+  const char = {
+    id, nameKo: name, nameEn, style, rarity, sa,
+    element: element || 'null',
+    elementKo: ELEMENT_KO[element] || '무',
+    weapon: weapon || '',
+    weaponKo: WEAPON_KO[weapon] || '',
+    attackType: ATK_TYPE[weapon] || '',
+    ls, acq: 'custom', date: new Date().toISOString().slice(0,10),
+    icon: '', customImg: customCharImage || ''
+  };
+
+  // Add to DB
+  DB.characters.push(char);
+  DB_MAP[id] = char;
+
+  // Save custom chars to localStorage
+  const customs = loadCustomChars();
+  customs.push(char);
+  localStorage.setItem(CUSTOM_CHARS_KEY, JSON.stringify(customs));
+
+  closeAddChar();
+  renderAll();
+}
+
+function loadCustomChars() {
+  try {
+    const raw = localStorage.getItem(CUSTOM_CHARS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+function restoreCustomChars() {
+  const customs = loadCustomChars();
+  customs.forEach(c => {
+    if (!DB_MAP[c.id]) {
+      DB.characters.push(c);
+      DB_MAP[c.id] = c;
+    }
+  });
+  if (customs.length) console.log(`Restored ${customs.length} custom characters`);
+}
+
+/* ═══════════════════════════════════════════
    BOOT
    ═══════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  loadIntroBanner();
+  // Skip intro if already dismissed this session
+  if (sessionStorage.getItem('ae_intro_dismissed')) {
+    document.getElementById('intro-screen').style.display = 'none';
+  }
+  init();
+});
 </script>
 </body>
 </html>
