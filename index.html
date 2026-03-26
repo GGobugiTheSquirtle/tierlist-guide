@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AE Tier List Builder</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <style>
 /* ─── Reset + Base ─── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -20,7 +21,7 @@
   --radius:6px;--card-w:88px;
 }
 html{background:var(--bg-primary);color:var(--text-primary);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-size:14px}
-body{min-height:100vh}
+body{min-height:100vh;max-width:1200px;margin:0 auto}
 button{cursor:pointer;font:inherit;border:none;background:none;color:inherit}
 input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:4px 8px}
 
@@ -47,10 +48,10 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 
 /* ─── Tier Rows ─── */
 .tier-area{padding:8px 16px}
-.tier-row{display:flex;align-items:stretch;min-height:84px;margin-bottom:4px;border-radius:var(--radius);overflow:hidden;background:var(--bg-tier-row);border:1px solid var(--border)}
+.tier-row{display:flex;align-items:stretch;margin-bottom:4px;border-radius:var(--radius);background:var(--bg-tier-row);border:1px solid var(--border)}
 .tier-label{width:56px;min-width:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:1rem;cursor:pointer;user-select:none;border-right:1px solid var(--border);padding:4px;text-align:center}
 .tier-label small{font-size:0.55rem;font-weight:400;color:var(--text-dim);margin-top:2px}
-.tier-drop{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px;padding:8px;min-height:84px;transition:background .15s}
+.tier-drop{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px;padding:8px;min-height:50px;transition:background .15s}
 .tier-drop.drag-over{background:rgba(212,164,74,0.12);outline:2px dashed var(--accent)}
 .tier-actions{display:flex;justify-content:center;gap:8px;margin:4px 0 8px}
 
@@ -134,19 +135,22 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .tv .tv-name{font-weight:600}
 .tv .tv-name-en{color:var(--text-dim);font-size:0.7rem;margin-left:4px}
 
-/* ─── Multi-Category View (Accordion) ─── */
-.multi-cat{padding:8px 16px}
-.mcat-section{margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.mcat-header{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg-secondary);cursor:pointer;user-select:none;font-weight:600;font-size:0.85rem;color:var(--accent)}
-.mcat-header:hover{background:rgba(212,164,74,0.08)}
-.mcat-header .mcat-arrow{transition:transform .2s;font-size:0.7rem}
-.mcat-header .mcat-arrow.open{transform:rotate(90deg)}
-.mcat-header .mcat-count{font-weight:400;font-size:0.72rem;color:var(--text-dim);margin-left:auto}
-.mcat-body{display:none}
-.mcat-body.open{display:block}
-.mcat-tier-row{display:flex;align-items:stretch;min-height:60px;border-top:1px solid var(--border)}
-.mcat-tier-label{width:48px;min-width:48px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;border-right:1px solid var(--border);padding:4px}
-.mcat-tier-cards{flex:1;display:flex;flex-wrap:wrap;gap:4px;padding:4px 6px;align-content:flex-start}
+/* ─── All View (Side-by-Side Columns) ─── */
+#all-view{padding:8px 16px;overflow-x:auto}
+.mcat-grid{display:flex;gap:8px;min-width:min-content}
+.mcat-col{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--bg-tier-row);min-width:220px;flex:1}
+.mcat-col-header{padding:8px 12px;background:var(--bg-secondary);font-weight:600;font-size:0.85rem;color:var(--accent);border-bottom:1px solid var(--border);text-align:center}
+.mcat-tier-row{display:flex;align-items:stretch;min-height:48px;border-bottom:1px solid var(--border)}
+.mcat-tier-row:last-child{border-bottom:none}
+.mcat-tier-label{width:40px;min-width:40px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;border-right:1px solid var(--border)}
+.mcat-tier-cards{flex:1;display:flex;flex-wrap:wrap;gap:3px;padding:3px 4px;align-content:flex-start}
+.mcat-mini{width:52px;text-align:center;padding:2px}
+.mcat-mini img{width:36px;height:36px;border-radius:4px;display:block;margin:0 auto}
+.mcat-mini .mm-name{font-size:0.52rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;margin-top:1px;line-height:1.2}
+.mcat-empty{color:var(--text-dim);font-size:0.7rem;padding:12px;text-align:center;font-style:italic}
+
+/* ─── Capture Area ─── */
+#capture-area{background:var(--bg-primary)}
 
 /* ─── Credits ─── */
 .credits{padding:8px 16px;text-align:center;font-size:0.7rem;color:var(--text-dim);border-top:1px solid var(--border);background:var(--bg-primary)}
@@ -234,9 +238,14 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
     <button class="btn btn-outline btn-sm" onclick="showPresetModal()">Template</button>
     <button class="btn btn-outline btn-sm" onclick="shareURL()">Share</button>
     <button class="btn btn-outline btn-sm" onclick="exportJSON()">Export</button>
+    <button class="btn btn-primary btn-sm" onclick="copyAsImage()">Copy Image</button>
+    <button class="btn btn-outline btn-sm" onclick="saveAsImage()">Save JPG</button>
     <label class="btn btn-outline btn-sm" style="cursor:pointer">Import<input type="file" accept=".json" style="display:none" onchange="importJSON(this.files[0])"></label>
   </div>
 </header>
+
+<!-- ─── Capture Area (for image export) ─── -->
+<div id="capture-area">
 
 <!-- ─── Category Tabs ─── -->
 <div class="cat-bar" id="cat-bar"></div>
@@ -252,10 +261,14 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 </div>
 
 <!-- ─── Multi-Category View ─── -->
-<div class="multi-cat" id="multi-cat-view" style="display:none"></div>
+
+<!-- ─── All View (multi-category side-by-side) ─── -->
+<div id="all-view" style="display:none"></div>
 
 <!-- ─── Table View ─── -->
 <div class="table-view" id="table-view" style="display:none"></div>
+
+</div><!-- /capture-area -->
 
 <!-- ─── Stats ─── -->
 <div class="stats-bar" id="stats-bar"></div>
@@ -352,7 +365,7 @@ const WEAPON_KO = {sword:'검',katana:'도',axe:'도끼',lance:'창',bow:'활',f
 const ELEMENT_KO = {fire:'불',water:'물',earth:'땅',wind:'바람',thunder:'뇌',shade:'그림자',crystal:'결정',null:'무'};
 const EL_ICON = {fire:'Skill_Type_8_1.png',water:'Skill_Type_8_8.png',earth:'Skill_Type_8_2.png',wind:'Skill_Type_8_4.png',thunder:'Skill_Type_8_16.png',shade:'Skill_Type_8_32.png',crystal:'Skill_Type_8_64.png',null:'Skill_Type_8_0.png'};
 const WP_ICON = {staff:'202000000_icon.png',sword:'202000001_icon.png',katana:'202000002_icon.png',axe:'202000003_icon.png',lance:'202000004_icon.png',bow:'202000005_icon.png',fist:'202000006_icon.png',hammer:'202000007_icon.png'};
-let currentView = 'tier'; // 'tier' | 'table'
+let currentView = 'tier'; // 'tier' | 'all' | 'table'
 let tableSort = {col:'nameKo', asc:true};
 let lang = 'ko'; // 'ko' | 'en'
 const ATK_TYPE = {sword:'slash',katana:'slash',axe:'slash',lance:'pierce',bow:'pierce',fist:'blunt',hammer:'blunt',staff:'magic'};
@@ -408,12 +421,14 @@ async function init() {
     return;
   }
 
-  // URL hash check first
+  // URL hash → viewer mode (skip intro, don't touch localStorage)
   if (location.hash.startsWith('#s=')) {
     loadFromURL();
+    document.getElementById('intro-screen').style.display = 'none';
   } else if (!loadFromStorage()) {
-    showPresetModal();
-    return;
+    // First visit: apply Prydwen preset directly (no modal)
+    applyPreset('prydwen');
+    return; // applyPreset calls renderAll
   }
 
   renderAll();
@@ -450,6 +465,17 @@ function showPresetModal() {
     list.appendChild(btn);
   }
   modal.style.display = 'flex';
+}
+
+function resetAll() {
+  const choice = prompt('Reset what?\n1 = All placements only (keep categories/tiers)\n2 = Everything (back to Prydwen preset)\n\nType 1 or 2:');
+  if (choice === '1') {
+    S.workspace.placements = {};
+    autoSave(); renderAll();
+  } else if (choice === '2') {
+    S.workspace.placements = {};
+    applyPreset('prydwen');
+  }
 }
 
 function applyPreset(key) {
@@ -510,6 +536,8 @@ function shareURL() {
 }
 
 function loadFromURL() {
+  // NOTE: This only sets in-memory state. Does NOT touch localStorage.
+  // User's saved work is safe. Only explicit save/applyPreset writes to storage.
   try {
     const hash = location.hash.slice(3); // remove #s=
     const json = LZString.decompressFromEncodedURIComponent(hash);
@@ -598,17 +626,17 @@ function renderAll() {
   const elCat = document.getElementById('cat-bar');
   const elPool = document.getElementById('pool-area');
   const elTable = document.getElementById('table-view');
-  const elMulti = document.getElementById('multi-cat-view');
+  const elAll = document.getElementById('all-view');
 
   // Hide all first
-  [elTier,elCat,elPool,elTable,elMulti].forEach(e => e.style.display = 'none');
+  [elTier,elCat,elPool,elTable,elAll].forEach(e => e.style.display = 'none');
 
   if (currentView === 'table') {
     elTable.style.display = '';
     renderFilterBar(); renderTableView(); renderStats();
   } else if (currentView === 'all') {
-    elMulti.style.display = '';
-    renderFilterBar(); renderMultiCatView(); renderStats();
+    elAll.style.display = '';
+    renderFilterBar(); renderAllView(); renderStats();
   } else {
     [elTier,elCat,elPool].forEach(e => e.style.display = '');
     renderCategoryTabs(); renderTierRows(); renderFilterBar(); renderPool(); renderStats();
@@ -639,10 +667,31 @@ function renderCategoryTabs() {
   S.workspace.categories.forEach(cat => {
     const tab = document.createElement('button');
     tab.className = 'cat-tab' + (cat.id === S.workspace.activeCategory ? ' active' : '');
-    tab.innerHTML = `<span class="cat-name">${esc(cat.name)}</span>` +
-      (S.mode==='builder' ? `<span class="cat-del" onclick="event.stopPropagation();delCategory('${cat.id}')">&times;</span>` : '');
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'cat-name';
+    nameSpan.textContent = cat.name;
+    tab.appendChild(nameSpan);
+
+    if (S.mode === 'builder') {
+      // Edit button (pencil icon)
+      const editBtn = document.createElement('span');
+      editBtn.className = 'cat-edit';
+      editBtn.textContent = '\u270E'; // ✎
+      editBtn.title = 'Rename';
+      editBtn.style.cssText = 'font-size:0.65rem;cursor:pointer;opacity:0.5;margin-left:2px';
+      editBtn.onclick = (e) => { e.stopPropagation(); editCategoryName(cat); };
+      editBtn.onmouseenter = () => editBtn.style.opacity = '1';
+      editBtn.onmouseleave = () => editBtn.style.opacity = '0.5';
+      tab.appendChild(editBtn);
+
+      const delBtn = document.createElement('span');
+      delBtn.className = 'cat-del';
+      delBtn.textContent = '\u00D7'; // ×
+      delBtn.onclick = (e) => { e.stopPropagation(); delCategory(cat.id); };
+      tab.appendChild(delBtn);
+    }
+
     tab.onclick = () => { S.workspace.activeCategory = cat.id; renderAll(); };
-    if (S.mode === 'builder') tab.ondblclick = () => editCategoryName(cat);
     bar.appendChild(tab);
   });
   if (S.mode === 'builder') {
@@ -651,6 +700,13 @@ function renderCategoryTabs() {
     add.textContent = '+ Add';
     add.onclick = addCategory;
     bar.appendChild(add);
+
+    const reset = document.createElement('button');
+    reset.className = 'cat-add';
+    reset.textContent = 'Reset';
+    reset.style.color = '#e74c3c';
+    reset.onclick = resetAll;
+    bar.appendChild(reset);
   }
 }
 
@@ -678,7 +734,7 @@ function editCategoryName(cat) {
   if (name !== null && name.trim()) { cat.name = name.trim(); autoSave(); renderAll(); }
 }
 
-/* ─── Tier Rows ─── */
+/* ─── Tier Rows (single active category — Builder) ─── */
 function renderTierRows() {
   const area = document.getElementById('tier-area');
   area.innerHTML = '';
@@ -697,19 +753,17 @@ function renderTierRows() {
     const row = document.createElement('div');
     row.className = 'tier-row';
 
-    // Label
     const label = document.createElement('div');
     label.className = 'tier-label';
     label.style.background = td.color + '22';
     label.style.color = td.color;
-    label.innerHTML = `${esc(td.label)}`;
+    label.innerHTML = esc(td.label);
     if (S.mode === 'builder') {
       label.title = 'Click to edit';
       label.onclick = (e) => showTierEdit(e, td, idx);
     }
     row.appendChild(label);
 
-    // Drop zone
     const drop = document.createElement('div');
     drop.className = 'tier-drop';
     drop.dataset.tier = td.id;
@@ -918,7 +972,7 @@ function renderFilterBar() {
   bar.innerHTML = `
     <div class="filter-row">
       <label>Search</label>
-      <input class="search-input" type="text" placeholder="EN / KO" value="${esc(S.ui.query)}" oninput="S.ui.query=this.value;renderPool();renderTierRows();renderStats()">
+      <input class="search-input" type="text" placeholder="EN / KO" value="${esc(S.ui.query)}" oninput="S.ui.query=this.value;renderAll()">
       <span class="filter-reset" onclick="resetFilters()">Reset</span>
     </div>
     <div class="filter-row">
@@ -960,13 +1014,13 @@ function toggleFilter(key, val) {
   const arr = S.ui.filters[key];
   const idx = arr.indexOf(val);
   if (idx >= 0) arr.splice(idx, 1); else arr.push(val);
-  renderFilterBar(); renderPool(); renderTierRows(); renderStats();
+  renderAll();
 }
 
 function resetFilters() {
   S.ui.query = '';
   S.ui.filters = { elements:[], weapons:[], styles:[], rarities:[], sa:null, ls:null, acq:[], excludeBuddy:false };
-  renderFilterBar(); renderPool(); renderTierRows(); renderStats();
+  renderAll();
 }
 
 /* ─── Pool ─── */
@@ -989,60 +1043,57 @@ function renderPool() {
   header.textContent = `Unranked: ${shown}/${total} shown (${DB.characters.length} total)`;
 }
 
-/* ─── Multi-Category (All) View ─── */
-function renderMultiCatView() {
-  const container = document.getElementById('multi-cat-view');
-  if (!S.workspace.categories.length) {
-    container.innerHTML = '<p style="padding:20px;color:var(--text-dim)">No categories. Switch to Tier view and add some.</p>';
+/* ─── Multi-Category (All) View — Side-by-Side ─── */
+function renderAllView() {
+  const container = document.getElementById('all-view');
+  const cats = S.workspace.categories;
+  const tds = S.workspace.tierDefs;
+
+  if (!cats.length) {
+    container.innerHTML = '<p class="mcat-empty">No categories yet. Use Tier view to add categories and place characters.</p>';
     return;
   }
 
-  let html = '';
-  S.workspace.categories.forEach(cat => {
+  let html = '<div class="mcat-grid">';
+
+  cats.forEach(cat => {
     const placements = S.workspace.placements[cat.id] || {};
-    const totalPlaced = Object.values(placements).reduce((sum, arr) => sum + arr.length, 0);
+    html += `<div class="mcat-col">`;
+    html += `<div class="mcat-col-header">${esc(cat.name)}</div>`;
 
-    html += `<div class="mcat-section">`;
-    html += `<div class="mcat-header" onclick="toggleMcat(this)">`;
-    html += `<span class="mcat-arrow open">&#9654;</span> ${esc(cat.name)}`;
-    html += `<span class="mcat-count">${totalPlaced} chars</span></div>`;
-    html += `<div class="mcat-body open">`;
+    let hasAny = false;
+    tds.forEach(td => {
+      const chars = (placements[td.id] || []).filter(cid => {
+        const c = charById(cid);
+        return c && charMatchesFilter(c);
+      });
 
-    S.workspace.tierDefs.forEach(td => {
-      const chars = placements[td.id] || [];
-      if (!chars.length) return; // skip empty tiers
       html += `<div class="mcat-tier-row">`;
       html += `<div class="mcat-tier-label" style="background:${td.color}22;color:${td.color}">${esc(td.label)}</div>`;
       html += `<div class="mcat-tier-cards">`;
-      chars.forEach(cid => {
-        const c = charById(cid);
-        if (!c || !charMatchesFilter(c)) return;
-        const elSrc = c.element && EL_ICON[c.element] ? `images/elements/${EL_ICON[c.element]}` : '';
-        const wpSrc = c.weapon && WP_ICON[c.weapon] ? `images/weapons/${WP_ICON[c.weapon]}` : '';
-        // Compact mini card for multi view
-        html += `<div class="char-card" style="width:72px;padding:2px" title="${esc(c.nameEn)}">`;
-        html += `<img class="card-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy" style="width:48px;height:48px">`;
-        html += `<span class="card-name" style="font-size:0.68rem">${esc(charName(c))}</span>`;
-        html += `<span class="card-meta" style="gap:1px">`;
-        if (elSrc) html += `<img src="${elSrc}" style="width:12px;height:12px">`;
-        if (wpSrc) html += `<img src="${wpSrc}" style="width:12px;height:12px">`;
-        html += `<span class="st-badge st-${c.style}" style="font-size:0.5rem;padding:0 2px">${c.style}</span>`;
-        html += `</span></div>`;
-      });
+
+      if (chars.length) {
+        hasAny = true;
+        chars.forEach(cid => {
+          const c = charById(cid);
+          html += `<div class="mcat-mini" title="${esc(c.nameEn + ' / ' + c.nameKo)}">`;
+          html += `<img src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy">`;
+          html += `<span class="mm-name">${esc(charName(c))}</span>`;
+          html += `</div>`;
+        });
+      }
+
       html += `</div></div>`;
     });
 
-    html += `</div></div>`;
+    if (!hasAny) {
+      html += `<div class="mcat-empty">Empty — place characters in Tier view</div>`;
+    }
+    html += `</div>`;
   });
 
+  html += '</div>';
   container.innerHTML = html;
-}
-
-function toggleMcat(header) {
-  const arrow = header.querySelector('.mcat-arrow');
-  const body = header.nextElementSibling;
-  arrow.classList.toggle('open');
-  body.classList.toggle('open');
 }
 
 /* ─── Table View ─── */
@@ -1164,7 +1215,12 @@ function dragMove(e) {
   _drag.ghost.style.display = '';
 
   document.querySelectorAll('.drag-over').forEach(d => d.classList.remove('drag-over'));
-  const dropZone = el ? el.closest('.tier-drop, .pool-grid') : null;
+  // tier-label도 같은 행의 tier-drop으로 처리
+  let dropZone = el ? el.closest('.tier-drop, .pool-grid') : null;
+  if (!dropZone && el) {
+    const label = el.closest('.tier-label');
+    if (label) dropZone = label.parentElement.querySelector('.tier-drop');
+  }
   if (dropZone) dropZone.classList.add('drag-over');
 }
 
@@ -1187,12 +1243,18 @@ function dragEnd(e) {
   const catId = S.workspace.activeCategory;
   if (!catId) { _drag = null; return; }
 
-  const dropZone = el ? el.closest('.tier-drop, .pool-grid') : null;
+  // tier-label도 같은 행의 tier-drop으로 처리
+  let dropZone = el ? el.closest('.tier-drop, .pool-grid') : null;
+  if (!dropZone && el) {
+    const label = el.closest('.tier-label');
+    if (label) dropZone = label.parentElement.querySelector('.tier-drop');
+  }
   if (dropZone) {
     removePlacement(catId, _drag.charId);
     if (dropZone.classList.contains('tier-drop')) {
       const tierId = dropZone.dataset.tier;
-      addPlacement(catId, tierId, _drag.charId);
+      const insertIdx = getInsertIndex(dropZone, e.clientX);
+      addPlacement(catId, tierId, _drag.charId, insertIdx);
     }
     // pool-grid drop = unrank (already removed)
     autoSave();
@@ -1211,10 +1273,27 @@ function removePlacement(catId, charId) {
   }
 }
 
-function addPlacement(catId, tierId, charId) {
+function addPlacement(catId, tierId, charId, insertIdx) {
   if (!S.workspace.placements[catId]) S.workspace.placements[catId] = {};
   if (!S.workspace.placements[catId][tierId]) S.workspace.placements[catId][tierId] = [];
-  S.workspace.placements[catId][tierId].push(charId);
+  const arr = S.workspace.placements[catId][tierId];
+  if (insertIdx !== undefined && insertIdx >= 0 && insertIdx < arr.length) {
+    arr.splice(insertIdx, 0, charId);
+  } else {
+    arr.push(charId);
+  }
+}
+
+// 드롭 위치에서 삽입 인덱스 계산
+function getInsertIndex(dropZone, clientX) {
+  const cards = dropZone.querySelectorAll('.char-card');
+  if (!cards.length) return 0;
+  for (let i = 0; i < cards.length; i++) {
+    const rect = cards[i].getBoundingClientRect();
+    const midX = rect.left + rect.width / 2;
+    if (clientX < midX) return i;
+  }
+  return cards.length; // after last card
 }
 
 /* ═══════════════════════════════════════════
@@ -1229,6 +1308,62 @@ function esc(s) { if(!s)return''; const d=document.createElement('div'); d.textC
 var LZString=function(){function o(o,r){if(!t[o]){t[o]={};for(var n=0;n<o.length;n++)t[o][o.charAt(n)]=n}return t[o][r]}var r=String.fromCharCode,n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$",t={},e={compressToEncodedURIComponent:function(o){return null==o?"":e._compress(o,6,function(o){return n.charAt(o)})},decompressFromEncodedURIComponent:function(r){return null==r?"":""==r?null:(r=r.replace(/ /g,"+"),e._decompress(r.length,32,function(n){return o(e.keyStrUriSafe,r.charAt(n))}))},_compress:function(o,n,t){if(null==o)return"";var e,i,s,p={},u={},a="",c="",l="",f=2,d=3,h=2,g=[],w=0,v=0;for(s=0;s<o.length;s+=1)if(a=o.charAt(s),Object.prototype.hasOwnProperty.call(p,a)||(p[a]=d++,u[a]=!0),c=l+a,Object.prototype.hasOwnProperty.call(p,c))l=c;else{if(Object.prototype.hasOwnProperty.call(u,l)){if(l.charCodeAt(0)<256){for(e=0;e<h;e++)w<<=1,v==n-1?(v=0,g.push(t(w)),w=0):v++;for(i=l.charCodeAt(0),e=0;e<8;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1}else{for(i=1,e=0;e<h;e++)w=w<<1|i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i=0;for(i=l.charCodeAt(0),e=0;e<16;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1}0==--f&&(f=Math.pow(2,h),h++),delete u[l]}else for(i=p[l],e=0;e<h;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1;0==--f&&(f=Math.pow(2,h),h++),p[c]=d++,l=String(a)}if(""!==l){if(Object.prototype.hasOwnProperty.call(u,l)){if(l.charCodeAt(0)<256){for(e=0;e<h;e++)w<<=1,v==n-1?(v=0,g.push(t(w)),w=0):v++;for(i=l.charCodeAt(0),e=0;e<8;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1}else{for(i=1,e=0;e<h;e++)w=w<<1|i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i=0;for(i=l.charCodeAt(0),e=0;e<16;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1}0==--f&&(f=Math.pow(2,h),h++),delete u[l]}else for(i=p[l],e=0;e<h;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1;0==--f&&(f=Math.pow(2,h),h++)}for(i=2,e=0;e<h;e++)w=w<<1|1&i,v==n-1?(v=0,g.push(t(w)),w=0):v++,i>>=1;for(;;){if(w<<=1,v==n-1){g.push(t(w));break}v++}return g.join("")},_decompress:function(o,n,t){var e,i,s,p,u,a,c,l=[],f=4,d=4,h=3,g="",w=[],v={val:t(0),position:n,index:1};for(e=0;e<3;e+=1)l[e]=e;for(s=0,u=Math.pow(2,2),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;switch(s){case 0:for(s=0,u=Math.pow(2,8),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;c=r(s);break;case 1:for(s=0,u=Math.pow(2,16),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;c=r(s);break;case 2:return""}for(l[3]=c,i=c,w.push(c);;){if(v.index>o)return"";for(s=0,u=Math.pow(2,h),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;switch(c=s){case 0:for(s=0,u=Math.pow(2,8),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;l[d++]=r(s),c=d-1,f--;break;case 1:for(s=0,u=Math.pow(2,16),a=1;a!=u;)p=v.val&v.position,v.position>>=1,0==v.position&&(v.position=n,v.val=t(v.index++)),s|=(p>0?1:0)*a,a<<=1;l[d++]=r(s),c=d-1,f--;break;case 2:return w.join("")}if(0==f&&(f=Math.pow(2,h),h++),l[c])g=l[c];else{if(c!==d)return null;g=i+i.charAt(0)}w.push(g),l[d++]=i+g.charAt(0),i=g,0==--f&&(f=Math.pow(2,h),h++)}}};return e.keyStrUriSafe=n,e}();
 
 /* ═══════════════════════════════════════════
+   IMAGE EXPORT (html2canvas)
+   ═══════════════════════════════════════════ */
+async function captureArea() {
+  if (typeof html2canvas === 'undefined') {
+    alert('html2canvas is loading... Try again in a moment.');
+    return null;
+  }
+  const area = document.getElementById('capture-area');
+  // Add watermark temporarily
+  const wm = document.createElement('div');
+  wm.style.cssText = 'padding:6px 16px;font-size:0.72rem;color:#666;background:var(--bg-primary);text-align:right';
+  wm.textContent = 'AE Tier List Builder | anothereden.wiki | Team 랜선을 넘는 고양이들';
+  area.appendChild(wm);
+
+  const canvas = await html2canvas(area, {
+    backgroundColor: '#1a1a2e',
+    scale: 1,
+    useCORS: true,
+    logging: false
+  });
+
+  area.removeChild(wm);
+  return canvas;
+}
+
+async function copyAsImage() {
+  const canvas = await captureArea();
+  if (!canvas) return;
+  try {
+    canvas.toBlob(async blob => {
+      await navigator.clipboard.write([
+        new ClipboardItem({ 'image/png': blob })
+      ]);
+      alert('Copied! (' + Math.round(blob.size/1024) + 'KB) Ctrl+V to paste.');
+    }, 'image/png');
+  } catch(e) {
+    console.error('Clipboard write failed', e);
+    // Fallback: download
+    saveCanvasAsPNG(canvas);
+  }
+}
+
+async function saveAsImage() {
+  const canvas = await captureArea();
+  if (!canvas) return;
+  saveCanvasAsPNG(canvas);
+}
+
+function saveCanvasAsPNG(canvas) {
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL('image/jpeg', 0.85);
+  a.download = 'ae-tierlist-' + new Date().toISOString().slice(0,10) + '.jpg';
+  a.click();
+}
+
+/* ═══════════════════════════════════════════
    INTRO SCREEN
    ═══════════════════════════════════════════ */
 const WIKI_UPDATE_IMG = 'https://anothereden.wiki/w/Special:FilePath/';
@@ -1236,31 +1371,20 @@ const WIKI_MAIN_URL = 'https://anothereden.wiki';
 let gameVersion = '';
 
 function loadIntroBanner() {
-  // Try to fetch wiki main page for current key visual
   const banner = document.getElementById('intro-banner');
   const verEl = document.getElementById('intro-ver');
   const gvEl = document.getElementById('game-version');
 
-  // Use known URL pattern — will update if wiki changes
-  const imgUrl = 'https://anothereden.wiki/images/e/e3/An_Ode_to_Origin_Act_4_3.14.50.png';
-  banner.src = imgUrl;
+  // Direct image link (no CORS fetch needed)
+  // This URL is the wiki's Special:FilePath which redirects to the actual image
+  banner.src = 'https://anothereden.wiki/images/e/e3/An_Ode_to_Origin_Act_4_3.14.50.png';
+  banner.onerror = () => { banner.style.display = 'none'; };
 
-  // Try to extract version from wiki
-  fetch('https://anothereden.wiki', {mode:'cors'}).then(r => r.text()).then(html => {
-    // Find version from image filename pattern: Act_N_X.Y.Z.png
-    const m = html.match(/An_Ode_to_\w+_Act_\d+_(\d+\.\d+\.\d+)\.png/);
-    if (m) {
-      gameVersion = m[1];
-      verEl.textContent = 'Game Version: ' + gameVersion;
-      if (gvEl) gvEl.textContent = gameVersion;
-      // Update banner with latest
-      const imgMatch = html.match(/(\/images\/[^"]+An_Ode_to_\w+_Act_\d+_\d+\.\d+\.\d+\.png)/);
-      if (imgMatch) banner.src = WIKI_MAIN_URL + imgMatch[1];
-    }
-  }).catch(() => {
-    verEl.textContent = 'Game Version: 3.14.50+';
-    if (gvEl) gvEl.textContent = '3.14.50+';
-  });
+  // Version from DB meta or known
+  const ver = DB.meta.version || '3.14.50+';
+  gameVersion = '3.14.50';
+  verEl.textContent = 'Game Version: ' + gameVersion + ' | DB: ' + ver;
+  if (gvEl) gvEl.textContent = gameVersion;
 }
 
 function dismissIntro() {
