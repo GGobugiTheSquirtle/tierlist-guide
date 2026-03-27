@@ -125,7 +125,11 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
 /* ─── Pool ─── */
 .pool-area{padding:8px 16px 16px;background:var(--bg-pool)}
-.pool-header{font-size:0.75rem;color:var(--text-secondary);margin-bottom:6px}
+.pool-header{font-size:0.75rem;color:var(--text-secondary);margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pool-header .pool-search{flex:1;min-width:120px;max-width:240px;padding:5px 10px;font-size:0.82rem}
+.pool-header .pool-sort{padding:3px 8px;font-size:0.72rem;border:1px solid var(--border);border-radius:4px;color:var(--text-secondary);cursor:pointer;background:var(--bg-card);white-space:nowrap}
+.pool-header .pool-sort:hover{border-color:var(--accent);color:var(--accent)}
+.pool-header .pool-sort.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
 .pool-grid{display:flex;flex-wrap:wrap;gap:6px;min-height:80px;padding:10px;border:1px dashed var(--border);border-radius:var(--radius)}
 .pool-grid.drag-over{border-color:var(--accent);background:rgba(212,164,74,0.06)}
 .pool-sentinel{height:1px;width:100%;flex-basis:100%}
@@ -1570,10 +1574,8 @@ function renderFilterBar() {
   bar.innerHTML = `
     <div class="filter-toggle ${isOpen?'open':''}" onclick="toggleFilterBar()">
       <span class="ft-arrow">&#9654;</span>
-      <label style="min-width:auto;cursor:pointer;font-weight:500;font-size:0.85rem;color:var(--text-secondary)">${T('searchLabel')}</label>
+      <label style="min-width:auto;cursor:pointer;font-weight:500;font-size:0.85rem;color:var(--text-secondary)">Filter</label>
       <span class="ft-summary">${esc(summary)}</span>
-      <input class="search-input" type="text" placeholder="${T('searchPlaceholder')}" value="${esc(S.ui.query)}"
-        onclick="event.stopPropagation()" oninput="debounceSearch(this.value)" style="width:140px;font-size:0.8rem">
       ${parts.length ? `<span class="filter-reset" onclick="event.stopPropagation();resetFilters()">${T('resetLabel')}</span>` : ''}
     </div>
     <div class="filter-body ${isOpen?'open':''}" id="filter-body">
@@ -1638,6 +1640,7 @@ function resetFilters() {
 const POOL_BATCH = 60;
 let _poolChars = [];
 let _poolRendered = 0;
+let _poolSort = 'nameKo'; // 'nameKo' | 'nameKo-desc' | 'date' | 'date-desc'
 let _poolObserver = null;
 
 function renderPool() {
@@ -1655,7 +1658,25 @@ function renderPool() {
     _poolChars.push(c);
   });
 
-  header.textContent = T('unrankedFmt')(_poolChars.length, total, DB.characters.length);
+  // 정렬
+  const [sortKey, sortDir] = _poolSort.includes('-desc') ? [_poolSort.replace('-desc',''), -1] : [_poolSort, 1];
+  _poolChars.sort((a, b) => {
+    const va = a[sortKey] || '', vb = b[sortKey] || '';
+    return String(va).localeCompare(String(vb), 'ko') * sortDir;
+  });
+
+  // 헤더: 카운트 + 검색 + 정렬
+  const nameLabel = lang==='ko'?'이름':'Name';
+  const dateLabel = lang==='ko'?'출시일':'Date';
+  header.innerHTML = `
+    <span>${T('unrankedFmt')(_poolChars.length, total, DB.characters.length)}</span>
+    <input class="pool-search" type="text" placeholder="${T('searchPlaceholder')}" value="${esc(S.ui.query)}"
+      oninput="debounceSearch(this.value)" onclick="event.stopPropagation()">
+    <button class="pool-sort ${_poolSort==='nameKo'?'active':''}" onclick="_poolSort='nameKo';renderPool()">${nameLabel} ▲</button>
+    <button class="pool-sort ${_poolSort==='nameKo-desc'?'active':''}" onclick="_poolSort='nameKo-desc';renderPool()">${nameLabel} ▼</button>
+    <button class="pool-sort ${_poolSort==='date'?'active':''}" onclick="_poolSort='date';renderPool()">${dateLabel} ▲</button>
+    <button class="pool-sort ${_poolSort==='date-desc'?'active':''}" onclick="_poolSort='date-desc';renderPool()">${dateLabel} ▼</button>`;
+
   _poolRendered = 0;
   renderPoolBatch(grid);
   setupPoolObserver(grid);
