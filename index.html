@@ -64,6 +64,7 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .tier-label small{font-size:0.55rem;font-weight:400;color:var(--text-dim);margin-top:2px}
 .tier-drop{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px;padding:8px;min-height:50px;transition:background .15s}
 .tier-drop.drag-over{background:rgba(212,164,74,0.12);outline:2px dashed var(--accent)}
+.tier-drop-hint{color:var(--text-dim);font-size:0.72rem;font-style:italic;align-self:center;padding:0 8px;pointer-events:none}
 .tier-actions{display:flex;justify-content:center;gap:8px;margin:4px 0 8px}
 
 /* ─── Character Card ─── */
@@ -135,8 +136,8 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 @keyframes fadeSlideUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
 /* ─── Tier Add Button ─── */
-.tier-add-btn{width:36px;height:36px;min-width:36px;border-radius:50%;background:rgba(212,164,74,0.12);color:var(--accent);font-size:1.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;border:1px dashed var(--accent);opacity:.5;align-self:center;margin:0 4px;flex-shrink:0}
-.tier-add-btn:hover{opacity:1;background:rgba(212,164,74,0.25);transform:scale(1.1)}
+.tier-add-btn{width:42px;height:42px;min-width:42px;border-radius:50%;background:rgba(212,164,74,0.15);color:var(--accent);font-size:1.4rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;border:2px dashed var(--accent);opacity:.7;align-self:center;margin:0 6px;flex-shrink:0}
+.tier-add-btn:hover{opacity:1;background:rgba(212,164,74,0.3);transform:scale(1.1)}
 
 /* ─── Character Picker Modal ─── */
 .picker-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:2000;display:flex;flex-direction:column;animation:pickerFadeIn .2s ease-out}
@@ -241,7 +242,7 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
   .search-input{width:160px;font-size:0.8rem}
   .filter-row label{font-size:0.78rem;min-width:42px}
   .ftag{padding:4px 7px;font-size:0.72rem;min-height:26px}
-  .tier-add-btn{width:30px;height:30px;min-width:30px;font-size:1rem}
+  .tier-add-btn{width:38px;height:38px;min-width:38px;font-size:1.2rem}
   .picker-modal{width:100%;max-height:95vh;border-radius:12px 12px 0 0;margin:auto 0 0 0}
   .picker-grid .char-card{width:70px}
   .picker-grid .char-card .card-icon{width:48px;height:48px}
@@ -506,6 +507,13 @@ const I18N = {
     resetPlacements:'배치만 초기화', resetPlacementsDesc:'카테고리/티어 유지, 배치만 초기화',
     resetEverything:'전부 초기화', resetEverythingDesc:'Prydwen 프리셋으로 복원',
     loadError:'캐릭터 데이터 로드 실패. data/characters.json 파일을 확인하세요.',
+    presetBlank:'빈 캔버스', presetBlankDesc:'처음부터 직접 구성',
+    presetAltema:'Altema 스타일', presetAltemaDesc:'종합 + 공격유형별 + 서포트 + 탱크',
+    presetPrydwen:'Prydwen 스타일', presetSimple:'심플', presetSimpleDesc:'카테고리 1개, S-A-B-C-D',
+    catOverall:'종합', catSlash:'DPS (참)', catPierce:'DPS (타)', catBlunt:'DPS (돌)', catMagic:'DPS (마법)',
+    catSupport:'서포트', catTank:'탱크', catAll:'전체',
+    emptyTierHint:'+ 버튼 또는 드래그로 캐릭터를 추가하세요',
+    captureWarning:'이미지 캡처에 편집 UI가 포함됩니다. 뷰어 모드로 전환하시겠습니까?',
   },
   en: {
     title:'AE Tier List Builder', subtitle:'Build and share your own Another Eden tier list',
@@ -564,33 +572,40 @@ const I18N = {
     resetPlacements:'Placements only', resetPlacementsDesc:'Keep categories and tiers, clear placements',
     resetEverything:'Everything', resetEverythingDesc:'Reset to Prydwen preset',
     loadError:'Failed to load character data. Make sure data/characters.json exists.',
+    presetBlank:'Blank Canvas', presetBlankDesc:'Start from scratch',
+    presetAltema:'Altema Style', presetAltemaDesc:'Overall + Attack types + Support + Tank',
+    presetPrydwen:'Prydwen Style', presetSimple:'Simple', presetSimpleDesc:'1 category, S-A-B-C-D',
+    catOverall:'Overall', catSlash:'DPS (Slash)', catPierce:'DPS (Pierce)', catBlunt:'DPS (Blunt)', catMagic:'DPS (Magic)',
+    catSupport:'Support', catTank:'Tank', catAll:'All',
+    emptyTierHint:'Drag characters here or use the + button',
+    captureWarning:'Capture will include editing UI. Switch to Viewer mode?',
   }
 };
 function T(k){ return I18N[lang][k] || I18N.en[k] || k; }
 
 const TIER_COLORS = ['#ffd700','#ff4444','#ff8c00','#ffdd00','#44bb44','#888888','#5dade2','#af7ac5'];
 
-const PRESETS = {
-  blank: { name:'빈 캔버스', desc:'처음부터 직접 구성', categories:[], tierDefs:[
+function getPresets() { return {
+  blank: { name:T('presetBlank'), desc:T('presetBlankDesc'), categories:[], tierDefs:[
     {label:'S',color:'#ff4444'},{label:'A',color:'#ff8c00'},{label:'B',color:'#ffdd00'},{label:'C',color:'#44bb44'},{label:'D',color:'#888888'}
   ]},
-  altema: { name:'Altema 스타일', desc:'종합 + 공격유형별 + 서포트 + 탱크', categories:[
-    {name:'종합'},{name:'DPS (참)'},{name:'DPS (타)'},{name:'DPS (돌)'},{name:'DPS (마법)'},{name:'서포트'},{name:'탱크'}
+  altema: { name:T('presetAltema'), desc:T('presetAltemaDesc'), categories:[
+    {name:T('catOverall')},{name:T('catSlash')},{name:T('catPierce')},{name:T('catBlunt')},{name:T('catMagic')},{name:T('catSupport')},{name:T('catTank')}
   ], tierDefs:[
     {label:'SS',color:'#ffd700'},{label:'S',color:'#ff4444'},{label:'A',color:'#ff8c00'},{label:'B',color:'#ffdd00'},{label:'C',color:'#888888'}
   ]},
-  prydwen: { name:'Prydwen 스타일', desc:'DPS / Amplifier / Sustain / Specialist', categories:[
+  prydwen: { name:T('presetPrydwen'), desc:'DPS / Amplifier / Sustain / Specialist', categories:[
     {name:'DPS'},{name:'Amplifier'},{name:'Sustain'},{name:'Specialist'}
   ], tierDefs:[
     {label:'T0',color:'#ffd700'},{label:'T0.5',color:'#ffaa00'},{label:'T1',color:'#ff4444'},{label:'T1.5',color:'#ff7744'},
     {label:'T2',color:'#ff8c00'},{label:'T3',color:'#ffdd00'},{label:'T4',color:'#44bb44'},{label:'T5',color:'#888888'}
   ]},
-  simple: { name:'심플', desc:'카테고리 1개, S-A-B-C-D', categories:[
-    {name:'전체'}
+  simple: { name:T('presetSimple'), desc:T('presetSimpleDesc'), categories:[
+    {name:T('catAll')}
   ], tierDefs:[
     {label:'S',color:'#ff4444'},{label:'A',color:'#ff8c00'},{label:'B',color:'#ffdd00'},{label:'C',color:'#44bb44'},{label:'D',color:'#888888'}
   ]}
-};
+}; }
 
 /* ─── App State ─── */
 let S = {
@@ -655,7 +670,7 @@ function showPresetModal() {
   const modal = document.getElementById('preset-modal');
   const list = document.getElementById('preset-list');
   list.innerHTML = '';
-  for (const [key, p] of Object.entries(PRESETS)) {
+  for (const [key, p] of Object.entries(getPresets())) {
     const btn = document.createElement('button');
     btn.className = 'preset-btn';
     btn.innerHTML = `<strong>${p.name}</strong><small>${p.desc}</small>`;
@@ -689,7 +704,7 @@ function resetAll() {
 }
 
 function applyPreset(key) {
-  const p = PRESETS[key];
+  const p = getPresets()[key];
   let catId = 0;
   S.workspace.categories = p.categories.map(c => ({ id:'cat_'+(catId++), name:c.name }));
   let tId = 0;
@@ -1071,10 +1086,18 @@ function renderTierRows() {
     drop.dataset.cat = catId;
 
     const chars = placements[td.id] || [];
+    let hasVisible = false;
     chars.forEach(cid => {
       const c = charById(cid);
-      if (c && charMatchesFilter(c)) drop.appendChild(makeCard(c, {inTier:true, catId}));
+      if (c && charMatchesFilter(c)) { drop.appendChild(makeCard(c, {inTier:true, catId})); hasVisible = true; }
     });
+
+    if (S.mode === 'builder' && !hasVisible && chars.length === 0) {
+      const hint = document.createElement('span');
+      hint.className = 'tier-drop-hint';
+      hint.textContent = T('emptyTierHint');
+      drop.appendChild(hint);
+    }
 
     if (S.mode === 'builder') {
       const addBtn = document.createElement('button');
@@ -1507,7 +1530,8 @@ function updatePickerCount() {
 function renderFilterBar() {
   const bar = document.getElementById('filter-bar');
   const f = S.ui.filters;
-  const isOpen = bar.dataset.open !== '0'; // default open
+  const isMobile = window.innerWidth <= 640;
+  const isOpen = isMobile ? bar.dataset.open === '1' : bar.dataset.open !== '0'; // mobile: default closed, desktop: default open
   const ACQ_I18N = {free:T('acqFree'),gacha:T('acqGacha'),buddy:T('acqBuddy'),custom:T('acqCustom')};
 
   // Active filter summary
@@ -2026,6 +2050,13 @@ async function captureArea() {
     alert(T('html2canvasWait'));
     return null;
   }
+  // Builder 모드일 때 Viewer 전환 안내
+  if (S.mode === 'builder') {
+    if (confirm(T('captureWarning'))) {
+      setMode('viewer');
+      await new Promise(r => setTimeout(r, 100)); // re-render 대기
+    }
+  }
   const area = document.getElementById('capture-area');
   // Add watermark temporarily
   const wm = document.createElement('div');
@@ -2081,21 +2112,31 @@ const WIKI_UPDATE_IMG = 'https://anothereden.wiki/w/Special:FilePath/';
 const WIKI_MAIN_URL = 'https://anothereden.wiki';
 let gameVersion = '';
 
-function loadIntroBanner() {
+async function loadIntroBanner() {
   const banner = document.getElementById('intro-banner');
   const verEl = document.getElementById('intro-ver');
   const gvEl = document.getElementById('game-version');
 
-  // Direct image link (no CORS fetch needed)
-  // This URL is the wiki's Special:FilePath which redirects to the actual image
-  banner.src = 'https://anothereden.wiki/images/e/e3/An_Ode_to_Origin_Act_4_3.14.50.png';
+  // 1) 로컬 배너 메타 시도 (update_tierlist_banner.py로 다운로드)
+  try {
+    const metaResp = await fetch('images/banner_meta.json');
+    if (metaResp.ok) {
+      const meta = await metaResp.json();
+      banner.src = 'images/banner.png';
+      gameVersion = meta.version || '';
+    } else {
+      throw new Error('no meta');
+    }
+  } catch(e) {
+    // 2) 로컬 없으면 위키 직접 시도 (CORS 허용 시에만)
+    banner.src = 'https://anothereden.wiki/images/e/e3/An_Ode_to_Origin_Act_4_3.14.50.png';
+    gameVersion = '3.14.50';
+  }
   banner.onerror = () => { banner.style.display = 'none'; };
 
-  // Version from DB meta or known
-  const ver = DB.meta.version || '3.14.50+';
-  gameVersion = '3.14.50';
-  verEl.textContent = T('gameVerPrefix') + gameVersion + ' | DB: ' + ver;
-  if (gvEl) gvEl.textContent = gameVersion;
+  const ver = DB.meta.version || '';
+  verEl.textContent = T('gameVerPrefix') + (gameVersion || '?') + (ver ? ' | DB: ' + ver : '');
+  if (gvEl) gvEl.textContent = gameVersion || '-';
 }
 
 function dismissIntro() {
