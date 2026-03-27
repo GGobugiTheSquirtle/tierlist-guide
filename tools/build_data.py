@@ -19,9 +19,10 @@ import io
 import time
 from pathlib import Path
 
-# Windows cp949 출력 깨짐 방지
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
-sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+# Windows cp949 출력 깨짐 방지 (CI 환경에서는 불필요)
+if sys.platform == 'win32':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 # ─────────────────────────────────────────────
 # 경로 설정 (스크립트 위치 기준 상대경로)
