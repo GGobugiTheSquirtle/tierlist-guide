@@ -72,7 +72,6 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .tier-label small{font-size:0.55rem;font-weight:400;color:var(--text-dim);margin-top:2px}
 .tier-drop{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px;padding:8px;min-height:50px;transition:background .15s}
 .tier-drop.drag-over{background:rgba(212,164,74,0.12);outline:2px dashed var(--accent)}
-.tier-drop-hint{color:var(--text-dim);font-size:0.72rem;font-style:italic;align-self:center;padding:0 8px;pointer-events:none}
 .tier-actions{display:flex;justify-content:center;gap:8px;margin:4px 0 8px}
 
 /* ─── Character Card ─── */
@@ -605,8 +604,7 @@ function getPresets() { return {
   prydwen: { name:T('presetPrydwen'), desc:'DPS / Amplifier / Sustain / Specialist', categories:[
     {name:'DPS'},{name:'Amplifier'},{name:'Sustain'},{name:'Specialist'}
   ], tierDefs:[
-    {label:'T0',color:'#ffd700'},{label:'T0.5',color:'#ffaa00'},{label:'T1',color:'#ff4444'},{label:'T1.5',color:'#ff7744'},
-    {label:'T2',color:'#ff8c00'},{label:'T3',color:'#ffdd00'},{label:'T4',color:'#44bb44'},{label:'T5',color:'#888888'}
+    {label:'T0',color:'#ffd700'},{label:'T0.5',color:'#ffaa00'},{label:'T1',color:'#ff4444'},{label:'T2',color:'#ff8c00'},{label:'T3',color:'#888888'}
   ]},
   simple: { name:T('presetSimple'), desc:T('presetSimpleDesc'), categories:[
     {name:T('catAll')}
@@ -1099,13 +1097,6 @@ function renderTierRows() {
       const c = charById(cid);
       if (c && charMatchesFilter(c)) { drop.appendChild(makeCard(c, {inTier:true, catId})); hasVisible = true; }
     });
-
-    if (S.mode === 'builder' && !hasVisible && chars.length === 0) {
-      const hint = document.createElement('span');
-      hint.className = 'tier-drop-hint';
-      hint.textContent = T('emptyTierHint');
-      drop.appendChild(hint);
-    }
 
     if (S.mode === 'builder') {
       const addBtn = document.createElement('button');
