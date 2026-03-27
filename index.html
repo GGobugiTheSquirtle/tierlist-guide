@@ -85,9 +85,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .card-remove{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(231,76,60,0.85);color:#fff;font-size:0.65rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;opacity:0;transition:opacity .15s;line-height:1}
 .char-card:hover .card-remove{opacity:1}
 @media(max-width:640px){.card-remove{opacity:1;width:16px;height:16px;font-size:0.6rem}}
-.card-ls{position:absolute;bottom:2px;left:2px;width:16px;height:16px;border-radius:3px;z-index:5;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
+.card-icon-wrap{position:relative;display:inline-block;margin:0 auto}
+.card-ls{position:absolute;bottom:1px;left:1px;width:16px;height:16px;border-radius:3px;z-index:5;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
 @media(max-width:640px){.card-ls{width:14px;height:14px}}
-.char-card .card-icon{width:64px;height:64px;border-radius:6px;display:block;margin:0 auto;background:var(--bg-secondary)}
+.char-card .card-icon{width:64px;height:64px;border-radius:6px;display:block;background:var(--bg-secondary)}
 .card-meta img,.card-sub img{width:20px;height:20px;display:inline-block;vertical-align:middle;flex-shrink:0}
 .card-name{display:block;font-size:0.78rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;font-weight:500}
 .card-meta{display:flex;justify-content:center;align-items:center;gap:2px;margin-top:2px}
@@ -2010,11 +2011,13 @@ function renderCardHTML(c, opts = {}) {
   const el2Src = c.element2 && EL_ICON[c.element2] ? `images/elements/${EL_ICON[c.element2]}` : '';
   const wpSrc = c.weapon && WP_ICON[c.weapon] ? `images/weapons/${WP_ICON[c.weapon]}` : '';
 
-  const lsIcon = c.ls === 'light' ? 'images/Guiding_Light_Icon.png' : c.ls === 'shadow' ? 'images/Luring_Shadow_Icon.png' : '';
+  const lsIcon = c.ls === 'light' ? 'images/ls/light.png' : c.ls === 'shadow' ? 'images/ls/shadow.png' : '';
 
   let html =
+    `<div class="card-icon-wrap">` +
     `<img class="card-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy">` +
     (lsIcon ? `<img class="card-ls" src="${lsIcon}" alt="${c.ls}">` : '') +
+    `</div>` +
     `<span class="card-name">${esc(charName(c))}</span>` +
     `<span class="card-meta">` +
       (el1Src ? `<img src="${el1Src}" alt="${c.elementKo}">` : '') +
