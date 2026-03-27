@@ -592,9 +592,128 @@ def save_json(characters):
 
 
 # ─────────────────────────────────────────────
+# 13. 품질 검증 (--check 모드)
+# ─────────────────────────────────────────────
+def run_check(characters):
+    """빌드 결과 품질 검증 리포트"""
+    import os
+    report = {"issues": [], "info": []}
+
+    # 1) 이전 빌드 대비 diff
+    prev_count = 0
+    prev_chars = {}
+    if OUTPUT_JSON.exists():
+        try:
+            with open(OUTPUT_JSON, "r", encoding="utf-8") as f:
+                prev = json.load(f)
+            prev_count = prev["meta"]["total"]
+            prev_chars = {c["id"]: c for c in prev["characters"]}
+            prev_version = prev["meta"].get("version", "?")
+        except Exception:
+            pass
+
+    new_count = len(characters)
+    delta = new_count - prev_count
+
+    if delta > 0:
+        new_ids = set(c["id"] for c in characters) - set(prev_chars.keys())
+        new_names = [c["nameEn"] for c in characters if c["id"] in new_ids]
+        report["info"].append(f"신규 캐릭터 {delta}명: {', '.join(new_names[:10])}")
+    elif delta < 0:
+        report["issues"].append(f"캐릭터 수 감소! {prev_count} → {new_count} ({delta}명)")
+    else:
+        report["info"].append(f"캐릭터 수 변동 없음 ({new_count}명)")
+
+    # 2) 한글명 누락
+    missing_ko = [c["nameEn"] for c in characters if c["nameKo"] == c["nameEn"]]
+    if missing_ko:
+        report["issues"].append(f"한글명 누락 {len(missing_ko)}명: {', '.join(missing_ko[:10])}")
+
+    # 3) 아이콘 무결성
+    icon_dir_files = set(os.listdir(OUTPUT_ICON_DIR)) if OUTPUT_ICON_DIR.exists() else set()
+    missing_icons = [c["nameEn"] for c in characters if c["icon"] and c["icon"] not in icon_dir_files]
+    no_icon = [c["nameEn"] for c in characters if not c["icon"]]
+    if missing_icons:
+        report["issues"].append(f"아이콘 파일 누락 {len(missing_icons)}명: {', '.join(missing_icons[:10])}")
+    if no_icon:
+        report["info"].append(f"위키 아이콘 미등록 {len(no_icon)}명 (저레어): {', '.join(no_icon[:10])}")
+
+    # 4) 필수 필드 비어있는 5★ 캐릭터
+    incomplete_5star = []
+    for c in characters:
+        if c["rarity"] == 5 and (not c["element"] or c["element"] == "null" or not c["weapon"] or not c["ls"]):
+            missing_fields = []
+            if not c["element"] or c["element"] == "null":
+                missing_fields.append("속성")
+            if not c["weapon"]:
+                missing_fields.append("무기")
+            if not c["ls"]:
+                missing_fields.append("천명")
+            incomplete_5star.append(f"{c['nameEn']}({','.join(missing_fields)})")
+    if incomplete_5star:
+        report["info"].append(f"5★ 데이터 불완전 {len(incomplete_5star)}명: {', '.join(incomplete_5star[:8])}")
+
+    # 5) LS 아이콘 존재 여부
+    for ls_type in ("light", "shadow"):
+        ls_path = OUTPUT_LS_ICON_DIR / f"{ls_type}.png"
+        if not ls_path.exists():
+            report["issues"].append(f"LS 아이콘 누락: {ls_type}.png")
+
+    # 6) 배너 상태
+    banner_meta = PROJECT_DIR / "images" / "banner_meta.json"
+    if banner_meta.exists():
+        with open(banner_meta, "r", encoding="utf-8") as f:
+            meta = json.load(f)
+        report["info"].append(f"배너: v{meta.get('version', '?')} ({meta.get('filename', '?')})")
+    else:
+        report["issues"].append("배너 메타 없음 — fetch_banner() 실행 필요")
+
+    # 7) 파서 건강도 (위키 구조 변경 감지)
+    try:
+        import requests
+        from bs4 import BeautifulSoup
+        resp = requests.get(WIKI_CHARACTERS_URL, headers=HEADERS, timeout=15)
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        rows = soup.find_all('tr', class_='character-row-entry')
+        if len(rows) == 0:
+            report["issues"].append("파서 경고: character-row-entry 클래스 0개 — 위키 구조 변경 가능")
+        elif abs(len(rows) - new_count) > 10:
+            report["issues"].append(f"파서 경고: 위키 행 {len(rows)}개 vs 파싱 {new_count}명 — 차이 큼")
+    except Exception as e:
+        report["issues"].append(f"파서 건강도 체크 실패: {e}")
+
+    # 리포트 출력
+    print("\n" + "=" * 50)
+    print("  품질 검증 리포트")
+    print("=" * 50)
+
+    if report["info"]:
+        print("\n  ℹ 정보:")
+        for item in report["info"]:
+            print(f"    · {item}")
+
+    if report["issues"]:
+        print("\n  ⚠ 이슈:")
+        for item in report["issues"]:
+            print(f"    · {item}")
+    else:
+        print("\n  ✓ 이슈 없음")
+
+    print("=" * 50)
+
+    has_changes = delta != 0 or bool(missing_icons)
+    return {"has_changes": has_changes, "report": report}
+
+
+# ─────────────────────────────────────────────
 # 실행
 # ─────────────────────────────────────────────
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="어나더에덴 티어리스트 데이터 빌더")
+    parser.add_argument("--check", action="store_true", help="빌드 후 품질 검증 리포트 출력")
+    args = parser.parse_args()
+
     print("=== 어나더에덴 티어리스트 데이터 빌드 (위키 직접) ===\n")
 
     name_mapping = load_name_ko()
@@ -608,16 +727,18 @@ if __name__ == "__main__":
     download_icons(characters)
     download_ls_icons()
     fetch_banner()
+
+    if args.check:
+        result = run_check(characters)
+
     save_json(characters)
 
-    if missing:
-        # 최종 누락 목록 (보완 후에도 남은 것)
-        still_missing = [c['nameEn'] for c in characters if c['nameKo'] == c['nameEn']]
-        if still_missing:
-            print(f"\n  ⚠ 최종 한글명 누락 {len(still_missing)}명 — name_ko.csv에 수동 추가 필요:")
-            for name in still_missing[:20]:
-                print(f"    - {name}")
-            if len(still_missing) > 20:
-                print(f"    ... 외 {len(still_missing)-20}명")
+    still_missing = [c['nameEn'] for c in characters if c['nameKo'] == c['nameEn']]
+    if still_missing:
+        print(f"\n  ⚠ 최종 한글명 누락 {len(still_missing)}명 — name_ko.csv에 수동 추가 필요:")
+        for name in still_missing[:20]:
+            print(f"    - {name}")
+        if len(still_missing) > 20:
+            print(f"    ... 외 {len(still_missing)-20}명")
 
     print("\n=== 빌드 완료 ===")
