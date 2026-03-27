@@ -70,6 +70,9 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .char-card{width:var(--card-w);background:var(--bg-card);border-radius:8px;padding:4px;text-align:center;cursor:grab;user-select:none;border:2px solid transparent;transition:border-color .15s,transform .1s;position:relative;overflow:hidden}
 .char-card:hover{border-color:var(--accent);transform:translateY(-2px)}
 .char-card:active{cursor:grabbing}
+.card-remove{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(231,76,60,0.85);color:#fff;font-size:0.65rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;opacity:0;transition:opacity .15s;line-height:1}
+.char-card:hover .card-remove{opacity:1}
+@media(max-width:640px){.card-remove{opacity:1;width:16px;height:16px;font-size:0.6rem}}
 .char-card .card-icon{width:64px;height:64px;border-radius:6px;display:block;margin:0 auto;background:var(--bg-secondary)}
 .card-meta img,.card-sub img{width:16px;height:16px;display:inline-block;vertical-align:middle;flex-shrink:0}
 .card-name{display:block;font-size:0.78rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;font-weight:500}
@@ -122,22 +125,14 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .tooltip .tt-row{color:var(--text-secondary)}
 
 /* ─── Info Toast (mobile tooltip) ─── */
-.info-toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:1900;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:0.8rem;color:var(--text-primary);box-shadow:0 4px 16px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px;max-width:90vw;animation:tapHintIn .2s ease-out}
+.info-toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:1900;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:0.8rem;color:var(--text-primary);box-shadow:0 4px 16px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px;max-width:90vw;animation:fadeSlideUp .2s ease-out}
 .info-toast img{width:40px;height:40px;border-radius:6px;flex-shrink:0}
 .info-toast .it-details{line-height:1.5}
 .info-toast .it-name{font-weight:700;color:var(--accent)}
 .info-toast .it-sub{color:var(--text-secondary);font-size:0.72rem}
 
-/* ─── Tap-Select Mode ─── */
-.char-card.tap-selected{border-color:var(--accent);box-shadow:0 0 12px rgba(212,164,74,0.6);transform:translateY(-3px)}
-.tap-select-active .tier-drop{cursor:pointer;position:relative}
-.tap-select-active .tier-drop::after{content:'Tap to place here';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(212,164,74,0.08);color:var(--accent);font-size:0.75rem;opacity:0;transition:opacity .15s;pointer-events:none;border-radius:var(--radius)}
-.tap-select-active .tier-drop:empty::after{opacity:1}
-.tap-select-active .tier-row{outline:1px dashed rgba(212,164,74,0.3);outline-offset:-1px}
-.tap-select-active .pool-grid{position:relative;cursor:pointer}
-.tap-select-active .pool-grid::after{content:var(--unrank-hint,'Tap to unrank');position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(231,76,60,0.06);color:#e74c3c;font-size:0.8rem;opacity:.7;pointer-events:none;border-radius:var(--radius);border:1px dashed rgba(231,76,60,0.3)}
-.tap-hint{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:1800;background:var(--bg-secondary);border:1px solid var(--accent);color:var(--accent);padding:10px 20px;border-radius:20px;font-size:0.82rem;box-shadow:0 4px 16px rgba(0,0,0,.5);pointer-events:none;animation:tapHintIn .25s ease-out}
-@keyframes tapHintIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+/* ─── Animations ─── */
+@keyframes fadeSlideUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
 /* ─── Tier Add Button ─── */
 .tier-add-btn{width:36px;height:36px;min-width:36px;border-radius:50%;background:rgba(212,164,74,0.12);color:var(--accent);font-size:1.2rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;border:1px dashed var(--accent);opacity:.5;align-self:center;margin:0 4px;flex-shrink:0}
@@ -162,6 +157,8 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .picker-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
 .picker-grid .char-card{cursor:pointer}
 .picker-grid .char-card:hover{border-color:var(--accent)}
+.picker-grid .char-card.picker-on{border-color:var(--accent);background:rgba(212,164,74,0.15);box-shadow:0 0 8px rgba(212,164,74,0.4)}
+.picker-grid .char-card.picker-on::after{content:'✓';position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:var(--accent);color:#111;font-size:0.6rem;display:flex;align-items:center;justify-content:center}
 .picker-empty{text-align:center;padding:30px;color:var(--text-dim);font-size:0.85rem}
 .picker-count{padding:6px 16px;border-top:1px solid var(--border);font-size:0.72rem;color:var(--text-secondary);text-align:center;flex-shrink:0}
 .picker-footer{padding:10px 16px;border-top:1px solid var(--border);flex-shrink:0;display:flex;justify-content:center}
@@ -248,8 +245,6 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
   .picker-modal{width:100%;max-height:95vh;border-radius:12px 12px 0 0;margin:auto 0 0 0}
   .picker-grid .char-card{width:70px}
   .picker-grid .char-card .card-icon{width:48px;height:48px}
-  .tap-hint{font-size:0.75rem;padding:8px 16px;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
-  .tap-select-active .tier-drop::after{font-size:0.65rem}
   .overflow-toggle{display:flex}
   .header-actions .desktop-only{display:none}
   .filter-row{flex-wrap:wrap}
@@ -500,7 +495,7 @@ const I18N = {
     nameRequired:'이름을 입력하세요',
     invalidJson:'잘못된 JSON 파일입니다',
     lsUnknown:'미정', lsLight:'천(Light)', lsShadow:'명(Shadow)',
-    pickerTitle:'이 티어에 캐릭터 추가', pickerDone:'선택 완료',
+    pickerTitle:'이 티어에 캐릭터 추가', pickerDone:'선택 완료', pickerSelected:'명 선택됨',
     rarity:'레어도',
     pickerSearch:'이름으로 검색...', pickerEmpty:'필터에 맞는 미배치 캐릭터가 없습니다',
     pickerCountFmt:function(s,t){return `${s} / ${t} 미배치 캐릭터`;},
@@ -558,7 +553,7 @@ const I18N = {
     nameRequired:'Name is required',
     invalidJson:'Invalid JSON file',
     lsUnknown:'Unknown', lsLight:'Light', lsShadow:'Shadow',
-    pickerTitle:'Add characters to this tier', pickerDone:'Done',
+    pickerTitle:'Add characters to this tier', pickerDone:'Done', pickerSelected:'selected',
     rarity:'Rarity',
     pickerSearch:'Search by name (KO/EN)...', pickerEmpty:'No unranked characters match the filter',
     pickerCountFmt:function(s,t){return `${s} / ${t} unranked characters`;},
@@ -1078,7 +1073,7 @@ function renderTierRows() {
     const chars = placements[td.id] || [];
     chars.forEach(cid => {
       const c = charById(cid);
-      if (c && charMatchesFilter(c)) drop.appendChild(makeCard(c));
+      if (c && charMatchesFilter(c)) drop.appendChild(makeCard(c, {inTier:true, catId}));
     });
 
     if (S.mode === 'builder') {
@@ -1203,16 +1198,29 @@ function showTierEdit(e, td, idx) {
 
 function closeAllPopups() {
   document.querySelectorAll('.edit-pop').forEach(p => p.remove());
-  tapDeselect();
 }
 
 /* ─── Character Card ─── */
-function makeCard(c) {
+function makeCard(c, opts = {}) {
   const card = document.createElement('div');
   card.className = 'char-card';
   card.dataset.id = c.id;
   card.style.touchAction = 'pan-y'; // allow scroll, restrict on drag start
   card.innerHTML = renderCardHTML(c);
+
+  // X button for cards placed in tier rows (builder mode)
+  if (opts.inTier && S.mode === 'builder') {
+    const xBtn = document.createElement('span');
+    xBtn.className = 'card-remove';
+    xBtn.textContent = '✕';
+    xBtn.addEventListener('pointerdown', e => e.stopPropagation());
+    xBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      removePlacement(opts.catId, c.id);
+      autoSave(); renderAll();
+    });
+    card.appendChild(xBtn);
+  }
 
   // Pointer Events drag + long-press (works on touch + mouse)
   if (S.mode === 'builder') {
@@ -1314,12 +1322,12 @@ function showMoveMenu(c, e) {
 let _picker = null; // { tierId, catId, query, filters }
 
 function openCharPicker(tierDef, catId) {
-  tapDeselect();
   closeAllPopups();
   _picker = {
     tierId: tierDef.id, catId, query: '',
     filters: { elements:[], weapons:[], styles:[], rarities:[] },
-    tierDef
+    tierDef,
+    selectedIds: new Set()
   };
 
   const overlay = document.createElement('div');
@@ -1375,6 +1383,13 @@ function openCharPicker(tierDef, catId) {
 }
 
 function closeCharPicker() {
+  if (_picker && _picker.selectedIds.size > 0) {
+    _picker.selectedIds.forEach(cid => {
+      addPlacement(_picker.catId, _picker.tierId, cid);
+    });
+    autoSave();
+    renderAll();
+  }
   _picker = null;
   const el = document.getElementById('char-picker');
   if (el) el.remove();
@@ -1454,15 +1469,19 @@ function renderPickerGrid() {
     shown++;
 
     const card = document.createElement('div');
-    card.className = 'char-card';
+    card.className = 'char-card' + (_picker.selectedIds.has(c.id) ? ' picker-on' : '');
     card.dataset.id = c.id;
     card.innerHTML = renderCardHTML(c, { compact: true });
 
     card.addEventListener('click', () => {
-      addPlacement(catId, _picker.tierId, c.id);
-      autoSave();
-      renderPickerGrid(); // re-render to remove added char
-      renderAll(); // update background tier rows
+      if (_picker.selectedIds.has(c.id)) {
+        _picker.selectedIds.delete(c.id);
+        card.classList.remove('picker-on');
+      } else {
+        _picker.selectedIds.add(c.id);
+        card.classList.add('picker-on');
+      }
+      updatePickerCount();
     });
 
     grid.appendChild(card);
@@ -1471,8 +1490,17 @@ function renderPickerGrid() {
   if (shown === 0) {
     grid.innerHTML = `<div class="picker-empty">${T('pickerEmpty')}</div>`;
   }
-  countEl.textContent = T('pickerCountFmt')(shown, total);
+  updatePickerCount();
   if (body) requestAnimationFrame(() => { body.scrollTop = scrollY; });
+}
+
+function updatePickerCount() {
+  if (!_picker) return;
+  const countEl = document.getElementById('picker-count');
+  const doneBtn = document.querySelector('.picker-footer .btn');
+  const n = _picker.selectedIds.size;
+  if (countEl) countEl.textContent = n > 0 ? `${n} ${T('pickerSelected')}` : '';
+  if (doneBtn) doneBtn.textContent = n > 0 ? `${T('pickerDone')} (${n})` : T('pickerDone');
 }
 
 /* ─── Filter Bar ─── */
@@ -1771,91 +1799,6 @@ function renderStats() {
 let _drag = null; // { charId, ghost, origCard, startX, startY, moved }
 
 /* ─── Tap-Select State ─── */
-let _tapSelected = null; // { charId } or null
-let _tapHintEl = null;
-
-function tapSelect(charId, card) {
-  // If same card tapped again, deselect
-  if (_tapSelected && _tapSelected.charId === charId) {
-    tapDeselect();
-    return;
-  }
-  tapDeselect(); // clear previous
-  _tapSelected = { charId };
-  card.classList.add('tap-selected');
-  document.body.classList.add('tap-select-active');
-  const poolGrid = document.getElementById('pool-grid');
-  if (poolGrid) poolGrid.style.setProperty('--unrank-hint', `'${T('unrankHint')}'`);
-  showTapHint(charById(charId));
-}
-
-function tapDeselect() {
-  if (!_tapSelected) return;
-  _tapSelected = null;
-  document.querySelectorAll('.char-card.tap-selected').forEach(c => c.classList.remove('tap-selected'));
-  document.body.classList.remove('tap-select-active');
-  hideTapHint();
-}
-
-function showTapHint(c) {
-  hideTapHint();
-  const hint = document.createElement('div');
-  hint.className = 'tap-hint';
-  hint.textContent = T('tapHintFmt')(charName(c));
-  document.body.appendChild(hint);
-  _tapHintEl = hint;
-}
-
-function hideTapHint() {
-  if (_tapHintEl) { _tapHintEl.remove(); _tapHintEl = null; }
-}
-
-// Listen for taps on tier rows / pool when a card is tap-selected
-document.addEventListener('pointerup', function(e) {
-  if (!_tapSelected || _drag) return;
-  const catId = S.workspace.activeCategory;
-  if (!catId) return;
-
-  const target = e.target;
-
-  // Tapped on another char-card? Don't handle here — makeCard handles it
-  if (target.closest('.char-card')) return;
-
-  // Tapped on a tier-drop or tier-label?
-  let tierDrop = target.closest('.tier-drop');
-  if (!tierDrop) {
-    const label = target.closest('.tier-label');
-    if (label) tierDrop = label.parentElement.querySelector('.tier-drop');
-  }
-  if (!tierDrop) {
-    const row = target.closest('.tier-row');
-    if (row) tierDrop = row.querySelector('.tier-drop');
-  }
-
-  if (tierDrop && tierDrop.dataset.tier) {
-    removePlacement(catId, _tapSelected.charId);
-    addPlacement(catId, tierDrop.dataset.tier, _tapSelected.charId);
-    autoSave();
-    tapDeselect();
-    renderAll();
-    return;
-  }
-
-  // Tapped on pool?
-  if (target.closest('.pool-grid') || target.closest('.pool-area')) {
-    removePlacement(catId, _tapSelected.charId);
-    autoSave();
-    tapDeselect();
-    renderAll();
-    return;
-  }
-
-  // Tapped elsewhere (not a popup, modal, picker)
-  if (!target.closest('.edit-pop') && !target.closest('.picker-overlay') && !target.closest('.tap-hint')) {
-    tapDeselect();
-  }
-});
-
 function dragStart(charId, card, e) {
   e.preventDefault();
   const rect = card.getBoundingClientRect();
@@ -1910,11 +1853,8 @@ function dragEnd(e) {
   _drag.ghost.remove();
 
   if (!_drag.moved) {
-    // Tap — toggle selection
-    const charId = _drag.charId;
-    const card = _drag.origCard;
+    // Tap without drag — do nothing (placement via Picker or drag only)
     _drag = null;
-    tapSelect(charId, card);
     return;
   }
 
