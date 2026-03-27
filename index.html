@@ -830,7 +830,7 @@ function charMatchesFilter(c) {
   const f = S.ui.filters;
   const q = S.ui.query.toLowerCase();
   if (q && !c.nameKo.toLowerCase().includes(q) && !c.nameEn.toLowerCase().includes(q) && !c.id.includes(q)) return false;
-  if (f.elements.length && !f.elements.includes(c.element)) return false;
+  if (f.elements.length && !f.elements.includes(c.element) && !(c.element2 && f.elements.includes(c.element2))) return false;
   if (f.weapons.length && !f.weapons.includes(c.weapon)) return false;
   if (f.styles.length && !f.styles.includes(c.style)) return false;
   if (f.rarities.length && !f.rarities.includes(c.rarity)) return false;
@@ -1499,7 +1499,7 @@ function pickerCharMatches(c) {
                       (c.nameEn && c.nameEn.toLowerCase().includes(q));
     if (!nameMatch) return false;
   }
-  if (f.elements.length && !f.elements.includes(c.element)) return false;
+  if (f.elements.length && !f.elements.includes(c.element) && !(c.element2 && f.elements.includes(c.element2))) return false;
   if (f.weapons.length && !f.weapons.includes(c.weapon)) return false;
   if (f.styles.length && !f.styles.includes(c.style)) return false;
   if (f.rarities.length && !f.rarities.includes(c.rarity)) return false;
