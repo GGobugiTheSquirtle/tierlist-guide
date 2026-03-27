@@ -86,7 +86,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .char-card:hover .card-remove{opacity:1}
 @media(max-width:640px){.card-remove{opacity:1;width:16px;height:16px;font-size:0.6rem}}
 .char-card .card-icon{width:64px;height:64px;border-radius:6px;display:block;margin:0 auto;background:var(--bg-secondary)}
-.card-meta img,.card-sub img{width:16px;height:16px;display:inline-block;vertical-align:middle;flex-shrink:0}
+.card-meta img,.card-sub img{width:20px;height:20px;display:inline-block;vertical-align:middle;flex-shrink:0}
 .card-name{display:block;font-size:0.78rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;font-weight:500}
 .card-meta{display:flex;justify-content:center;align-items:center;gap:2px;margin-top:2px}
 .card-meta .st-badge{font-size:0.58rem;padding:1px 4px;border-radius:3px;font-weight:600;line-height:1.4}
@@ -247,7 +247,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 @media(max-width:640px){
   :root{--card-w:70px}
   .char-card .card-icon{width:48px;height:48px}
-  .card-meta img,.card-sub img{width:14px;height:14px}
+  .card-meta img,.card-sub img{width:18px;height:18px}
   .card-name{font-size:0.7rem}
   .card-meta{font-size:0.62rem}
   .card-sub{font-size:0.58rem}
@@ -1286,7 +1286,7 @@ function showTooltip(c, e) {
   tt.innerHTML = `<div class="tt-name">${esc(c.nameKo)}</div>` +
     `<div class="tt-row">${esc(c.nameEn)}</div>` +
     `<div class="tt-row">${c.style} / ${c.rarity}★${c.sa?' SA':''}</div>` +
-    `<div class="tt-row">${c.elementKo || ''} / ${c.weaponKo || ''} / ${c.attackType || ''}</div>` +
+    `<div class="tt-row">${c.elementKo || ''}${c.element2Ko ? '+'+c.element2Ko : ''} / ${c.weaponKo || ''}</div>` +
     (c.ls ? `<div class="tt-row">${c.ls==='light'?T('lightLabel'):T('shadowLabel')}</div>` : '') +
     (c.date ? `<div class="tt-row">${c.date}</div>` : '');
   tt.style.display = 'block';
@@ -2002,21 +2002,24 @@ function esc(s) { if(!s)return''; const d=document.createElement('div'); d.textC
 
 function renderCardHTML(c, opts = {}) {
   const stClass = 'st-' + c.style;
-  const elSrc = c.element && EL_ICON[c.element] ? `images/elements/${EL_ICON[c.element]}` : '';
+  // 속성 아이콘 (다중속성 = element2 필드 지원)
+  const el1Src = c.element && EL_ICON[c.element] ? `images/elements/${EL_ICON[c.element]}` : '';
+  const el2Src = c.element2 && EL_ICON[c.element2] ? `images/elements/${EL_ICON[c.element2]}` : '';
   const wpSrc = c.weapon && WP_ICON[c.weapon] ? `images/weapons/${WP_ICON[c.weapon]}` : '';
+
   let html =
     `<img class="card-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy">` +
     `<span class="card-name">${esc(charName(c))}</span>` +
     `<span class="card-meta">` +
-      (elSrc ? `<img src="${elSrc}" alt="${c.elementKo}">` : '') +
+      (el1Src ? `<img src="${el1Src}" alt="${c.elementKo}">` : '') +
+      (el2Src ? `<img src="${el2Src}" alt="${c.element2Ko || ''}">` : '') +
       (wpSrc ? `<img src="${wpSrc}" alt="${c.weaponKo}">` : '') +
-      `<span class="st-badge ${stClass}">${c.style}</span>` +
     `</span>`;
   if (!opts.compact) {
     html +=
       `<span class="card-sub">` +
-        (c.ls ? `<span class="ls-badge ls-${c.ls}">${c.ls==='light'?'L':'S'}</span>` : '') +
         `<span class="rarity-badge r${c.rarity}">${c.rarity}★</span>` +
+        `<span class="st-badge ${stClass}">${c.style}</span>` +
         (c.sa ? `<span class="sa-badge">SA</span>` : '') +
       `</span>`;
   }
@@ -2030,13 +2033,11 @@ function showInfoToast(c) {
   hideInfoToast();
   const el = document.createElement('div');
   el.className = 'info-toast';
-  const atkType = c.attackType || ATK_TYPE[c.weapon] || '';
   el.innerHTML = `<img src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}">
     <div class="it-details">
       <div class="it-name">${esc(c.nameKo)}</div>
       <div class="it-sub">${esc(c.nameEn)}</div>
-      <div class="it-sub">${c.style} ${c.rarity}★${c.sa?' SA':''} | ${c.elementKo||''} ${c.weaponKo||''} ${atkType}</div>
-      ${c.ls ? `<div class="it-sub">${c.ls==='light'?T('lightLabel'):T('shadowLabel')}</div>` : ''}
+      <div class="it-sub">${c.elementKo||''}${c.element2Ko?'+'+c.element2Ko:''} / ${c.weaponKo||''} | ${c.style} ${c.rarity}★${c.sa?' SA':''}</div>
     </div>`;
   document.body.appendChild(el);
   _toastEl = el;
