@@ -164,6 +164,8 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .picker-grid .char-card:hover{border-color:var(--accent)}
 .picker-empty{text-align:center;padding:30px;color:var(--text-dim);font-size:0.85rem}
 .picker-count{padding:6px 16px;border-top:1px solid var(--border);font-size:0.72rem;color:var(--text-secondary);text-align:center;flex-shrink:0}
+.picker-footer{padding:10px 16px;border-top:1px solid var(--border);flex-shrink:0;display:flex;justify-content:center}
+.picker-footer .btn{padding:10px 40px;font-size:0.9rem;border-radius:8px}
 
 /* ─── Ghost (drag) ─── */
 .drag-ghost{position:fixed;pointer-events:none;z-index:999;opacity:.85;transform:scale(1.05)}
@@ -250,9 +252,8 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
   .tap-select-active .tier-drop::after{font-size:0.65rem}
   .overflow-toggle{display:flex}
   .header-actions .desktop-only{display:none}
-  .filter-row{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
-  .filter-row::-webkit-scrollbar{display:none}
-  .filter-row label{position:sticky;left:0;background:var(--bg-pool);z-index:1;padding-right:4px}
+  .filter-row{flex-wrap:wrap}
+  .filter-row label{width:100%;margin-bottom:2px}
   .mcat-grid{flex-direction:column}
   .mcat-col{min-width:unset}
 }
@@ -499,6 +500,17 @@ const I18N = {
     nameRequired:'이름을 입력하세요',
     invalidJson:'잘못된 JSON 파일입니다',
     lsUnknown:'미정', lsLight:'천(Light)', lsShadow:'명(Shadow)',
+    pickerTitle:'이 티어에 캐릭터 추가', pickerDone:'선택 완료',
+    rarity:'레어도',
+    pickerSearch:'이름으로 검색...', pickerEmpty:'필터에 맞는 미배치 캐릭터가 없습니다',
+    pickerCountFmt:function(s,t){return `${s} / ${t} 미배치 캐릭터`;},
+    addBtnTitle:'캐릭터 검색/추가',
+    tapHintFmt:function(name){return `${name} 선택됨 — 티어를 탭하여 배치`;},
+    unrankHint:'탭하여 배치 해제',
+    resetTitle:'초기화', resetDesc:'초기화 범위를 선택하세요',
+    resetPlacements:'배치만 초기화', resetPlacementsDesc:'카테고리/티어 유지, 배치만 초기화',
+    resetEverything:'전부 초기화', resetEverythingDesc:'Prydwen 프리셋으로 복원',
+    loadError:'캐릭터 데이터 로드 실패. data/characters.json 파일을 확인하세요.',
   },
   en: {
     title:'AE Tier List Builder', subtitle:'Build and share your own Another Eden tier list',
@@ -546,6 +558,17 @@ const I18N = {
     nameRequired:'Name is required',
     invalidJson:'Invalid JSON file',
     lsUnknown:'Unknown', lsLight:'Light', lsShadow:'Shadow',
+    pickerTitle:'Add characters to this tier', pickerDone:'Done',
+    rarity:'Rarity',
+    pickerSearch:'Search by name (KO/EN)...', pickerEmpty:'No unranked characters match the filter',
+    pickerCountFmt:function(s,t){return `${s} / ${t} unranked characters`;},
+    addBtnTitle:'Search & add characters',
+    tapHintFmt:function(name){return `${name} selected — tap a tier to place`;},
+    unrankHint:'Tap to unrank',
+    resetTitle:'Reset', resetDesc:'What would you like to reset?',
+    resetPlacements:'Placements only', resetPlacementsDesc:'Keep categories and tiers, clear placements',
+    resetEverything:'Everything', resetEverythingDesc:'Reset to Prydwen preset',
+    loadError:'Failed to load character data. Make sure data/characters.json exists.',
   }
 };
 function T(k){ return I18N[lang][k] || I18N.en[k] || k; }
@@ -597,7 +620,7 @@ async function init() {
     console.log(`Loaded ${DB.characters.length} characters (incl. custom)`);
   } catch(e) {
     console.error('Failed to load characters.json', e);
-    document.body.innerHTML = '<p style="padding:40px;color:#e74c3c">Failed to load character data. Make sure data/characters.json exists.</p>';
+    document.body.innerHTML = `<p style="padding:40px;color:#e74c3c">${T('loadError')}</p>`;
     return;
   }
 
@@ -651,11 +674,11 @@ function resetAll() {
   const overlay = document.createElement('div');
   overlay.className = 'modal-overlay';
   overlay.innerHTML = `<div class="modal">
-    <h2>${lang==='ko'?'초기화':'Reset'}</h2>
-    <p>${lang==='ko'?'초기화 범위를 선택하세요':'What would you like to reset?'}</p>
+    <h2>${T('resetTitle')}</h2>
+    <p>${T('resetDesc')}</p>
     <div class="preset-list">
-      <button class="preset-btn" data-choice="1"><strong>${lang==='ko'?'배치만 초기화':'Placements only'}</strong><small>${lang==='ko'?'카테고리/티어 유지, 배치만 초기화':'Keep categories and tiers, clear placements'}</small></button>
-      <button class="preset-btn" data-choice="2"><strong>${lang==='ko'?'전부 초기화':'Everything'}</strong><small>${lang==='ko'?'Prydwen 프리셋으로 복원':'Reset to Prydwen preset'}</small></button>
+      <button class="preset-btn" data-choice="1"><strong>${T('resetPlacements')}</strong><small>${T('resetPlacementsDesc')}</small></button>
+      <button class="preset-btn" data-choice="2"><strong>${T('resetEverything')}</strong><small>${T('resetEverythingDesc')}</small></button>
       <button class="preset-btn" style="border-color:var(--text-dim)"><strong>${T('cancel')}</strong></button>
     </div>
   </div>`;
@@ -840,7 +863,7 @@ function updateStaticUI() {
   _h('acm-img-placeholder','dropPaste');
   _s('acm-lbl-name','nameLabel'); _s('acm-lbl-en','enNameLabel');
   _s('acm-lbl-el','elementLabel'); _s('acm-lbl-wp','weaponLabel');
-  _s('acm-lbl-rarity', lang==='ko'?'레어도':'Rarity');
+  _s('acm-lbl-rarity', T('rarity'));
   _s('acm-lbl-ls','lsLabel');
   _s('acm-ls-unk','lsUnknown'); _s('acm-ls-light','lsLight'); _s('acm-ls-shadow','lsShadow');
   _s('acm-btn-cancel','cancel'); _s('acm-btn-add','addCharBtn');
@@ -1062,7 +1085,7 @@ function renderTierRows() {
       const addBtn = document.createElement('button');
       addBtn.className = 'tier-add-btn';
       addBtn.textContent = '+';
-      addBtn.title = lang==='ko'?'캐릭터 검색/추가':'Search & add characters';
+      addBtn.title = T('addBtnTitle');
       addBtn.addEventListener('pointerdown', e => e.stopPropagation());
       addBtn.addEventListener('click', e => { e.stopPropagation(); openCharPicker(td, catId); });
       drop.appendChild(addBtn);
@@ -1307,8 +1330,7 @@ function openCharPicker(tierDef, catId) {
     <div class="picker-modal">
       <div class="picker-header">
         <span class="picker-tier-badge" style="background:${tierDef.color}22;color:${tierDef.color}">${esc(tierDef.label)}</span>
-        <span class="picker-title">${lang==='ko'?'이 티어에 캐릭터 추가':'Add characters to this tier'}</span>
-        <button class="picker-close" onclick="closeCharPicker()">&times;</button>
+        <span class="picker-title">${T('pickerTitle')}</span>
       </div>
       <div class="picker-search">
         <input type="text" id="picker-query" placeholder="" autocomplete="off">
@@ -1318,6 +1340,9 @@ function openCharPicker(tierDef, catId) {
         <div class="picker-grid" id="picker-grid"></div>
       </div>
       <div class="picker-count" id="picker-count"></div>
+      <div class="picker-footer">
+        <button class="btn btn-primary" onclick="closeCharPicker()">${T('pickerDone')}</button>
+      </div>
     </div>`;
 
   document.body.appendChild(overlay);
@@ -1329,7 +1354,7 @@ function openCharPicker(tierDef, catId) {
 
   // Search input with debounce + IME
   const input = document.getElementById('picker-query');
-  input.placeholder = lang==='ko'?'이름으로 검색...':'Search by name (KO/EN)...';
+  input.placeholder = T('pickerSearch');
   let _pickerTimer = null;
   input.addEventListener('input', () => {
     if (_isComposing) return;
@@ -1444,9 +1469,9 @@ function renderPickerGrid() {
   });
 
   if (shown === 0) {
-    grid.innerHTML = `<div class="picker-empty">${lang==='ko'?'필터에 맞는 미배치 캐릭터가 없습니다':'No unranked characters match the filter'}</div>`;
+    grid.innerHTML = `<div class="picker-empty">${T('pickerEmpty')}</div>`;
   }
-  countEl.textContent = lang==='ko'?`${shown} / ${total} 미배치 캐릭터`:`${shown} / ${total} unranked characters`;
+  countEl.textContent = T('pickerCountFmt')(shown, total);
   if (body) requestAnimationFrame(() => { body.scrollTop = scrollY; });
 }
 
@@ -1454,7 +1479,7 @@ function renderPickerGrid() {
 function renderFilterBar() {
   const bar = document.getElementById('filter-bar');
   const f = S.ui.filters;
-  const isOpen = bar.dataset.open === '1';
+  const isOpen = bar.dataset.open !== '0'; // default open
   const ACQ_I18N = {free:T('acqFree'),gacha:T('acqGacha'),buddy:T('acqBuddy'),custom:T('acqCustom')};
 
   // Active filter summary
@@ -1519,7 +1544,7 @@ function renderFilterBar() {
 
 function toggleFilterBar() {
   const bar = document.getElementById('filter-bar');
-  bar.dataset.open = bar.dataset.open === '1' ? '0' : '1';
+  bar.dataset.open = bar.dataset.open === '0' ? '1' : '0';
   renderFilterBar();
 }
 
@@ -1760,7 +1785,7 @@ function tapSelect(charId, card) {
   card.classList.add('tap-selected');
   document.body.classList.add('tap-select-active');
   const poolGrid = document.getElementById('pool-grid');
-  if (poolGrid) poolGrid.style.setProperty('--unrank-hint', `'${lang==='ko'?'탭하여 배치 해제':'Tap to unrank'}'`);
+  if (poolGrid) poolGrid.style.setProperty('--unrank-hint', `'${T('unrankHint')}'`);
   showTapHint(charById(charId));
 }
 
@@ -1776,7 +1801,7 @@ function showTapHint(c) {
   hideTapHint();
   const hint = document.createElement('div');
   hint.className = 'tap-hint';
-  hint.textContent = `${charName(c)} selected — tap a tier to place`;
+  hint.textContent = T('tapHintFmt')(charName(c));
   document.body.appendChild(hint);
   _tapHintEl = hint;
 }
