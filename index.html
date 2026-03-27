@@ -483,7 +483,8 @@ const I18N = {
     elementLabel:'속성', weaponLabel:'무기', styleLabel:'스타일',
     lightLabel:'천', shadowLabel:'명',
     acquireLabel:'획득처',
-    acqFree:'무료', acqGacha:'가챠', acqBuddy:'버디', acqCustom:'커스텀',
+    acqFree:'배포', acqGacha:'몽견', acqBuddy:'버디', acqCustom:'커스텀',
+    acq_free:'배포', acq_gacha:'몽견', acq_buddy:'버디', acqExcludeBuddy:'버디제외',
     thIcon:'', thNamePri:'이름', thNameSec:'영문명',
     thElement:'속성', thWeapon:'무기', thStyle:'스타일', thRarity:'레어도',
     thSA:'SA', thLS:'천/명', thAttack:'공격유형', thRelease:'출시일',
@@ -549,6 +550,7 @@ const I18N = {
     lightLabel:'Light', shadowLabel:'Shadow',
     acquireLabel:'Acquire',
     acqFree:'Free', acqGacha:'Gacha', acqBuddy:'Buddy', acqCustom:'Custom',
+    acq_free:'Free', acq_gacha:'Gacha', acq_buddy:'Buddy', acqExcludeBuddy:'No Buddy',
     thIcon:'', thNamePri:'Name (KO)', thNameSec:'Name (EN)',
     thElement:'Element', thWeapon:'Weapon', thStyle:'Style', thRarity:'Rarity',
     thSA:'SA', thLS:'L/S', thAttack:'Attack', thRelease:'Release',
@@ -1353,7 +1355,7 @@ function openCharPicker(tierDef, catId) {
   closeAllPopups();
   _picker = {
     tierId: tierDef.id, catId, query: '',
-    filters: { elements:[], weapons:[], styles:[], rarities:[], sa:null, ls:null },
+    filters: { elements:[], weapons:[], styles:[], rarities:[], sa:null, ls:null, acq:[], excludeBuddy:false },
     tierDef,
     selectedIds: new Set()
   };
@@ -1454,6 +1456,14 @@ function renderPickerFilters() {
   // L/S
   html += `<button class="ftag ${f.ls==='light'?'on':''}" data-ftype="ls" data-fval="light" style="color:var(--ls-light)">${T('lightLabel')}</button>`;
   html += `<button class="ftag ${f.ls==='shadow'?'on':''}" data-ftype="ls" data-fval="shadow" style="color:var(--ls-shadow)">${T('shadowLabel')}</button>`;
+  html += '<span style="width:6px"></span>';
+  // 획득처
+  ['free','gacha','buddy'].forEach(a => {
+    html += `<button class="ftag ${f.acq.includes(a)?'on':''}" data-ftype="acq" data-fval="${a}">${T('acq_'+a)}</button>`;
+  });
+  html += `<button class="ftag ${f.excludeBuddy?'on':''}" data-ftype="excludeBuddy" data-fval="true" style="${f.excludeBuddy?'border-color:#e74c3c;color:#e74c3c':''}">${T('acqExcludeBuddy')}</button>`;
+  html += '<span style="width:6px"></span>';
+  html += `<button class="ftag ${f.acq.includes('custom')?'on':''}" data-ftype="acq" data-fval="custom">${T('acqCustom')}</button>`;
 
   container.innerHTML = html;
 
@@ -1462,12 +1472,12 @@ function renderPickerFilters() {
       const ftype = btn.dataset.ftype;
       let fval = btn.dataset.fval;
       if (ftype === 'rarities') fval = parseInt(fval);
-      // SA 토글
       if (ftype === 'sa') {
         _picker.filters.sa = _picker.filters.sa ? null : true;
-      // L/S 토글
       } else if (ftype === 'ls') {
         _picker.filters.ls = _picker.filters.ls === fval ? null : fval;
+      } else if (ftype === 'excludeBuddy') {
+        _picker.filters.excludeBuddy = !_picker.filters.excludeBuddy;
       } else {
         const arr = _picker.filters[ftype];
         const idx = arr.indexOf(fval);
@@ -1495,6 +1505,8 @@ function pickerCharMatches(c) {
   if (f.rarities.length && !f.rarities.includes(c.rarity)) return false;
   if (f.sa === true && !c.sa) return false;
   if (f.ls && c.ls !== f.ls) return false;
+  if (f.acq.length && !f.acq.includes(c.acq)) return false;
+  if (f.excludeBuddy && c.acq === 'buddy') return false;
   return true;
 }
 
@@ -1611,7 +1623,7 @@ function renderFilterBar() {
           ${['free','gacha','buddy','custom'].map(a =>
             `<button class="ftag ${f.acq.includes(a)?'on':''}" onclick="toggleFilter('acq','${a}')">${ACQ_I18N[a]}</button>`
           ).join('')}
-          <button class="ftag ${f.excludeBuddy?'on':''}" onclick="S.ui.filters.excludeBuddy=!S.ui.filters.excludeBuddy;renderAll()" style="${f.excludeBuddy?'border-color:#e74c3c;color:#e74c3c':''}">Buddy &#10005;</button>
+          <button class="ftag ${f.excludeBuddy?'on':''}" onclick="S.ui.filters.excludeBuddy=!S.ui.filters.excludeBuddy;renderAll()" style="${f.excludeBuddy?'border-color:#e74c3c;color:#e74c3c':''}">${T('acqExcludeBuddy')}</button>
         </div>
       </div>
     </div>`;
