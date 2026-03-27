@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AE Tier List Builder</title>
+<title>어나더에덴 티어표 빌더 | AE Tier List Builder</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <style>
 /* ─── Reset + Base ─── */
@@ -34,6 +34,17 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .btn-outline{border:1px solid var(--border);color:var(--text-secondary)}.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
 .btn-sm{padding:3px 8px;font-size:0.75rem}
 .btn-danger{color:#e74c3c;border-color:#e74c3c}.btn-danger:hover{background:#e74c3c;color:#fff}
+
+/* ─── Overflow Menu (mobile) ─── */
+.overflow-toggle{display:none;width:36px;height:36px;border-radius:var(--radius);border:1px solid var(--border);font-size:1.2rem;color:var(--text-secondary);align-items:center;justify-content:center;flex-shrink:0}
+.overflow-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.overflow-sheet{position:fixed;inset:0;z-index:2500;display:none;flex-direction:column;justify-content:flex-end}
+.overflow-sheet.open{display:flex}
+.overflow-backdrop{flex:1;background:rgba(0,0,0,.5)}
+.overflow-panel{background:var(--bg-secondary);border-top:1px solid var(--border);border-radius:12px 12px 0 0;padding:12px 16px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:6px;max-height:60vh;overflow-y:auto}
+.overflow-panel .btn{text-align:left;padding:12px 16px;font-size:0.9rem;border:1px solid var(--border);border-radius:var(--radius)}
+.overflow-panel .btn:active{background:rgba(212,164,74,0.15)}
+.overflow-handle{width:40px;height:4px;background:var(--text-dim);border-radius:2px;margin:0 auto 10px;opacity:.5}
 
 /* ─── Toggle Group (mode, view, lang) ─── */
 .toggle-group{display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
@@ -74,8 +85,19 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .sa-badge{color:var(--accent);font-weight:700;font-size:0.62rem;background:rgba(212,164,74,0.2);padding:1px 4px;border-radius:3px;line-height:1.4}
 
 
+/* ─── Inline Input ─── */
+.inline-input{display:inline-flex;align-items:center;gap:4px}
+.inline-input input{width:120px;padding:4px 8px;font-size:0.8rem}
+.inline-input button{padding:4px 8px;font-size:0.75rem}
+
 /* ─── Filter Bar ─── */
-.filter-bar{padding:12px 16px;background:var(--bg-pool);border-top:2px solid var(--border)}
+.filter-bar{background:var(--bg-pool);border-top:2px solid var(--border)}
+.filter-toggle{display:flex;align-items:center;gap:8px;padding:10px 16px;cursor:pointer;user-select:none}
+.filter-toggle .ft-arrow{transition:transform .2s;font-size:0.7rem;color:var(--text-dim)}
+.filter-toggle.open .ft-arrow{transform:rotate(90deg)}
+.filter-toggle .ft-summary{font-size:0.75rem;color:var(--text-dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.filter-body{max-height:0;overflow:hidden;transition:max-height .25s ease-out}
+.filter-body.open{max-height:500px;overflow:visible}
 .filter-row{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
 .filter-row label{font-size:0.85rem;color:var(--text-secondary);min-width:52px;font-weight:500}
 .search-input{width:240px;padding:6px 12px;font-size:0.85rem}
@@ -91,11 +113,20 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .pool-header{font-size:0.75rem;color:var(--text-secondary);margin-bottom:6px}
 .pool-grid{display:flex;flex-wrap:wrap;gap:6px;min-height:80px;padding:10px;border:1px dashed var(--border);border-radius:var(--radius)}
 .pool-grid.drag-over{border-color:var(--accent);background:rgba(212,164,74,0.06)}
+.pool-sentinel{height:1px;width:100%;flex-basis:100%}
+.pool-load-more{text-align:center;padding:8px;font-size:0.75rem;color:var(--text-dim);flex-basis:100%}
 
 /* ─── Tooltip ─── */
 .tooltip{position:fixed;z-index:1000;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;font-size:0.75rem;pointer-events:none;max-width:220px;line-height:1.5;box-shadow:0 4px 12px rgba(0,0,0,.4)}
 .tooltip .tt-name{font-weight:700;color:var(--accent);font-size:0.85rem}
 .tooltip .tt-row{color:var(--text-secondary)}
+
+/* ─── Info Toast (mobile tooltip) ─── */
+.info-toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:1900;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:0.8rem;color:var(--text-primary);box-shadow:0 4px 16px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px;max-width:90vw;animation:tapHintIn .2s ease-out}
+.info-toast img{width:40px;height:40px;border-radius:6px;flex-shrink:0}
+.info-toast .it-details{line-height:1.5}
+.info-toast .it-name{font-weight:700;color:var(--accent)}
+.info-toast .it-sub{color:var(--text-secondary);font-size:0.72rem}
 
 /* ─── Tap-Select Mode ─── */
 .char-card.tap-selected{border-color:var(--accent);box-shadow:0 0 12px rgba(212,164,74,0.6);transform:translateY(-3px)}
@@ -213,8 +244,15 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
   .picker-modal{width:100%;max-height:95vh;border-radius:12px 12px 0 0;margin:auto 0 0 0}
   .picker-grid .char-card{width:70px}
   .picker-grid .char-card .card-icon{width:48px;height:48px}
-  .tap-hint{font-size:0.75rem;padding:8px 16px;bottom:14px}
+  .tap-hint{font-size:0.75rem;padding:8px 16px;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
   .tap-select-active .tier-drop::after{font-size:0.65rem}
+  .overflow-toggle{display:flex}
+  .header-actions .desktop-only{display:none}
+  .filter-row{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
+  .filter-row::-webkit-scrollbar{display:none}
+  .filter-row label{position:sticky;left:0;background:var(--bg-pool);z-index:1;padding-right:4px}
+  .mcat-grid{flex-direction:column}
+  .mcat-col{min-width:unset}
 }
 
 /* ─── Intro Screen ─── */
@@ -251,39 +289,46 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 <!-- ─── Intro Screen ─── -->
 <div class="intro" id="intro-screen">
   <img class="intro-banner" id="intro-banner" src="" alt="Another Eden Key Visual" onerror="this.style.display='none'">
-  <h1>AE Tier List Builder</h1>
-  <p class="intro-sub">Build and share your own Another Eden tier list</p>
-  <p class="intro-ver" id="intro-ver">Game Version: loading...</p>
+  <h1 id="intro-title">어나더에덴 티어표 빌더</h1>
+  <p class="intro-sub" id="intro-sub">나만의 어나더에덴 티어표를 만들고 공유하세요</p>
+  <p class="intro-ver" id="intro-ver">게임 버전: 로딩중...</p>
   <p class="intro-team">Built by Team 랜선을 넘는 고양이들</p>
-  <button class="intro-start" onclick="dismissIntro()">Start Building</button>
+  <button class="intro-start" id="intro-start-btn" onclick="dismissIntro()">시작하기</button>
 </div>
 
 <!-- ─── Header ─── -->
 <header class="header">
-  <h1>AE Tier List Builder</h1>
+  <h1 id="header-title">어나더에덴 티어표 빌더</h1>
   <div class="header-actions">
     <div class="toggle-group">
-      <button id="btn-viewer" onclick="setMode('viewer')">Viewer</button>
-      <button id="btn-builder" class="active" onclick="setMode('builder')">Builder</button>
+      <button id="btn-viewer" onclick="setMode('viewer')">뷰어</button>
+      <button id="btn-builder" class="active" onclick="setMode('builder')">빌더</button>
     </div>
     <div class="toggle-group">
-      <button id="btn-tier" class="active" onclick="setView('tier')">Tier</button>
-      <button id="btn-all" onclick="setView('all')">All</button>
-      <button id="btn-table" onclick="setView('table')">Table</button>
+      <button id="btn-tier" class="active" onclick="setView('tier')">티어</button>
+      <button id="btn-all" onclick="setView('all')">전체</button>
+      <button id="btn-table" onclick="setView('table')">표</button>
     </div>
     <div class="toggle-group">
       <button id="btn-ko" class="active" onclick="setLang('ko')">KO</button>
       <button id="btn-en" onclick="setLang('en')">EN</button>
     </div>
-    <button class="btn btn-outline btn-sm btn-add-char" onclick="showAddCharModal()">+ Char</button>
-    <button class="btn btn-outline btn-sm" onclick="showPresetModal()">Template</button>
-    <button class="btn btn-outline btn-sm" onclick="shareURL()">Share</button>
-    <button class="btn btn-outline btn-sm" onclick="exportJSON()">Export</button>
-    <button class="btn btn-primary btn-sm" onclick="copyAsImage()">Copy Image</button>
-    <button class="btn btn-outline btn-sm" onclick="saveAsImage()">Save JPG</button>
-    <label class="btn btn-outline btn-sm" style="cursor:pointer">Import<input type="file" accept=".json" style="display:none" onchange="importJSON(this.files[0])"></label>
+    <button class="btn btn-outline btn-sm btn-add-char desktop-only" id="btn-add-char" onclick="showAddCharModal()">+ 캐릭터</button>
+    <button class="btn btn-outline btn-sm desktop-only" id="btn-template" onclick="showPresetModal()">템플릿</button>
+    <button class="btn btn-outline btn-sm desktop-only" id="btn-share" onclick="shareURL()">공유</button>
+    <button class="btn btn-outline btn-sm desktop-only" id="btn-export" onclick="exportJSON()">내보내기</button>
+    <button class="btn btn-primary btn-sm desktop-only" id="btn-copy-img" onclick="copyAsImage()">이미지 복사</button>
+    <button class="btn btn-outline btn-sm desktop-only" id="btn-save-jpg" onclick="saveAsImage()">JPG 저장</button>
+    <label class="btn btn-outline btn-sm desktop-only" id="btn-import" style="cursor:pointer">가져오기<input type="file" accept=".json" style="display:none" onchange="importJSON(this.files[0])"></label>
+    <button class="overflow-toggle" onclick="toggleOverflow()" aria-label="More actions">&#8942;</button>
   </div>
 </header>
+
+<!-- ─── Overflow Bottom Sheet ─── -->
+<div class="overflow-sheet" id="overflow-sheet">
+  <div class="overflow-backdrop" onclick="toggleOverflow()"></div>
+  <div class="overflow-panel" id="overflow-panel"></div>
+</div>
 
 <!-- ─── Capture Area (for image export) ─── -->
 <div id="capture-area">
@@ -297,7 +342,7 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 <!-- ─── Filter + Pool ─── -->
 <div class="filter-bar" id="filter-bar"></div>
 <div class="pool-area" id="pool-area">
-  <div class="pool-header" id="pool-header">Unranked</div>
+  <div class="pool-header" id="pool-header">미배치</div>
   <div class="pool-grid" id="pool-grid"></div>
 </div>
 
@@ -315,14 +360,7 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 <div class="stats-bar" id="stats-bar"></div>
 
 <!-- ─── Credits ─── -->
-<div class="credits">
-  Data: <a href="https://anothereden.wiki" target="_blank">Another Eden Wiki</a> |
-  Icons &amp; images &copy; WFS / GREE |
-  DB: <span id="data-version">-</span> |
-  <span id="data-total">-</span> chars |
-  Game: <span id="game-version">-</span> |
-  Team 랜선을 넘는 고양이들
-</div>
+<div class="credits" id="credits-bar"></div>
 
 <!-- ─── Tooltip ─── -->
 <div class="tooltip" id="tooltip" style="display:none"></div>
@@ -330,8 +368,8 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 <!-- ─── Preset Modal ─── -->
 <div class="modal-overlay" id="preset-modal" style="display:none">
   <div class="modal">
-    <h2>Start Template</h2>
-    <p>Choose a preset or start blank. You can customize everything later.</p>
+    <h2 id="preset-title">템플릿 선택</h2>
+    <p id="preset-desc">프리셋을 고르거나 빈 캔버스로 시작하세요. 나중에 모두 수정 가능합니다.</p>
     <div class="preset-list" id="preset-list"></div>
   </div>
 </div>
@@ -339,20 +377,20 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 <!-- ─── Add Character Modal ─── -->
 <div class="modal-overlay" id="add-char-modal" style="display:none">
   <div class="modal add-char-modal">
-    <h2>Add Custom Character</h2>
+    <h2 id="acm-title">커스텀 캐릭터 추가</h2>
     <div style="display:flex;gap:16px">
-      <div class="acm-img-drop" id="acm-img-drop" title="Drop image or click to paste">
-        <span id="acm-img-placeholder">Drop / Paste<br>Image</span>
+      <div class="acm-img-drop" id="acm-img-drop" title="이미지 드롭 또는 클릭">
+        <span id="acm-img-placeholder">이미지<br>드롭/붙여넣기</span>
       </div>
       <div style="flex:1">
-        <div class="acm-row"><label>Name</label><input id="acm-name" placeholder="Character name"></div>
-        <div class="acm-row"><label>EN Name</label><input id="acm-name-en" placeholder="English name (optional)"></div>
+        <div class="acm-row"><label id="acm-lbl-name">이름</label><input id="acm-name" placeholder="캐릭터 이름"></div>
+        <div class="acm-row"><label id="acm-lbl-en">영문 이름</label><input id="acm-name-en" placeholder="영문 이름 (선택)"></div>
       </div>
     </div>
     <div class="acm-row">
-      <label>Element</label>
+      <label id="acm-lbl-el">속성</label>
       <select id="acm-element">
-        <option value="">-- Select --</option>
+        <option value="">-- 선택 --</option>
         <option value="fire">불 Fire</option><option value="water">물 Water</option>
         <option value="earth">땅 Earth</option><option value="wind">바람 Wind</option>
         <option value="thunder">뇌 Thunder</option><option value="shade">그림자 Shade</option>
@@ -360,9 +398,9 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
       </select>
     </div>
     <div class="acm-row">
-      <label>Weapon</label>
+      <label id="acm-lbl-wp">무기</label>
       <select id="acm-weapon">
-        <option value="">-- Select --</option>
+        <option value="">-- 선택 --</option>
         <option value="sword">검 Sword</option><option value="katana">도 Katana</option>
         <option value="axe">도끼 Axe</option><option value="lance">창 Lance</option>
         <option value="bow">활 Bow</option><option value="fist">권갑 Fist</option>
@@ -375,23 +413,23 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
         <option value="NS">NS</option><option value="AS">AS</option>
         <option value="ES">ES</option><option value="Alter">Alter</option>
       </select>
-      <label style="min-width:auto">Rarity</label>
+      <label id="acm-lbl-rarity" style="min-width:auto">레어도</label>
       <select id="acm-rarity">
         <option value="5">5★</option><option value="4">4★</option><option value="3">3★</option>
       </select>
     </div>
     <div class="acm-row">
-      <label>L/S</label>
+      <label id="acm-lbl-ls">L/S</label>
       <select id="acm-ls">
-        <option value="">Unknown</option><option value="light">Light</option><option value="shadow">Shadow</option>
+        <option value="" id="acm-ls-unk">미정</option><option value="light" id="acm-ls-light">천(Light)</option><option value="shadow" id="acm-ls-shadow">명(Shadow)</option>
       </select>
       <label style="min-width:auto;margin-left:8px">
         <input type="checkbox" id="acm-sa"> SA
       </label>
     </div>
     <div class="acm-actions">
-      <button class="btn btn-outline" onclick="closeAddChar()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveCustomChar()">Add Character</button>
+      <button class="btn btn-outline" id="acm-btn-cancel" onclick="closeAddChar()">취소</button>
+      <button class="btn btn-primary" id="acm-btn-add" onclick="saveCustomChar()">캐릭터 추가</button>
     </div>
   </div>
 </div>
@@ -410,6 +448,105 @@ let currentView = 'tier'; // 'tier' | 'all' | 'table'
 let tableSort = {col:'nameKo', asc:true};
 let lang = 'ko'; // 'ko' | 'en'
 const ATK_TYPE = {sword:'slash',katana:'slash',axe:'slash',lance:'pierce',bow:'pierce',fist:'blunt',hammer:'blunt',staff:'magic'};
+
+/* ─── i18n ─── */
+const I18N = {
+  ko: {
+    title:'어나더에덴 티어표 빌더', subtitle:'나만의 어나더에덴 티어표를 만들고 공유하세요',
+    gameVerLoading:'게임 버전: 로딩중...', startBuilding:'시작하기',
+    viewer:'뷰어', builder:'빌더', tier:'티어', all:'전체', table:'표',
+    addChar:'+ 캐릭터', template:'템플릿', share:'공유', export:'내보내기',
+    copyImage:'이미지 복사', saveJpg:'JPG 저장', import:'가져오기',
+    dataLabel:'데이터:', charsUnit:'캐릭터', gameLabel:'게임:',
+    unranked:'미배치',
+    unrankedFmt:function(s,t,a){return `미배치: ${s}/${t} 표시 (전체 ${a})`;},
+    startTemplate:'템플릿 선택',
+    presetDesc:'프리셋을 고르거나 빈 캔버스로 시작하세요. 나중에 모두 수정 가능합니다.',
+    addCustomChar:'커스텀 캐릭터 추가', dropPaste:'이미지<br>드롭/붙여넣기',
+    nameLabel:'이름', enNameLabel:'영문 이름',
+    charPlaceholder:'캐릭터 이름', enPlaceholder:'영문 이름 (선택)',
+    selectDefault:'-- 선택 --',
+    cancel:'취소', addCharBtn:'캐릭터 추가',
+    searchLabel:'검색', searchPlaceholder:'이름 검색', resetLabel:'초기화',
+    elementLabel:'속성', weaponLabel:'무기', styleLabel:'스타일',
+    lightLabel:'천', shadowLabel:'명',
+    acquireLabel:'획득처',
+    acqFree:'무료', acqGacha:'가챠', acqBuddy:'버디', acqCustom:'커스텀',
+    thIcon:'', thNamePri:'이름', thNameSec:'영문명',
+    thElement:'속성', thWeapon:'무기', thStyle:'스타일', thRarity:'레어도',
+    thSA:'SA', thLS:'천/명', thAttack:'공격유형', thRelease:'출시일',
+    statsTotal:'전체:', statsRanked:'배치:', statsFiltered:'필터:',
+    addCatBtn:'+ 추가', resetBtn:'초기화',
+    catNamePrompt:'카테고리 이름:', confirmDelCat:'이 카테고리와 배치를 삭제하시겠습니까?',
+    noCatSelected:'카테고리를 선택하세요. 위에서 추가할 수 있습니다.',
+    addRowTop:'+ 맨 위에 행 추가', addRowBottom:'+ 맨 아래에 행 추가',
+    tierPrompt:'티어 이름:', tierDefault:'신규',
+    deleteBtn:'삭제', upBtn:'위', downBtn:'아래', okBtn:'확인',
+    confirmDelTier:'이 티어를 삭제하시겠습니까? 캐릭터는 미배치로 돌아갑니다.',
+    unrankBtn:'배치 해제', clickToEdit:'클릭하여 편집', rename:'이름 변경',
+    confirmReplace:'현재 티어표가 교체됩니다. 계속하시겠습니까?',
+    resetPrompt:'초기화 범위?\n1 = 배치만 초기화 (카테고리/티어 유지)\n2 = 전부 초기화 (Prydwen 프리셋으로)\n\n1 또는 2를 입력:',
+    noCatsYet:'카테고리가 없습니다. 티어 뷰에서 카테고리를 추가하고 캐릭터를 배치하세요.',
+    emptyCategory:'비어 있음 — 티어 뷰에서 캐릭터를 배치하세요',
+    urlTooLong:function(kb){return `URL이 너무 깁니다 (${kb}KB). JSON 내보내기를 사용하세요.`;},
+    shareUrlCopied:function(kb){return `공유 URL 복사됨! (${kb}KB)`;},
+    copyShareUrl:'이 URL을 복사하세요:',
+    html2canvasWait:'html2canvas 로딩 중... 잠시 후 다시 시도하세요.',
+    imageCopied:function(kb){return `복사됨! (${kb}KB) Ctrl+V로 붙여넣기`;},
+    gameVerPrefix:'게임 버전: ',
+    nameRequired:'이름을 입력하세요',
+    invalidJson:'잘못된 JSON 파일입니다',
+    lsUnknown:'미정', lsLight:'천(Light)', lsShadow:'명(Shadow)',
+  },
+  en: {
+    title:'AE Tier List Builder', subtitle:'Build and share your own Another Eden tier list',
+    gameVerLoading:'Game Version: loading...', startBuilding:'Start Building',
+    viewer:'Viewer', builder:'Builder', tier:'Tier', all:'All', table:'Table',
+    addChar:'+ Char', template:'Template', share:'Share', export:'Export',
+    copyImage:'Copy Image', saveJpg:'Save JPG', import:'Import',
+    dataLabel:'Data:', charsUnit:'chars', gameLabel:'Game:',
+    unranked:'Unranked',
+    unrankedFmt:function(s,t,a){return `Unranked: ${s}/${t} shown (${a} total)`;},
+    startTemplate:'Start Template',
+    presetDesc:'Choose a preset or start blank. You can customize everything later.',
+    addCustomChar:'Add Custom Character', dropPaste:'Drop / Paste<br>Image',
+    nameLabel:'Name', enNameLabel:'EN Name',
+    charPlaceholder:'Character name', enPlaceholder:'English name (optional)',
+    selectDefault:'-- Select --',
+    cancel:'Cancel', addCharBtn:'Add Character',
+    searchLabel:'Search', searchPlaceholder:'EN / KO', resetLabel:'Reset',
+    elementLabel:'Element', weaponLabel:'Weapon', styleLabel:'Style',
+    lightLabel:'Light', shadowLabel:'Shadow',
+    acquireLabel:'Acquire',
+    acqFree:'Free', acqGacha:'Gacha', acqBuddy:'Buddy', acqCustom:'Custom',
+    thIcon:'', thNamePri:'Name (KO)', thNameSec:'Name (EN)',
+    thElement:'Element', thWeapon:'Weapon', thStyle:'Style', thRarity:'Rarity',
+    thSA:'SA', thLS:'L/S', thAttack:'Attack', thRelease:'Release',
+    statsTotal:'Total:', statsRanked:'Ranked:', statsFiltered:'Filtered:',
+    addCatBtn:'+ Add', resetBtn:'Reset',
+    catNamePrompt:'Category name:', confirmDelCat:'Delete this category and its placements?',
+    noCatSelected:'No category selected. Add one above.',
+    addRowTop:'+ Add row at top', addRowBottom:'+ Add row at bottom',
+    tierPrompt:'Tier label:', tierDefault:'New',
+    deleteBtn:'Delete', upBtn:'Up', downBtn:'Down', okBtn:'OK',
+    confirmDelTier:'Delete this tier row? Characters will be unranked.',
+    unrankBtn:'Unrank', clickToEdit:'Click to edit', rename:'Rename',
+    confirmReplace:'Current tier list will be replaced. Continue?',
+    resetPrompt:'Reset what?\n1 = All placements only (keep categories/tiers)\n2 = Everything (back to Prydwen preset)\n\nType 1 or 2:',
+    noCatsYet:'No categories yet. Use Tier view to add categories and place characters.',
+    emptyCategory:'Empty — place characters in Tier view',
+    urlTooLong:function(kb){return `URL is too long (${kb}KB). Use Export JSON instead.`;},
+    shareUrlCopied:function(kb){return `Share URL copied! (${kb}KB)`;},
+    copyShareUrl:'Copy this URL:',
+    html2canvasWait:'html2canvas is loading... Try again in a moment.',
+    imageCopied:function(kb){return `Copied! (${kb}KB) Ctrl+V to paste.`;},
+    gameVerPrefix:'Game Version: ',
+    nameRequired:'Name is required',
+    invalidJson:'Invalid JSON file',
+    lsUnknown:'Unknown', lsLight:'Light', lsShadow:'Shadow',
+  }
+};
+function T(k){ return I18N[lang][k] || I18N.en[k] || k; }
 
 const TIER_COLORS = ['#ffd700','#ff4444','#ff8c00','#ffdd00','#44bb44','#888888','#5dade2','#af7ac5'];
 
@@ -493,7 +630,7 @@ function showPresetModal() {
   // 기존 배치가 있으면 경고
   const hasData = Object.keys(S.workspace.placements).some(k =>
     Object.values(S.workspace.placements[k]).some(arr => arr.length > 0));
-  if (hasData && !confirm('Current tier list will be replaced. Continue?')) return;
+  if (hasData && !confirm(T('confirmReplace'))) return;
 
   const modal = document.getElementById('preset-modal');
   const list = document.getElementById('preset-list');
@@ -509,14 +646,26 @@ function showPresetModal() {
 }
 
 function resetAll() {
-  const choice = prompt('Reset what?\n1 = All placements only (keep categories/tiers)\n2 = Everything (back to Prydwen preset)\n\nType 1 or 2:');
-  if (choice === '1') {
-    S.workspace.placements = {};
-    autoSave(); renderAll();
-  } else if (choice === '2') {
-    S.workspace.placements = {};
-    applyPreset('prydwen');
-  }
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `<div class="modal">
+    <h2>${lang==='ko'?'초기화':'Reset'}</h2>
+    <p>${lang==='ko'?'초기화 범위를 선택하세요':'What would you like to reset?'}</p>
+    <div class="preset-list">
+      <button class="preset-btn" data-choice="1"><strong>${lang==='ko'?'배치만 초기화':'Placements only'}</strong><small>${lang==='ko'?'카테고리/티어 유지, 배치만 초기화':'Keep categories and tiers, clear placements'}</small></button>
+      <button class="preset-btn" data-choice="2"><strong>${lang==='ko'?'전부 초기화':'Everything'}</strong><small>${lang==='ko'?'Prydwen 프리셋으로 복원':'Reset to Prydwen preset'}</small></button>
+      <button class="preset-btn" style="border-color:var(--text-dim)"><strong>${T('cancel')}</strong></button>
+    </div>
+  </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.onclick = () => {
+      const choice = btn.dataset.choice;
+      if (choice === '1') { S.workspace.placements = {}; autoSave(); renderAll(); }
+      else if (choice === '2') { S.workspace.placements = {}; applyPreset('prydwen'); }
+      overlay.remove();
+    };
+  });
 }
 
 function applyPreset(key) {
@@ -565,13 +714,13 @@ function shareURL() {
   const hash = LZString.compressToEncodedURIComponent(json);
   const url = location.origin + location.pathname + '#s=' + hash;
   if (url.length > 8000) {
-    alert('URL is too long (' + Math.round(url.length/1024) + 'KB). Use Export JSON instead.');
+    alert(T('urlTooLong')(Math.round(url.length/1024)));
     return;
   }
   navigator.clipboard.writeText(url).then(() => {
-    alert('Share URL copied! (' + Math.round(url.length/1024*10)/10 + 'KB)');
+    alert(T('shareUrlCopied')(Math.round(url.length/1024*10)/10));
   }).catch(() => {
-    prompt('Copy this URL:', url);
+    prompt(T('copyShareUrl'), url);
   });
   history.replaceState(null, '', '#s=' + hash);
 }
@@ -620,7 +769,7 @@ function importJSON(file) {
         saveToStorage();
         renderAll();
       }
-    } catch(err) { alert('Invalid JSON file'); }
+    } catch(err) { alert(T('invalidJson')); }
   };
   reader.readAsText(file);
 }
@@ -654,9 +803,56 @@ function getPlacedIds(catId) {
 function charById(id) { return DB_MAP[id]; }
 
 /* ═══════════════════════════════════════════
+   STATIC UI (i18n)
+   ═══════════════════════════════════════════ */
+function updateStaticUI() {
+  // Intro
+  const _s = (id,k) => { const e=document.getElementById(id); if(e) e.textContent=T(k); };
+  const _h = (id,k) => { const e=document.getElementById(id); if(e) e.innerHTML=T(k); };
+  _s('intro-title','title'); _s('intro-sub','subtitle'); _s('intro-start-btn','startBuilding');
+  // Header
+  _s('header-title','title');
+  _s('btn-viewer','viewer'); _s('btn-builder','builder');
+  _s('btn-tier','tier'); _s('btn-all','all'); _s('btn-table','table');
+  _s('btn-add-char','addChar'); _s('btn-template','template');
+  _s('btn-share','share'); _s('btn-export','export');
+  _s('btn-copy-img','copyImage'); _s('btn-save-jpg','saveJpg');
+  // Import label — preserve the hidden input
+  const impEl = document.getElementById('btn-import');
+  if (impEl) { const inp = impEl.querySelector('input'); impEl.textContent = T('import'); if(inp) impEl.appendChild(inp); }
+  // Restore toggle active states
+  document.getElementById('btn-viewer').className = S.mode==='viewer'?'active':'';
+  document.getElementById('btn-builder').className = S.mode==='builder'?'active':'';
+  document.getElementById('btn-tier').className = currentView==='tier'?'active':'';
+  document.getElementById('btn-all').className = currentView==='all'?'active':'';
+  document.getElementById('btn-table').className = currentView==='table'?'active':'';
+  document.getElementById('btn-ko').className = lang==='ko'?'active':'';
+  document.getElementById('btn-en').className = lang==='en'?'active':'';
+  // Credits
+  const cb = document.getElementById('credits-bar');
+  if (cb) cb.innerHTML = `${T('dataLabel')} <a href="https://anothereden.wiki" target="_blank">Another Eden Wiki</a> | Icons &amp; images &copy; WFS / GREE | DB: <span id="data-version">-</span> | <span id="data-total">-</span> ${T('charsUnit')} | ${T('gameLabel')} <span id="game-version">-</span> | Team 랜선을 넘는 고양이들`;
+  // Preset modal
+  _s('preset-title','startTemplate'); _s('preset-desc','presetDesc');
+  // Add char modal
+  _s('acm-title','addCustomChar');
+  _h('acm-img-placeholder','dropPaste');
+  _s('acm-lbl-name','nameLabel'); _s('acm-lbl-en','enNameLabel');
+  _s('acm-lbl-el','elementLabel'); _s('acm-lbl-wp','weaponLabel');
+  _s('acm-lbl-rarity', lang==='ko'?'레어도':'Rarity');
+  _s('acm-lbl-ls','lsLabel');
+  _s('acm-ls-unk','lsUnknown'); _s('acm-ls-light','lsLight'); _s('acm-ls-shadow','lsShadow');
+  _s('acm-btn-cancel','cancel'); _s('acm-btn-add','addCharBtn');
+  const acmName = document.getElementById('acm-name');
+  const acmEn = document.getElementById('acm-name-en');
+  if(acmName) acmName.placeholder = T('charPlaceholder');
+  if(acmEn) acmEn.placeholder = T('enPlaceholder');
+}
+
+/* ═══════════════════════════════════════════
    RENDER
    ═══════════════════════════════════════════ */
-function renderAll() {
+function renderAll(trigger) {
+  updateStaticUI();
   // Credits
   const dv = document.getElementById('data-version');
   const dt = document.getElementById('data-total');
@@ -674,13 +870,19 @@ function renderAll() {
 
   if (currentView === 'table') {
     elTable.style.display = '';
-    renderFilterBar(); renderTableView(); renderStats();
+    if (trigger !== 'placement') renderFilterBar();
+    renderTableView(); renderStats();
   } else if (currentView === 'all') {
     elAll.style.display = '';
-    renderFilterBar(); renderAllView(); renderStats();
+    if (trigger !== 'placement') renderFilterBar();
+    renderAllView(); renderStats();
   } else {
     [elTier,elCat,elPool].forEach(e => e.style.display = '');
-    renderCategoryTabs(); renderTierRows(); renderFilterBar(); renderPool(); renderStats();
+    if (trigger !== 'filter') renderCategoryTabs();
+    renderTierRows();
+    if (trigger !== 'placement') renderFilterBar();
+    if (trigger !== 'category') renderPool();
+    renderStats();
   }
 }
 
@@ -694,8 +896,7 @@ function setView(v) {
 
 function setLang(l) {
   lang = l;
-  document.getElementById('btn-ko').className = l==='ko'?'active':'';
-  document.getElementById('btn-en').className = l==='en'?'active':'';
+  document.documentElement.lang = l;
   renderAll();
 }
 
@@ -718,7 +919,7 @@ function renderCategoryTabs() {
       const editBtn = document.createElement('span');
       editBtn.className = 'cat-edit';
       editBtn.textContent = '\u270E'; // ✎
-      editBtn.title = 'Rename';
+      editBtn.title = T('rename');
       editBtn.style.cssText = 'font-size:0.65rem;cursor:pointer;opacity:0.5;margin-left:2px';
       editBtn.onclick = (e) => { e.stopPropagation(); editCategoryName(cat); };
       editBtn.onmouseenter = () => editBtn.style.opacity = '1';
@@ -738,13 +939,13 @@ function renderCategoryTabs() {
   if (S.mode === 'builder') {
     const add = document.createElement('button');
     add.className = 'cat-add';
-    add.textContent = '+ Add';
+    add.textContent = T('addCatBtn');
     add.onclick = addCategory;
     bar.appendChild(add);
 
     const reset = document.createElement('button');
     reset.className = 'cat-add';
-    reset.textContent = 'Reset';
+    reset.textContent = T('resetBtn');
     reset.style.color = '#e74c3c';
     reset.onclick = resetAll;
     bar.appendChild(reset);
@@ -752,16 +953,36 @@ function renderCategoryTabs() {
 }
 
 function addCategory() {
-  const name = prompt('Category name:');
-  if (!name) return;
-  const id = 'cat_' + Date.now();
-  S.workspace.categories.push({ id, name });
-  S.workspace.activeCategory = id;
-  autoSave(); renderAll();
+  const bar = document.getElementById('cat-bar');
+  if (bar.querySelector('.inline-input')) return;
+  const wrap = document.createElement('span');
+  wrap.className = 'inline-input';
+  wrap.innerHTML = `<input type="text" placeholder="${T('catNamePrompt')}" autofocus>
+    <button class="btn btn-sm btn-primary" data-action="ok">OK</button>
+    <button class="btn btn-sm btn-outline" data-action="cancel">&#10005;</button>`;
+  bar.insertBefore(wrap, bar.querySelector('.cat-add'));
+  const input = wrap.querySelector('input');
+  input.focus();
+  const confirm = () => {
+    const name = input.value.trim();
+    if (name) {
+      const id = 'cat_' + Date.now();
+      S.workspace.categories.push({ id, name });
+      S.workspace.activeCategory = id;
+      autoSave();
+    }
+    wrap.remove(); renderAll();
+  };
+  wrap.querySelector('[data-action="ok"]').onclick = confirm;
+  wrap.querySelector('[data-action="cancel"]').onclick = () => { wrap.remove(); };
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') confirm();
+    if (e.key === 'Escape') wrap.remove();
+  });
 }
 
 function delCategory(id) {
-  if (!confirm('Delete this category and its placements?')) return;
+  if (!confirm(T('confirmDelCat'))) return;
   S.workspace.categories = S.workspace.categories.filter(c => c.id !== id);
   delete S.workspace.placements[id];
   if (S.workspace.activeCategory === id) {
@@ -771,8 +992,27 @@ function delCategory(id) {
 }
 
 function editCategoryName(cat) {
-  const name = prompt('Category name:', cat.name);
-  if (name !== null && name.trim()) { cat.name = name.trim(); autoSave(); renderAll(); }
+  const tab = [...document.querySelectorAll('.cat-tab')].find(t =>
+    t.querySelector('.cat-name')?.textContent === cat.name
+  );
+  if (!tab) return;
+  const nameSpan = tab.querySelector('.cat-name');
+  const origText = nameSpan.textContent;
+  const input = document.createElement('input');
+  input.type = 'text'; input.value = origText;
+  input.style.cssText = 'width:80px;padding:2px 4px;font-size:0.8rem';
+  nameSpan.replaceWith(input);
+  input.focus(); input.select();
+  const finish = () => {
+    const val = input.value.trim();
+    if (val && val !== origText) { cat.name = val; autoSave(); }
+    renderAll();
+  };
+  input.addEventListener('blur', finish);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+    if (e.key === 'Escape') { input.value = origText; input.blur(); }
+  });
 }
 
 /* ─── Tier Rows (single active category — Builder) ─── */
@@ -780,12 +1020,12 @@ function renderTierRows() {
   const area = document.getElementById('tier-area');
   area.innerHTML = '';
   const catId = S.workspace.activeCategory;
-  if (!catId) { area.innerHTML = '<p style="padding:20px;color:var(--text-dim)">No category selected. Add one above.</p>'; return; }
+  if (!catId) { area.innerHTML = `<p style="padding:20px;color:var(--text-dim)">${T('noCatSelected')}</p>`; return; }
 
   if (S.mode === 'builder') {
     const topAdd = document.createElement('div');
     topAdd.className = 'tier-actions';
-    topAdd.innerHTML = `<button class="btn btn-sm btn-outline" onclick="addTierRow(0)">+ Add row at top</button>`;
+    topAdd.innerHTML = `<button class="btn btn-sm btn-outline" onclick="addTierRow(0)">${T('addRowTop')}</button>`;
     area.appendChild(topAdd);
   }
 
@@ -800,7 +1040,7 @@ function renderTierRows() {
     label.style.color = td.color;
     label.innerHTML = esc(td.label);
     if (S.mode === 'builder') {
-      label.title = 'Click to edit';
+      label.title = T('clickToEdit');
       label.onclick = (e) => showTierEdit(e, td, idx);
     }
     row.appendChild(label);
@@ -820,7 +1060,7 @@ function renderTierRows() {
       const addBtn = document.createElement('button');
       addBtn.className = 'tier-add-btn';
       addBtn.textContent = '+';
-      addBtn.title = 'Search & add characters';
+      addBtn.title = lang==='ko'?'캐릭터 검색/추가':'Search & add characters';
       addBtn.addEventListener('pointerdown', e => e.stopPropagation());
       addBtn.addEventListener('click', e => { e.stopPropagation(); openCharPicker(td, catId); });
       drop.appendChild(addBtn);
@@ -833,18 +1073,40 @@ function renderTierRows() {
   if (S.mode === 'builder') {
     const botAdd = document.createElement('div');
     botAdd.className = 'tier-actions';
-    botAdd.innerHTML = `<button class="btn btn-sm btn-outline" onclick="addTierRow(${S.workspace.tierDefs.length})">+ Add row at bottom</button>`;
+    botAdd.innerHTML = `<button class="btn btn-sm btn-outline" onclick="addTierRow(${S.workspace.tierDefs.length})">${T('addRowBottom')}</button>`;
     area.appendChild(botAdd);
   }
 }
 
 function addTierRow(idx) {
-  const label = prompt('Tier label:', 'New');
-  if (!label) return;
-  const color = TIER_COLORS[S.workspace.tierDefs.length % TIER_COLORS.length];
-  const td = { id:'t_'+Date.now(), label, color };
-  S.workspace.tierDefs.splice(idx, 0, td);
-  autoSave(); renderAll();
+  const area = document.getElementById('tier-area');
+  if (area.querySelector('.inline-input')) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'inline-input';
+  wrap.style.cssText = 'justify-content:center;padding:6px';
+  wrap.innerHTML = `<input type="text" placeholder="${T('tierPrompt')}" autofocus style="width:80px">
+    <button class="btn btn-sm btn-primary" data-action="ok">OK</button>
+    <button class="btn btn-sm btn-outline" data-action="cancel">&#10005;</button>`;
+  // DOM: [topAdd] + [tier-row × N] + [botAdd]
+  const target = area.children[idx + 1]; // +1 for topAdd
+  if (target) area.insertBefore(wrap, target); else area.appendChild(wrap);
+  const input = wrap.querySelector('input');
+  input.focus();
+  const confirm = () => {
+    const label = input.value.trim();
+    if (label) {
+      const color = TIER_COLORS[S.workspace.tierDefs.length % TIER_COLORS.length];
+      S.workspace.tierDefs.splice(idx, 0, { id:'t_'+Date.now(), label, color });
+      autoSave();
+    }
+    wrap.remove(); renderAll();
+  };
+  wrap.querySelector('[data-action="ok"]').onclick = confirm;
+  wrap.querySelector('[data-action="cancel"]').onclick = () => { wrap.remove(); };
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') confirm();
+    if (e.key === 'Escape') wrap.remove();
+  });
 }
 
 function showTierEdit(e, td, idx) {
@@ -861,10 +1123,10 @@ function showTierEdit(e, td, idx) {
       `<div class="color-swatch ${c===td.color?'sel':''}" style="background:${c}" data-c="${c}"></div>`
     ).join('')}</div>
     <div class="pop-actions">
-      <button class="btn btn-sm btn-danger" id="pop-del">Delete</button>
-      <button class="btn btn-sm" id="pop-up" ${idx===0?'disabled':''}>Up</button>
-      <button class="btn btn-sm" id="pop-dn" ${idx>=S.workspace.tierDefs.length-1?'disabled':''}>Down</button>
-      <button class="btn btn-sm btn-primary" id="pop-ok">OK</button>
+      <button class="btn btn-sm btn-danger" id="pop-del">${T('deleteBtn')}</button>
+      <button class="btn btn-sm" id="pop-up" ${idx===0?'disabled':''}>${T('upBtn')}</button>
+      <button class="btn btn-sm" id="pop-dn" ${idx>=S.workspace.tierDefs.length-1?'disabled':''}>${T('downBtn')}</button>
+      <button class="btn btn-sm btn-primary" id="pop-ok">${T('okBtn')}</button>
     </div>`;
 
   document.body.appendChild(pop);
@@ -884,7 +1146,7 @@ function showTierEdit(e, td, idx) {
     autoSave(); renderAll();
   };
   pop.querySelector('#pop-del').onclick = () => {
-    if (confirm('Delete this tier row? Characters will be unranked.')) {
+    if (confirm(T('confirmDelTier'))) {
       // Move characters back to unranked
       for (const catId of Object.keys(S.workspace.placements)) {
         delete S.workspace.placements[catId][td.id];
@@ -924,39 +1186,33 @@ function makeCard(c) {
   const card = document.createElement('div');
   card.className = 'char-card';
   card.dataset.id = c.id;
-  card.style.touchAction = 'none'; // prevent scroll during drag
+  card.style.touchAction = 'pan-y'; // allow scroll, restrict on drag start
+  card.innerHTML = renderCardHTML(c);
 
-  const stClass = 'st-' + c.style;
-  const elSrc = c.element && EL_ICON[c.element] ? `images/elements/${EL_ICON[c.element]}` : '';
-  const wpSrc = c.weapon && WP_ICON[c.weapon] ? `images/weapons/${WP_ICON[c.weapon]}` : '';
-
-  card.innerHTML =
-    `<img class="card-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy">` +
-    `<span class="card-name">${esc(charName(c))}</span>` +
-    `<span class="card-meta">` +
-      (elSrc ? `<img src="${elSrc}" alt="${c.elementKo}">` : '') +
-      (wpSrc ? `<img src="${wpSrc}" alt="${c.weaponKo}">` : '') +
-      `<span class="st-badge ${stClass}">${c.style}</span>` +
-    `</span>` +
-    `<span class="card-sub">` +
-      (c.ls ? `<span class="ls-badge ls-${c.ls}">${c.ls==='light'?'L':'S'}</span>` : '') +
-      `<span class="rarity-badge r${c.rarity}">${c.rarity}★</span>` +
-      (c.sa ? `<span class="sa-badge">SA</span>` : '') +
-    `</span>`;
-
-  // Pointer Events drag (works on touch + mouse)
+  // Pointer Events drag + long-press (works on touch + mouse)
   if (S.mode === 'builder') {
+    let _lpTimer = null;
     card.addEventListener('pointerdown', e => {
-      if (e.button !== 0) return; // left click only
+      if (e.button !== 0) return;
+      _lpTimer = setTimeout(() => { _lpTimer = null; showMoveMenu(c, e); }, 500);
       dragStart(c.id, card, e);
+    });
+    card.addEventListener('pointerup', () => { if (_lpTimer) { clearTimeout(_lpTimer); _lpTimer = null; } });
+    card.addEventListener('pointermove', () => {
+      if (_lpTimer && _drag && _drag.moved) { clearTimeout(_lpTimer); _lpTimer = null; }
     });
     card.addEventListener('contextmenu', e => { e.preventDefault(); showMoveMenu(c, e); });
   }
 
-  // Tooltip
+  // Tooltip (mouse) + Info toast (touch, viewer mode)
   card.addEventListener('mouseenter', e => showTooltip(c, e));
   card.addEventListener('mouseleave', hideTooltip);
   card.addEventListener('mousemove', moveTooltip);
+  if (S.mode !== 'builder') {
+    card.addEventListener('pointerup', (e) => {
+      if (e.pointerType === 'touch') showInfoToast(c);
+    });
+  }
 
   return card;
 }
@@ -968,7 +1224,7 @@ function showTooltip(c, e) {
     `<div class="tt-row">${esc(c.nameEn)}</div>` +
     `<div class="tt-row">${c.style} / ${c.rarity}★${c.sa?' SA':''}</div>` +
     `<div class="tt-row">${c.elementKo || ''} / ${c.weaponKo || ''} / ${c.attackType || ''}</div>` +
-    (c.ls ? `<div class="tt-row">${c.ls==='light'?'Light':'Shadow'}</div>` : '') +
+    (c.ls ? `<div class="tt-row">${c.ls==='light'?T('lightLabel'):T('shadowLabel')}</div>` : '') +
     (c.date ? `<div class="tt-row">${c.date}</div>` : '');
   tt.style.display = 'block';
   moveTooltip(e);
@@ -984,6 +1240,16 @@ function hideTooltip() { document.getElementById('tooltip').style.display = 'non
 
 /* ─── Mobile Context Menu ─── */
 function showMoveMenu(c, e) {
+  // Cancel any active drag
+  if (_drag) {
+    if (_drag.origCard) { _drag.origCard.style.opacity = '1'; _drag.origCard.style.touchAction = 'pan-y'; }
+    if (_drag.ghost) _drag.ghost.remove();
+    document.removeEventListener('pointermove', dragMove);
+    document.removeEventListener('pointerup', dragEnd);
+    document.removeEventListener('pointercancel', dragEnd);
+    document.querySelectorAll('.drag-over').forEach(d => d.classList.remove('drag-over'));
+    _drag = null;
+  }
   closeAllPopups();
   const pop = document.createElement('div');
   pop.className = 'edit-pop';
@@ -995,7 +1261,7 @@ function showMoveMenu(c, e) {
   S.workspace.tierDefs.forEach(td => {
     html += `<button class="btn btn-sm btn-outline" style="display:block;width:100%;margin-bottom:3px;text-align:left;border-left:3px solid ${td.color}" data-tid="${td.id}">${esc(td.label)}</button>`;
   });
-  html += `<button class="btn btn-sm btn-outline" style="display:block;width:100%;margin-top:4px" data-tid="__unrank">Unrank</button>`;
+  html += `<button class="btn btn-sm btn-outline" style="display:block;width:100%;margin-top:4px" data-tid="__unrank">${T('unrankBtn')}</button>`;
   pop.innerHTML = html;
 
   pop.querySelectorAll('[data-tid]').forEach(btn => {
@@ -1039,11 +1305,11 @@ function openCharPicker(tierDef, catId) {
     <div class="picker-modal">
       <div class="picker-header">
         <span class="picker-tier-badge" style="background:${tierDef.color}22;color:${tierDef.color}">${esc(tierDef.label)}</span>
-        <span class="picker-title">Add characters to this tier</span>
+        <span class="picker-title">${lang==='ko'?'이 티어에 캐릭터 추가':'Add characters to this tier'}</span>
         <button class="picker-close" onclick="closeCharPicker()">&times;</button>
       </div>
       <div class="picker-search">
-        <input type="text" id="picker-query" placeholder="Search by name (KO/EN)..." autocomplete="off">
+        <input type="text" id="picker-query" placeholder="" autocomplete="off">
       </div>
       <div class="picker-filters" id="picker-filters"></div>
       <div class="picker-body">
@@ -1059,9 +1325,19 @@ function openCharPicker(tierDef, catId) {
     if (e.target === overlay) closeCharPicker();
   });
 
-  // Search input
+  // Search input with debounce + IME
   const input = document.getElementById('picker-query');
+  input.placeholder = lang==='ko'?'이름으로 검색...':'Search by name (KO/EN)...';
+  let _pickerTimer = null;
   input.addEventListener('input', () => {
+    if (_isComposing) return;
+    clearTimeout(_pickerTimer);
+    _pickerTimer = setTimeout(() => {
+      _picker.query = input.value;
+      renderPickerGrid();
+    }, 150);
+  });
+  input.addEventListener('compositionend', () => {
     _picker.query = input.value;
     renderPickerGrid();
   });
@@ -1136,6 +1412,8 @@ function renderPickerGrid() {
   if (!_picker) return;
   const grid = document.getElementById('picker-grid');
   const countEl = document.getElementById('picker-count');
+  const body = grid.parentElement;
+  const scrollY = body ? body.scrollTop : 0;
   grid.innerHTML = '';
 
   const catId = _picker.catId;
@@ -1151,19 +1429,7 @@ function renderPickerGrid() {
     const card = document.createElement('div');
     card.className = 'char-card';
     card.dataset.id = c.id;
-
-    const stClass = 'st-' + c.style;
-    const elSrc = c.element && EL_ICON[c.element] ? `images/elements/${EL_ICON[c.element]}` : '';
-    const wpSrc = c.weapon && WP_ICON[c.weapon] ? `images/weapons/${WP_ICON[c.weapon]}` : '';
-
-    card.innerHTML =
-      `<img class="card-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy">` +
-      `<span class="card-name">${esc(charName(c))}</span>` +
-      `<span class="card-meta">` +
-        (elSrc ? `<img src="${elSrc}" alt="${c.elementKo}">` : '') +
-        (wpSrc ? `<img src="${wpSrc}" alt="${c.weaponKo}">` : '') +
-        `<span class="st-badge ${stClass}">${c.style}</span>` +
-      `</span>`;
+    card.innerHTML = renderCardHTML(c, { compact: true });
 
     card.addEventListener('click', () => {
       addPlacement(catId, _picker.tierId, c.id);
@@ -1176,87 +1442,163 @@ function renderPickerGrid() {
   });
 
   if (shown === 0) {
-    grid.innerHTML = '<div class="picker-empty">No unranked characters match the filter</div>';
+    grid.innerHTML = `<div class="picker-empty">${lang==='ko'?'필터에 맞는 미배치 캐릭터가 없습니다':'No unranked characters match the filter'}</div>`;
   }
-  countEl.textContent = `${shown} / ${total} unranked characters`;
+  countEl.textContent = lang==='ko'?`${shown} / ${total} 미배치 캐릭터`:`${shown} / ${total} unranked characters`;
+  if (body) requestAnimationFrame(() => { body.scrollTop = scrollY; });
 }
 
 /* ─── Filter Bar ─── */
 function renderFilterBar() {
   const bar = document.getElementById('filter-bar');
   const f = S.ui.filters;
+  const isOpen = bar.dataset.open === '1';
+  const ACQ_I18N = {free:T('acqFree'),gacha:T('acqGacha'),buddy:T('acqBuddy'),custom:T('acqCustom')};
+
+  // Active filter summary
+  const parts = [];
+  if (S.ui.query) parts.push(`"${S.ui.query}"`);
+  if (f.elements.length) parts.push(f.elements.map(e => ELEMENT_KO[e]).join(','));
+  if (f.weapons.length) parts.push(f.weapons.map(w => WEAPON_KO[w]).join(','));
+  if (f.styles.length) parts.push(f.styles.join(','));
+  if (f.rarities.length) parts.push(f.rarities.map(r => r+'★').join(','));
+  if (f.sa) parts.push('SA');
+  if (f.ls) parts.push(f.ls);
+  if (f.acq.length) parts.push(f.acq.map(a => ACQ_I18N[a]).join(','));
+  const summary = parts.length ? parts.join(' | ') : '';
+
   bar.innerHTML = `
-    <div class="filter-row">
-      <label>Search</label>
-      <input class="search-input" type="text" placeholder="EN / KO" value="${esc(S.ui.query)}" oninput="S.ui.query=this.value;renderAll()">
-      <span class="filter-reset" onclick="resetFilters()">Reset</span>
+    <div class="filter-toggle ${isOpen?'open':''}" onclick="toggleFilterBar()">
+      <span class="ft-arrow">&#9654;</span>
+      <label style="min-width:auto;cursor:pointer;font-weight:500;font-size:0.85rem;color:var(--text-secondary)">${T('searchLabel')}</label>
+      <span class="ft-summary">${esc(summary)}</span>
+      <input class="search-input" type="text" placeholder="${T('searchPlaceholder')}" value="${esc(S.ui.query)}"
+        onclick="event.stopPropagation()" oninput="debounceSearch(this.value)" style="width:140px;font-size:0.8rem">
+      ${parts.length ? `<span class="filter-reset" onclick="event.stopPropagation();resetFilters()">${T('resetLabel')}</span>` : ''}
     </div>
-    <div class="filter-row">
-      <label>Element</label>
-      ${['fire','water','earth','wind','thunder','shade','crystal','null'].map(el =>
-        `<button class="ftag ${f.elements.includes(el)?'on':''}" onclick="toggleFilter('elements','${el}')"><img src="images/elements/${EL_ICON[el]}" width="18" height="18"> ${ELEMENT_KO[el]}</button>`
-      ).join('')}
-    </div>
-    <div class="filter-row">
-      <label>Weapon</label>
-      ${['sword','katana','axe','lance','bow','fist','hammer','staff'].map(w =>
-        `<button class="ftag ${f.weapons.includes(w)?'on':''}" onclick="toggleFilter('weapons','${w}')"><img src="images/weapons/${WP_ICON[w]}" width="18" height="18"> ${WEAPON_KO[w]}</button>`
-      ).join('')}
-    </div>
-    <div class="filter-row">
-      <label>Style</label>
-      ${['NS','AS','ES','Alter'].map(s =>
-        `<button class="ftag ${f.styles.includes(s)?'on':''}" onclick="toggleFilter('styles','${s}')">${s}</button>`
-      ).join('')}
-      <span style="margin-left:8px"></span>
-      ${[4,5].map(r =>
-        `<button class="ftag ${f.rarities.includes(r)?'on':''}" onclick="toggleFilter('rarities',${r})">${r}★</button>`
-      ).join('')}
-      <button class="ftag ${f.sa===true?'on':''}" onclick="S.ui.filters.sa=S.ui.filters.sa?null:true;renderAll()">SA</button>
-      <span style="margin-left:8px"></span>
-      <button class="ftag ${f.ls==='light'?'on':''}" onclick="S.ui.filters.ls=S.ui.filters.ls==='light'?null:'light';renderAll()" style="color:var(--ls-light)">Light</button>
-      <button class="ftag ${f.ls==='shadow'?'on':''}" onclick="S.ui.filters.ls=S.ui.filters.ls==='shadow'?null:'shadow';renderAll()" style="color:var(--ls-shadow)">Shadow</button>
-    </div>
-    <div class="filter-row">
-      <label>Acquire</label>
-      ${['free','gacha','buddy','custom'].map(a =>
-        `<button class="ftag ${f.acq.includes(a)?'on':''}" onclick="toggleFilter('acq','${a}')">${{free:'Free',gacha:'Gacha',buddy:'Buddy',custom:'Custom'}[a]}</button>`
-      ).join('')}
-      <button class="ftag ${f.excludeBuddy?'on':''}" onclick="S.ui.filters.excludeBuddy=!S.ui.filters.excludeBuddy;renderAll()" style="${f.excludeBuddy?'border-color:#e74c3c;color:#e74c3c':''}">Buddy &#10005;</button>
+    <div class="filter-body ${isOpen?'open':''}" id="filter-body">
+      <div style="padding:8px 16px">
+        <div class="filter-row">
+          <label>${T('elementLabel')}</label>
+          ${['fire','water','earth','wind','thunder','shade','crystal','null'].map(el =>
+            `<button class="ftag ${f.elements.includes(el)?'on':''}" onclick="toggleFilter('elements','${el}')"><img src="images/elements/${EL_ICON[el]}" width="18" height="18"> ${ELEMENT_KO[el]}</button>`
+          ).join('')}
+        </div>
+        <div class="filter-row">
+          <label>${T('weaponLabel')}</label>
+          ${['sword','katana','axe','lance','bow','fist','hammer','staff'].map(w =>
+            `<button class="ftag ${f.weapons.includes(w)?'on':''}" onclick="toggleFilter('weapons','${w}')"><img src="images/weapons/${WP_ICON[w]}" width="18" height="18"> ${WEAPON_KO[w]}</button>`
+          ).join('')}
+        </div>
+        <div class="filter-row">
+          <label>${T('styleLabel')}</label>
+          ${['NS','AS','ES','Alter'].map(s =>
+            `<button class="ftag ${f.styles.includes(s)?'on':''}" onclick="toggleFilter('styles','${s}')">${s}</button>`
+          ).join('')}
+          <span style="margin-left:8px"></span>
+          ${[4,5].map(r =>
+            `<button class="ftag ${f.rarities.includes(r)?'on':''}" onclick="toggleFilter('rarities',${r})">${r}★</button>`
+          ).join('')}
+          <button class="ftag ${f.sa===true?'on':''}" onclick="S.ui.filters.sa=S.ui.filters.sa?null:true;renderAll()">SA</button>
+          <span style="margin-left:8px"></span>
+          <button class="ftag ${f.ls==='light'?'on':''}" onclick="S.ui.filters.ls=S.ui.filters.ls==='light'?null:'light';renderAll()" style="color:var(--ls-light)">${T('lightLabel')}</button>
+          <button class="ftag ${f.ls==='shadow'?'on':''}" onclick="S.ui.filters.ls=S.ui.filters.ls==='shadow'?null:'shadow';renderAll()" style="color:var(--ls-shadow)">${T('shadowLabel')}</button>
+        </div>
+        <div class="filter-row">
+          <label>${T('acquireLabel')}</label>
+          ${['free','gacha','buddy','custom'].map(a =>
+            `<button class="ftag ${f.acq.includes(a)?'on':''}" onclick="toggleFilter('acq','${a}')">${ACQ_I18N[a]}</button>`
+          ).join('')}
+          <button class="ftag ${f.excludeBuddy?'on':''}" onclick="S.ui.filters.excludeBuddy=!S.ui.filters.excludeBuddy;renderAll()" style="${f.excludeBuddy?'border-color:#e74c3c;color:#e74c3c':''}">Buddy &#10005;</button>
+        </div>
+      </div>
     </div>`;
+}
+
+function toggleFilterBar() {
+  const bar = document.getElementById('filter-bar');
+  bar.dataset.open = bar.dataset.open === '1' ? '0' : '1';
+  renderFilterBar();
 }
 
 function toggleFilter(key, val) {
   const arr = S.ui.filters[key];
   const idx = arr.indexOf(val);
   if (idx >= 0) arr.splice(idx, 1); else arr.push(val);
-  renderAll();
+  renderAll('filter');
 }
 
 function resetFilters() {
   S.ui.query = '';
   S.ui.filters = { elements:[], weapons:[], styles:[], rarities:[], sa:null, ls:null, acq:[], excludeBuddy:false };
-  renderAll();
+  renderAll('filter');
 }
 
-/* ─── Pool ─── */
+/* ─── Pool (Lazy Render) ─── */
+const POOL_BATCH = 60;
+let _poolChars = [];
+let _poolRendered = 0;
+let _poolObserver = null;
+
 function renderPool() {
   const grid = document.getElementById('pool-grid');
   const header = document.getElementById('pool-header');
   grid.innerHTML = '';
   const catId = S.workspace.activeCategory;
   const placed = catId ? getPlacedIds(catId) : new Set();
+  const total = DB.characters.filter(c => !placed.has(c.id)).length;
 
-  let shown = 0, total = 0;
+  _poolChars = [];
   DB.characters.forEach(c => {
     if (placed.has(c.id)) return;
-    total++;
     if (!charMatchesFilter(c)) return;
-    grid.appendChild(makeCard(c));
-    shown++;
+    _poolChars.push(c);
   });
 
-  header.textContent = `Unranked: ${shown}/${total} shown (${DB.characters.length} total)`;
+  header.textContent = T('unrankedFmt')(_poolChars.length, total, DB.characters.length);
+  _poolRendered = 0;
+  renderPoolBatch(grid);
+  setupPoolObserver(grid);
+}
+
+function renderPoolBatch(grid) {
+  const end = Math.min(_poolRendered + POOL_BATCH, _poolChars.length);
+  for (let i = _poolRendered; i < end; i++) {
+    grid.appendChild(makeCard(_poolChars[i]));
+  }
+  _poolRendered = end;
+
+  const oldSentinel = grid.querySelector('.pool-sentinel');
+  if (oldSentinel) oldSentinel.remove();
+  const oldInfo = grid.querySelector('.pool-load-more');
+  if (oldInfo) oldInfo.remove();
+
+  if (_poolRendered < _poolChars.length) {
+    const sentinel = document.createElement('div');
+    sentinel.className = 'pool-sentinel';
+    grid.appendChild(sentinel);
+    const info = document.createElement('div');
+    info.className = 'pool-load-more';
+    info.textContent = `${_poolRendered} / ${_poolChars.length}`;
+    grid.appendChild(info);
+  }
+}
+
+function setupPoolObserver(grid) {
+  if (_poolObserver) _poolObserver.disconnect();
+  _poolObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && _poolRendered < _poolChars.length) {
+        const info = grid.querySelector('.pool-load-more');
+        if (info) info.remove();
+        renderPoolBatch(grid);
+        const newSentinel = grid.querySelector('.pool-sentinel');
+        if (newSentinel) _poolObserver.observe(newSentinel);
+      }
+    });
+  }, { root: null, rootMargin: '200px' });
+  const sentinel = grid.querySelector('.pool-sentinel');
+  if (sentinel) _poolObserver.observe(sentinel);
 }
 
 /* ─── Multi-Category (All) View — Side-by-Side ─── */
@@ -1266,7 +1608,7 @@ function renderAllView() {
   const tds = S.workspace.tierDefs;
 
   if (!cats.length) {
-    container.innerHTML = '<p class="mcat-empty">No categories yet. Use Tier view to add categories and place characters.</p>';
+    container.innerHTML = `<p class="mcat-empty">${T('noCatsYet')}</p>`;
     return;
   }
 
@@ -1303,7 +1645,7 @@ function renderAllView() {
     });
 
     if (!hasAny) {
-      html += `<div class="mcat-empty">Empty — place characters in Tier view</div>`;
+      html += `<div class="mcat-empty">${T('emptyCategory')}</div>`;
     }
     html += `</div>`;
   });
@@ -1328,17 +1670,17 @@ function renderTableView() {
   });
 
   const cols = [
-    {key:'icon', label:'', sortable:false},
-    {key:'nameKo', label:'Name (KO)'},
-    {key:'nameEn', label:'Name (EN)'},
-    {key:'element', label:'Element'},
-    {key:'weapon', label:'Weapon'},
-    {key:'style', label:'Style'},
-    {key:'rarity', label:'Rarity'},
-    {key:'sa', label:'SA'},
-    {key:'ls', label:'L/S'},
-    {key:'attackType', label:'Attack'},
-    {key:'date', label:'Release'},
+    {key:'icon', label:T('thIcon'), sortable:false},
+    {key:'nameKo', label:T('thNamePri')},
+    {key:'nameEn', label:T('thNameSec')},
+    {key:'element', label:T('thElement')},
+    {key:'weapon', label:T('thWeapon')},
+    {key:'style', label:T('thStyle')},
+    {key:'rarity', label:T('thRarity')},
+    {key:'sa', label:T('thSA')},
+    {key:'ls', label:T('thLS')},
+    {key:'attackType', label:T('thAttack')},
+    {key:'date', label:T('thRelease')},
   ];
 
   let html = '<table class="tv"><thead><tr>';
@@ -1352,7 +1694,7 @@ function renderTableView() {
   filtered.forEach(c => {
     const elIcon = c.element && EL_ICON[c.element] ? `<img class="tv-el-icon" src="images/elements/${EL_ICON[c.element]}" alt="${c.elementKo}"> ${c.elementKo}` : c.elementKo || '';
     const wpIcon = c.weapon && WP_ICON[c.weapon] ? `<img class="tv-wp-icon" src="images/weapons/${WP_ICON[c.weapon]}" alt="${c.weaponKo}"> ${c.weaponKo}` : c.weaponKo || '';
-    const lsText = c.ls === 'light' ? '<span style="color:var(--ls-light)">Light</span>' : c.ls === 'shadow' ? '<span style="color:var(--ls-shadow)">Shadow</span>' : '';
+    const lsText = c.ls === 'light' ? `<span style="color:var(--ls-light)">${T('lightLabel')}</span>` : c.ls === 'shadow' ? `<span style="color:var(--ls-shadow)">${T('shadowLabel')}</span>` : '';
     const stColor = c.style==='AS'?'var(--style-as)':c.style==='ES'?'var(--style-es)':c.style==='Alter'?'var(--style-alter)':'inherit';
 
     html += `<tr>
@@ -1393,7 +1735,7 @@ function renderStats() {
     return `${td.label}: ${arr.length}`;
   }).join(' | ');
 
-  bar.textContent = `Total: ${DB.characters.length} | Ranked: ${placed.size} | Filtered: ${filtered.length} | ${tierCounts}`;
+  bar.textContent = `${T('statsTotal')} ${DB.characters.length} | ${T('statsRanked')} ${placed.size} | ${T('statsFiltered')} ${filtered.length} | ${tierCounts}`;
 }
 
 /* ═══════════════════════════════════════════
@@ -1509,6 +1851,7 @@ function dragMove(e) {
   const dy = e.clientY - _drag.startY;
   if (!_drag.moved && Math.abs(dx) < 8 && Math.abs(dy) < 8) return; // dead zone for tap
   _drag.moved = true;
+  if (_drag.origCard) _drag.origCard.style.touchAction = 'none'; // lock scroll during drag
   _drag.ghost.style.left = (e.clientX - 30) + 'px';
   _drag.ghost.style.top = (e.clientY - 30) + 'px';
 
@@ -1534,7 +1877,7 @@ function dragEnd(e) {
   document.removeEventListener('pointercancel', dragEnd);
   document.querySelectorAll('.drag-over').forEach(d => d.classList.remove('drag-over'));
 
-  if (_drag.origCard) _drag.origCard.style.opacity = '1';
+  if (_drag.origCard) { _drag.origCard.style.opacity = '1'; _drag.origCard.style.touchAction = 'pan-y'; }
   _drag.ghost.remove();
 
   if (!_drag.moved) {
@@ -1610,6 +1953,96 @@ function getInsertIndex(dropZone, clientX) {
    ═══════════════════════════════════════════ */
 function esc(s) { if(!s)return''; const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
 
+function renderCardHTML(c, opts = {}) {
+  const stClass = 'st-' + c.style;
+  const elSrc = c.element && EL_ICON[c.element] ? `images/elements/${EL_ICON[c.element]}` : '';
+  const wpSrc = c.weapon && WP_ICON[c.weapon] ? `images/weapons/${WP_ICON[c.weapon]}` : '';
+  let html =
+    `<img class="card-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy">` +
+    `<span class="card-name">${esc(charName(c))}</span>` +
+    `<span class="card-meta">` +
+      (elSrc ? `<img src="${elSrc}" alt="${c.elementKo}">` : '') +
+      (wpSrc ? `<img src="${wpSrc}" alt="${c.weaponKo}">` : '') +
+      `<span class="st-badge ${stClass}">${c.style}</span>` +
+    `</span>`;
+  if (!opts.compact) {
+    html +=
+      `<span class="card-sub">` +
+        (c.ls ? `<span class="ls-badge ls-${c.ls}">${c.ls==='light'?'L':'S'}</span>` : '') +
+        `<span class="rarity-badge r${c.rarity}">${c.rarity}★</span>` +
+        (c.sa ? `<span class="sa-badge">SA</span>` : '') +
+      `</span>`;
+  }
+  return html;
+}
+
+/* ─── Info Toast (mobile tooltip replacement) ─── */
+let _toastEl = null;
+let _toastTimer = null;
+function showInfoToast(c) {
+  hideInfoToast();
+  const el = document.createElement('div');
+  el.className = 'info-toast';
+  const atkType = c.attackType || ATK_TYPE[c.weapon] || '';
+  el.innerHTML = `<img src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}">
+    <div class="it-details">
+      <div class="it-name">${esc(c.nameKo)}</div>
+      <div class="it-sub">${esc(c.nameEn)}</div>
+      <div class="it-sub">${c.style} ${c.rarity}★${c.sa?' SA':''} | ${c.elementKo||''} ${c.weaponKo||''} ${atkType}</div>
+      ${c.ls ? `<div class="it-sub">${c.ls==='light'?T('lightLabel'):T('shadowLabel')}</div>` : ''}
+    </div>`;
+  document.body.appendChild(el);
+  _toastEl = el;
+  _toastTimer = setTimeout(hideInfoToast, 3000);
+  el.addEventListener('pointerdown', hideInfoToast);
+}
+function hideInfoToast() {
+  clearTimeout(_toastTimer);
+  if (_toastEl) { _toastEl.remove(); _toastEl = null; }
+}
+
+/* ─── Debounced Search ─── */
+let _searchTimer = null;
+let _isComposing = false;
+
+function debounceSearch(val) {
+  if (_isComposing) return;
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(() => {
+    S.ui.query = val;
+    renderAll();
+  }, 150);
+}
+
+function setupSearchIME() {
+  document.addEventListener('compositionstart', () => { _isComposing = true; });
+  document.addEventListener('compositionend', (e) => {
+    _isComposing = false;
+    if (e.target.classList.contains('search-input')) {
+      debounceSearch(e.target.value);
+    }
+  });
+}
+
+/* ─── Overflow Menu ─── */
+function toggleOverflow() {
+  const sheet = document.getElementById('overflow-sheet');
+  sheet.classList.toggle('open');
+  if (sheet.classList.contains('open')) renderOverflowPanel();
+}
+function renderOverflowPanel() {
+  const panel = document.getElementById('overflow-panel');
+  if (!panel) return;
+  panel.innerHTML = `<div class="overflow-handle"></div>
+    <button class="btn btn-outline btn-add-char" onclick="toggleOverflow();showAddCharModal()">${T('addChar')}</button>
+    <button class="btn btn-outline" onclick="toggleOverflow();showPresetModal()">${T('template')}</button>
+    <button class="btn btn-outline" onclick="toggleOverflow();shareURL()">${T('share')}</button>
+    <button class="btn btn-outline" onclick="toggleOverflow();exportJSON()">${T('export')}</button>
+    <button class="btn btn-primary" onclick="toggleOverflow();copyAsImage()">${T('copyImage')}</button>
+    <button class="btn btn-outline" onclick="toggleOverflow();saveAsImage()">${T('saveJpg')}</button>
+    <label class="btn btn-outline" style="cursor:pointer">${T('import')}<input type="file" accept=".json" style="display:none" onchange="importJSON(this.files[0]);toggleOverflow()"></label>`;
+}
+
 /* ═══════════════════════════════════════════
    LZ-String (MIT License) - minified
    https://github.com/pieroxy/lz-string
@@ -1621,19 +2054,19 @@ var LZString=function(){function o(o,r){if(!t[o]){t[o]={};for(var n=0;n<o.length
    ═══════════════════════════════════════════ */
 async function captureArea() {
   if (typeof html2canvas === 'undefined') {
-    alert('html2canvas is loading... Try again in a moment.');
+    alert(T('html2canvasWait'));
     return null;
   }
   const area = document.getElementById('capture-area');
   // Add watermark temporarily
   const wm = document.createElement('div');
   wm.style.cssText = 'padding:6px 16px;font-size:0.72rem;color:#666;background:var(--bg-primary);text-align:right';
-  wm.textContent = 'AE Tier List Builder | anothereden.wiki | Team 랜선을 넘는 고양이들';
+  wm.textContent = T('title') + ' | anothereden.wiki | Team 랜선을 넘는 고양이들';
   area.appendChild(wm);
 
   const canvas = await html2canvas(area, {
     backgroundColor: '#1a1a2e',
-    scale: 1,
+    scale: Math.min(window.devicePixelRatio || 1, 2),
     useCORS: true,
     logging: false
   });
@@ -1650,7 +2083,7 @@ async function copyAsImage() {
       await navigator.clipboard.write([
         new ClipboardItem({ 'image/png': blob })
       ]);
-      alert('Copied! (' + Math.round(blob.size/1024) + 'KB) Ctrl+V to paste.');
+      alert(T('imageCopied')(Math.round(blob.size/1024)));
     }, 'image/png');
   } catch(e) {
     console.error('Clipboard write failed', e);
@@ -1692,7 +2125,7 @@ function loadIntroBanner() {
   // Version from DB meta or known
   const ver = DB.meta.version || '3.14.50+';
   gameVersion = '3.14.50';
-  verEl.textContent = 'Game Version: ' + gameVersion + ' | DB: ' + ver;
+  verEl.textContent = T('gameVerPrefix') + gameVersion + ' | DB: ' + ver;
   if (gvEl) gvEl.textContent = gameVersion;
 }
 
@@ -1720,7 +2153,7 @@ function showAddCharModal() {
   document.getElementById('acm-sa').checked = false;
   customCharImage = null;
   const drop = document.getElementById('acm-img-drop');
-  drop.innerHTML = '<span id="acm-img-placeholder">Drop / Paste<br>Image</span>';
+  drop.innerHTML = `<span id="acm-img-placeholder">${T('dropPaste')}</span>`;
   setupImageDrop();
 }
 
@@ -1773,7 +2206,7 @@ function readImageFile(file) {
 
 function saveCustomChar() {
   const name = document.getElementById('acm-name').value.trim();
-  if (!name) { alert('Name is required'); return; }
+  if (!name) { alert(T('nameRequired')); return; }
 
   const nameEn = document.getElementById('acm-name-en').value.trim() || name;
   const element = document.getElementById('acm-element').value;
@@ -1830,6 +2263,7 @@ function restoreCustomChars() {
    BOOT
    ═══════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
+  setupSearchIME();
   loadIntroBanner();
   // Skip intro if already dismissed this session
   if (sessionStorage.getItem('ae_intro_dismissed')) {
