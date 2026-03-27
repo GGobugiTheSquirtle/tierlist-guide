@@ -1827,7 +1827,8 @@ function renderTableView() {
   html += '</tr></thead><tbody>';
 
   filtered.forEach(c => {
-    const elIcon = c.element && EL_ICON[c.element] ? `<img class="tv-el-icon" src="images/elements/${EL_ICON[c.element]}" alt="${c.elementKo}"> ${c.elementKo}` : c.elementKo || '';
+    let elIcon = c.element && EL_ICON[c.element] ? `<img class="tv-el-icon" src="images/elements/${EL_ICON[c.element]}" alt="${c.elementKo}"> ${c.elementKo}` : c.elementKo || '';
+    if (c.element2 && EL_ICON[c.element2]) elIcon += ` <img class="tv-el-icon" src="images/elements/${EL_ICON[c.element2]}" alt="${c.element2Ko||''}"> ${c.element2Ko||''}`;
     const wpIcon = c.weapon && WP_ICON[c.weapon] ? `<img class="tv-wp-icon" src="images/weapons/${WP_ICON[c.weapon]}" alt="${c.weaponKo}"> ${c.weaponKo}` : c.weaponKo || '';
     const lsText = c.ls === 'light' ? `<span style="color:var(--ls-light)">${T('lightLabel')}</span>` : c.ls === 'shadow' ? `<span style="color:var(--ls-shadow)">${T('shadowLabel')}</span>` : '';
     const stColor = c.style==='AS'?'var(--style-as)':c.style==='ES'?'var(--style-es)':c.style==='Alter'?'var(--style-alter)':'inherit';
