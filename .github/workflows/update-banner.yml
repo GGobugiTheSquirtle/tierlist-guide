@@ -1,0 +1,43 @@
+name: Update Banner Image
+
+on:
+  schedule:
+    # 매주 월요일 00:00 UTC (한국시간 월요일 09:00)
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # 수동 실행 가능
+
+permissions:
+  contents: write
+
+jobs:
+  update-banner:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run banner update script
+        run: python _tools/update_tierlist_banner.py
+        env:
+          PYTHONIOENCODING: utf-8
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet images/banner.png images/banner_meta.json && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          VERSION=$(python -c "import json; print(json.load(open('images/banner_meta.json'))['version'])")
+          git add images/banner.png images/banner_meta.json
+          git commit -m "chore: auto-update banner to v${VERSION}"
+          git push
