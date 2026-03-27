@@ -134,6 +134,8 @@ input{font:inherit;color:var(--text-primary);background:var(--bg-secondary);bord
 .tap-select-active .tier-drop::after{content:'Tap to place here';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(212,164,74,0.08);color:var(--accent);font-size:0.75rem;opacity:0;transition:opacity .15s;pointer-events:none;border-radius:var(--radius)}
 .tap-select-active .tier-drop:empty::after{opacity:1}
 .tap-select-active .tier-row{outline:1px dashed rgba(212,164,74,0.3);outline-offset:-1px}
+.tap-select-active .pool-grid{position:relative;cursor:pointer}
+.tap-select-active .pool-grid::after{content:var(--unrank-hint,'Tap to unrank');position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(231,76,60,0.06);color:#e74c3c;font-size:0.8rem;opacity:.7;pointer-events:none;border-radius:var(--radius);border:1px dashed rgba(231,76,60,0.3)}
 .tap-hint{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:1800;background:var(--bg-secondary);border:1px solid var(--accent);color:var(--accent);padding:10px 20px;border-radius:20px;font-size:0.82rem;box-shadow:0 4px 16px rgba(0,0,0,.5);pointer-events:none;animation:tapHintIn .25s ease-out}
 @keyframes tapHintIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
@@ -1757,6 +1759,8 @@ function tapSelect(charId, card) {
   _tapSelected = { charId };
   card.classList.add('tap-selected');
   document.body.classList.add('tap-select-active');
+  const poolGrid = document.getElementById('pool-grid');
+  if (poolGrid) poolGrid.style.setProperty('--unrank-hint', `'${lang==='ko'?'탭하여 배치 해제':'Tap to unrank'}'`);
   showTapHint(charById(charId));
 }
 
