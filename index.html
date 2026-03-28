@@ -311,7 +311,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
 <!-- ─── Intro Screen ─── -->
 <div class="intro" id="intro-screen">
-  <img class="intro-banner" id="intro-banner" src="" alt="Another Eden Key Visual" onerror="this.style.display='none'">
+  <img class="intro-banner" id="intro-banner" alt="Another Eden Key Visual" style="display:none">
   <h1 id="intro-title">어나더에덴 티어표 빌더</h1>
   <p class="intro-sub" id="intro-sub">나만의 어나더에덴 티어표를 만들고 공유하세요</p>
   <p class="intro-ver" id="intro-ver">게임 버전: 로딩중...</p>
@@ -2197,6 +2197,10 @@ async function loadIntroBanner() {
   const verEl = document.getElementById('intro-ver');
   const gvEl = document.getElementById('game-version');
 
+  // 로드 성공 시 표시, 실패 시 숨김 유지
+  banner.onload = () => { banner.style.display = ''; };
+  banner.onerror = () => { banner.style.display = 'none'; };
+
   // 1) 로컬 배너 메타 시도 (update_tierlist_banner.py로 다운로드)
   try {
     const metaResp = await fetch('images/banner_meta.json');
@@ -2212,7 +2216,6 @@ async function loadIntroBanner() {
     banner.src = 'https://anothereden.wiki/images/e/e3/An_Ode_to_Origin_Act_4_3.14.50.png';
     gameVersion = '3.14.50';
   }
-  banner.onerror = () => { banner.style.display = 'none'; };
 
   const ver = DB.meta.version || '';
   verEl.textContent = T('gameVerPrefix') + (gameVersion || '?') + (ver ? ' | DB: ' + ver : '');
