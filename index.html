@@ -92,8 +92,16 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .card-meta img,.card-sub img{width:20px;height:20px;display:inline-block;vertical-align:middle;flex-shrink:0}
 .card-name{display:block;font-size:0.78rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;font-weight:500}
 .card-meta{display:flex;justify-content:center;align-items:center;gap:2px;margin-top:2px}
-.card-meta .st-badge{font-size:0.58rem;padding:1px 4px;border-radius:3px;font-weight:600;line-height:1.4}
-.st-NS{background:rgba(85,85,85,0.3);color:#aaa;border:1px solid rgba(85,85,85,0.5)}.st-AS{background:rgba(192,192,192,0.2);color:var(--style-as);border:1px solid rgba(192,192,192,0.4)}.st-ES{background:rgba(80,200,120,0.15);color:var(--style-es);border:1px solid rgba(80,200,120,0.35)}.st-Alter{background:rgba(255,107,107,0.2);color:var(--style-alter);border:1px solid rgba(255,107,107,0.4)}
+.st-badge{font-size:0.58rem;padding:1px 4px;border-radius:3px;font-weight:600;line-height:1.4;display:inline-block}
+/* 미성각 (SA=false) */
+.st-NS{background:linear-gradient(135deg,#E8D478,#C8A840);color:#111;border:1px solid #D0B850;text-shadow:0 1px 0 rgba(255,255,255,0.3)}
+.st-AS{background:linear-gradient(135deg,#90A8E0,#5070B8);color:#fff;border:1px solid #6080C8;text-shadow:0 1px 1px rgba(0,0,0,0.3)}
+.st-ES{background:linear-gradient(135deg,#88A0D8,#4868B0);color:#fff;border:1px solid #5878C0;text-shadow:0 1px 1px rgba(0,0,0,0.3)}
+.st-Alter{background:linear-gradient(135deg,#FF7878,#D04848);color:#fff;border:1px solid #E05858;text-shadow:0 1px 1px rgba(0,0,0,0.3)}
+/* 성각 (SA=true) */
+.st-NS.st-sa{background:linear-gradient(135deg,#F8A0A0,#D85868);color:#fff;border-color:#E07078;text-shadow:0 1px 1px rgba(0,0,0,0.2)}
+.st-AS.st-sa{background:linear-gradient(135deg,#A090E0,#6050C0);border-color:#7868D0}
+.st-ES.st-sa{background:linear-gradient(135deg,#A0F0F0,#40C0C8);color:#111;border-color:#60D0D0;text-shadow:0 1px 0 rgba(255,255,255,0.3)}
 .card-sub{display:flex;justify-content:center;align-items:center;gap:3px;margin-top:2px;font-size:0.68rem;color:var(--text-dim)}
 .ls-badge{font-weight:700;font-size:0.62rem;padding:1px 4px;border-radius:3px;line-height:1.4}
 .ls-light{background:rgba(255,234,167,0.2);color:var(--ls-light)}
@@ -1840,7 +1848,7 @@ function renderTableView() {
     if (c.element2 && EL_ICON[c.element2]) elIcon += ` <img class="tv-el-icon" src="images/elements/${EL_ICON[c.element2]}" alt="${c.element2Ko||''}"> ${c.element2Ko||''}`;
     const wpIcon = c.weapon && WP_ICON[c.weapon] ? `<img class="tv-wp-icon" src="images/weapons/${WP_ICON[c.weapon]}" alt="${c.weaponKo}"> ${c.weaponKo}` : c.weaponKo || '';
     const lsText = c.ls === 'light' ? `<span style="color:var(--ls-light)">${T('lightLabel')}</span>` : c.ls === 'shadow' ? `<span style="color:var(--ls-shadow)">${T('shadowLabel')}</span>` : '';
-    const stColor = c.style==='AS'?'var(--style-as)':c.style==='ES'?'var(--style-es)':c.style==='Alter'?'var(--style-alter)':'inherit';
+    const tvStClass = 'st-' + c.style + (c.sa ? ' st-sa' : '');
 
     html += `<tr>
       <td><img class="tv-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy"></td>
@@ -1848,7 +1856,7 @@ function renderTableView() {
       <td style="color:var(--text-dim)">${esc(lang==='ko'?c.nameEn:c.nameKo)}</td>
       <td>${elIcon}</td>
       <td>${wpIcon}</td>
-      <td style="color:${stColor};font-weight:600">${c.style}</td>
+      <td><span class="st-badge ${tvStClass}">${c.style}</span></td>
       <td>${c.rarity}★</td>
       <td>${c.sa ? '<span class="sa-badge">SA</span>' : ''}</td>
       <td>${lsText}</td>
@@ -2013,7 +2021,7 @@ function getInsertIndex(dropZone, clientX) {
 function esc(s) { if(!s)return''; const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
 
 function renderCardHTML(c, opts = {}) {
-  const stClass = 'st-' + c.style;
+  const stClass = 'st-' + c.style + (c.sa ? ' st-sa' : '');
   // 속성 아이콘 (다중속성 = element2 필드 지원)
   const el1Src = c.element && EL_ICON[c.element] ? `images/elements/${EL_ICON[c.element]}` : '';
   const el2Src = c.element2 && EL_ICON[c.element2] ? `images/elements/${EL_ICON[c.element2]}` : '';
