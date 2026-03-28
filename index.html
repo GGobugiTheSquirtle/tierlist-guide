@@ -2084,25 +2084,18 @@ function hideInfoToast() {
 
 /* ─── Debounced Search ─── */
 let _searchTimer = null;
-let _isComposing = false;
 
 function debounceSearch(val) {
-  if (_isComposing) return;
   clearTimeout(_searchTimer);
   _searchTimer = setTimeout(() => {
     S.ui.query = val;
     renderPool();
-  }, 150);
+  }, 120);
 }
 
 function setupSearchIME() {
-  document.addEventListener('compositionstart', () => { _isComposing = true; });
-  document.addEventListener('compositionend', (e) => {
-    _isComposing = false;
-    if (e.target.classList.contains('pool-search') || e.target.classList.contains('search-input')) {
-      debounceSearch(e.target.value);
-    }
-  });
+  // 한글 IME 조합 중에도 oninput이 발생하므로 별도 처리 불필요
+  // debounce 타이머가 자연스럽게 중복 호출 방지
 }
 
 /* ─── Overflow Menu ─── */
