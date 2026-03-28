@@ -533,6 +533,8 @@ const I18N = {
     presetPrydwen:'역할별 분류', presetSimple:'심플', presetSimpleDesc:'카테고리 1개, S-A-B-C-D',
     catOverall:'종합', catSlash:'DPS (참)', catPierce:'DPS (타)', catBlunt:'DPS (돌)', catMagic:'DPS (마법)',
     catSupport:'서포트', catTank:'탱크', catAll:'전체',
+    catDPS:'딜러', catAmplifier:'버퍼', catSustain:'힐러', catSpecialist:'스페셜리스트',
+    presetRoleDesc:'딜러 / 버퍼 / 힐러 / 스페셜리스트',
     emptyTierHint:'+ 버튼 또는 드래그로 캐릭터를 추가하세요',
     captureWarning:'이미지 캡처에 편집 UI가 포함됩니다. 뷰어 모드로 전환하시겠습니까?',
   },
@@ -599,6 +601,8 @@ const I18N = {
     presetPrydwen:'By Role', presetSimple:'Simple', presetSimpleDesc:'1 category, S-A-B-C-D',
     catOverall:'Overall', catSlash:'DPS (Slash)', catPierce:'DPS (Pierce)', catBlunt:'DPS (Blunt)', catMagic:'DPS (Magic)',
     catSupport:'Support', catTank:'Tank', catAll:'All',
+    catDPS:'DPS', catAmplifier:'Amplifier', catSustain:'Sustain', catSpecialist:'Specialist',
+    presetRoleDesc:'DPS / Amplifier / Sustain / Specialist',
     emptyTierHint:'Drag characters here or use the + button',
     captureWarning:'Capture will include editing UI. Switch to Viewer mode?',
   }
@@ -616,8 +620,8 @@ function getPresets() { return {
   ], tierDefs:[
     {label:'SS',color:'#ffd700'},{label:'S',color:'#ff4444'},{label:'A',color:'#ff8c00'},{label:'B',color:'#ffdd00'},{label:'C',color:'#888888'}
   ]},
-  prydwen: { name:T('presetPrydwen'), desc:'DPS / Amplifier / Sustain / Specialist', categories:[
-    {name:'DPS'},{name:'Amplifier'},{name:'Sustain'},{name:'Specialist'}
+  prydwen: { name:T('presetPrydwen'), desc:T('presetRoleDesc'), categories:[
+    {name:T('catDPS')},{name:T('catAmplifier')},{name:T('catSustain')},{name:T('catSpecialist')}
   ], tierDefs:[
     {label:'T0',color:'#ffd700'},{label:'T0.5',color:'#ffaa00'},{label:'T1',color:'#ff4444'},{label:'T2',color:'#ff8c00'},{label:'T3',color:'#888888'}
   ]},
