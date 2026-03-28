@@ -2146,7 +2146,7 @@ async function captureArea() {
 
   const canvas = await html2canvas(area, {
     backgroundColor: '#1a1a2e',
-    scale: Math.min(window.devicePixelRatio || 1, 2),
+    scale: Math.max(window.devicePixelRatio || 2, 3),
     useCORS: true,
     logging: false
   });
@@ -2180,7 +2180,7 @@ async function saveAsImage() {
 
 function saveCanvasAsPNG(canvas) {
   const a = document.createElement('a');
-  a.href = canvas.toDataURL('image/jpeg', 0.85);
+  a.href = canvas.toDataURL('image/jpeg', 0.95);
   a.download = 'ae-tierlist-' + new Date().toISOString().slice(0,10) + '.jpg';
   a.click();
 }
