@@ -772,8 +772,35 @@ function autoSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveToStor
 /* ═══════════════════════════════════════════
    URL SHARE (LZ-string inline below)
    ═══════════════════════════════════════════ */
+// 캐릭터 ID ↔ 인덱스 변환 (URL 단축용)
+function buildIdIndex() {
+  const map = {}; DB.characters.forEach((c, i) => { map[c.id] = i; });
+  return map;
+}
+function placementsToCompact(placements) {
+  const idMap = buildIdIndex();
+  const compact = {};
+  for (const [catId, tiers] of Object.entries(placements)) {
+    compact[catId] = {};
+    for (const [tierId, ids] of Object.entries(tiers)) {
+      compact[catId][tierId] = ids.map(id => idMap[id] !== undefined ? idMap[id] : id);
+    }
+  }
+  return compact;
+}
+function compactToPlacements(compact) {
+  const restored = {};
+  for (const [catId, tiers] of Object.entries(compact)) {
+    restored[catId] = {};
+    for (const [tierId, indices] of Object.entries(tiers)) {
+      restored[catId][tierId] = indices.map(idx => typeof idx === 'number' ? (DB.characters[idx]?.id || idx) : idx);
+    }
+  }
+  return restored;
+}
+
 function shareURL() {
-  const state = { v:1, categories:S.workspace.categories, tierDefs:S.workspace.tierDefs, placements:S.workspace.placements };
+  const state = { v:2, c:S.workspace.categories, t:S.workspace.tierDefs, p:placementsToCompact(S.workspace.placements) };
   const json = JSON.stringify(state);
   const hash = LZString.compressToEncodedURIComponent(json);
   const url = location.origin + location.pathname + '#s=' + hash;
@@ -797,7 +824,15 @@ function loadFromURL() {
     const json = LZString.decompressFromEncodedURIComponent(hash);
     if (!json) return;
     const state = JSON.parse(json);
-    if (state.v === 1) {
+    if (state.v === 2) {
+      S.workspace.categories = state.c || [];
+      S.workspace.tierDefs = state.t || [];
+      S.workspace.placements = compactToPlacements(state.p || {});
+      S.workspace.activeCategory = S.workspace.categories.length ? S.workspace.categories[0].id : null;
+      setMode('viewer');
+      setView('all');
+    } else if (state.v === 1) {
+      // v1 하위호환
       S.workspace.categories = state.categories || [];
       S.workspace.tierDefs = state.tierDefs || [];
       S.workspace.placements = state.placements || {};
