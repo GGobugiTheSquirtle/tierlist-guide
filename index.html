@@ -93,7 +93,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .card-name{display:block;font-size:0.78rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;font-weight:500}
 .card-meta{display:flex;justify-content:center;align-items:center;gap:2px;margin-top:2px}
 .card-meta .st-badge{font-size:0.58rem;padding:1px 4px;border-radius:3px;font-weight:600;line-height:1.4}
-.st-NS{background:#555;color:#ddd}.st-AS{background:var(--style-as);color:#111}.st-ES{background:var(--style-es);color:#111}.st-Alter{background:var(--style-alter);color:#fff}
+.st-NS{background:rgba(85,85,85,0.3);color:#aaa;border:1px solid rgba(85,85,85,0.5)}.st-AS{background:rgba(192,192,192,0.2);color:var(--style-as);border:1px solid rgba(192,192,192,0.4)}.st-ES{background:rgba(80,200,120,0.15);color:var(--style-es);border:1px solid rgba(80,200,120,0.35)}.st-Alter{background:rgba(255,107,107,0.2);color:var(--style-alter);border:1px solid rgba(255,107,107,0.4)}
 .card-sub{display:flex;justify-content:center;align-items:center;gap:3px;margin-top:2px;font-size:0.68rem;color:var(--text-dim)}
 .ls-badge{font-weight:700;font-size:0.62rem;padding:1px 4px;border-radius:3px;line-height:1.4}
 .ls-light{background:rgba(255,234,167,0.2);color:var(--ls-light)}
@@ -1680,17 +1680,25 @@ function renderPool() {
     return String(va).localeCompare(String(vb), 'ko') * sortDir;
   });
 
-  // 헤더: 카운트 + 검색 + 정렬
+  // 헤더: 카운트 + 검색 + 정렬 (검색 중 포커스 유지)
+  const existingSearch = header.querySelector('.pool-search');
+  const searchHasFocus = existingSearch && document.activeElement === existingSearch;
   const nameLabel = lang==='ko'?'이름':'Name';
   const dateLabel = lang==='ko'?'출시일':'Date';
-  header.innerHTML = `
-    <span>${T('unrankedFmt')(_poolChars.length, total, DB.characters.length)}</span>
-    <input class="pool-search" type="text" placeholder="${T('searchPlaceholder')}" value="${esc(S.ui.query)}"
-      oninput="debounceSearch(this.value)" onclick="event.stopPropagation()">
-    <button class="pool-sort ${_poolSort==='nameKo'?'active':''}" onclick="_poolSort='nameKo';renderPool()">${nameLabel} ▲</button>
-    <button class="pool-sort ${_poolSort==='nameKo-desc'?'active':''}" onclick="_poolSort='nameKo-desc';renderPool()">${nameLabel} ▼</button>
-    <button class="pool-sort ${_poolSort==='date'?'active':''}" onclick="_poolSort='date';renderPool()">${dateLabel} ▲</button>
-    <button class="pool-sort ${_poolSort==='date-desc'?'active':''}" onclick="_poolSort='date-desc';renderPool()">${dateLabel} ▼</button>`;
+  if (searchHasFocus) {
+    // 검색 중이면 카운트만 업데이트, input은 건드리지 않음
+    const countSpan = header.querySelector('.pool-count');
+    if (countSpan) countSpan.textContent = T('unrankedFmt')(_poolChars.length, total, DB.characters.length);
+  } else {
+    header.innerHTML = `
+      <span class="pool-count">${T('unrankedFmt')(_poolChars.length, total, DB.characters.length)}</span>
+      <input class="pool-search" type="text" placeholder="${T('searchPlaceholder')}" value="${esc(S.ui.query)}"
+        oninput="debounceSearch(this.value)" onclick="event.stopPropagation()">
+      <button class="pool-sort ${_poolSort==='nameKo'?'active':''}" onclick="_poolSort='nameKo';renderPool()">${nameLabel} ▲</button>
+      <button class="pool-sort ${_poolSort==='nameKo-desc'?'active':''}" onclick="_poolSort='nameKo-desc';renderPool()">${nameLabel} ▼</button>
+      <button class="pool-sort ${_poolSort==='date'?'active':''}" onclick="_poolSort='date';renderPool()">${dateLabel} ▲</button>
+      <button class="pool-sort ${_poolSort==='date-desc'?'active':''}" onclick="_poolSort='date-desc';renderPool()">${dateLabel} ▼</button>`;
+  }
 
   _poolRendered = 0;
   renderPoolBatch(grid);
