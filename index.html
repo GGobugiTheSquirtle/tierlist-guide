@@ -880,7 +880,14 @@ function importJSON(file) {
 function charMatchesFilter(c) {
   const f = S.ui.filters;
   const q = S.ui.query.toLowerCase();
-  if (q && !c.nameKo.toLowerCase().includes(q) && !c.nameEn.toLowerCase().includes(q) && !c.id.includes(q)) return false;
+  if (q) {
+    let match = c.nameKo.toLowerCase().includes(q) || c.nameEn.toLowerCase().includes(q) || c.id.includes(q);
+    if (!match && c.alterOf) {
+      const orig = charById(c.alterOf);
+      if (orig) match = orig.nameKo.toLowerCase().includes(q) || orig.nameEn.toLowerCase().includes(q);
+    }
+    if (!match) return false;
+  }
   if (f.elements.length && !f.elements.includes(c.element) && !(c.element2 && f.elements.includes(c.element2))) return false;
   if (f.weapons.length && !f.weapons.includes(c.weapon)) return false;
   if (f.styles.length && !f.styles.includes(c.style)) return false;
@@ -1334,8 +1341,10 @@ function makeCard(c, opts = {}) {
 /* ─── Tooltip ─── */
 function showTooltip(c, e) {
   const tt = document.getElementById('tooltip');
+  const alterHint = c.alterOf ? (() => { const o = charById(c.alterOf); return o ? `<div class="tt-row" style="color:var(--style-alter);font-style:italic">⟡ ${esc(o.nameKo)}</div>` : ''; })() : '';
   tt.innerHTML = `<div class="tt-name">${esc(c.nameKo)}</div>` +
     `<div class="tt-row">${esc(c.nameEn)}</div>` +
+    alterHint +
     `<div class="tt-row">${c.style} / ${c.rarity}★${c.sa?' SA':''}</div>` +
     `<div class="tt-row">${c.elementKo || ''}${c.element2Ko ? '+'+c.element2Ko : ''} / ${c.weaponKo || ''}</div>` +
     (c.ls ? `<div class="tt-row">${c.ls==='light'?T('lightLabel'):T('shadowLabel')}</div>` : '') +

@@ -23,7 +23,8 @@
       "ls": "shadow",
       "acq": "buddy",
       "date": "2026-03-19",
-      "icon": "101000431_rank5_command.webp"
+      "icon": "101000431_rank5_command.webp",
+      "alterOf": "toova"
     },
     {
       "id": "mare",
@@ -498,7 +499,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2025-07-10",
-      "icon": "101010201_rank5_command.webp"
+      "icon": "101010201_rank5_command.webp",
+      "alterOf": "tsukiha"
     },
     {
       "id": "cyan_scyther_as",
@@ -555,7 +557,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2025-05-22",
-      "icon": "101050211_rank5_command.webp"
+      "icon": "101050211_rank5_command.webp",
+      "alterOf": "shion"
     },
     {
       "id": "red_clad_flam_as",
@@ -802,7 +805,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2025-02-20",
-      "icon": "101050201_rank5_command.webp"
+      "icon": "101050201_rank5_command.webp",
+      "alterOf": "senya"
     },
     {
       "id": "krervo_as",
@@ -859,7 +863,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2025-01-09",
-      "icon": "101010191_rank5_command.webp"
+      "icon": "101010191_rank5_command.webp",
+      "alterOf": "claude"
     },
     {
       "id": "necoco_es",
@@ -1049,7 +1054,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2024-10-24",
-      "icon": "101060181_rank5_command.webp"
+      "icon": "101060181_rank5_command.webp",
+      "alterOf": "akane"
     },
     {
       "id": "sesta_as",
@@ -1201,7 +1207,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2024-08-22",
-      "icon": "101070151_rank5_command.webp"
+      "icon": "101070151_rank5_command.webp",
+      "alterOf": "myrus"
     },
     {
       "id": "terry",
@@ -1277,7 +1284,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2024-07-04",
-      "icon": "101060171_rank5_command.webp"
+      "icon": "101060171_rank5_command.webp",
+      "alterOf": "renri"
     },
     {
       "id": "minalca_as",
@@ -1467,7 +1475,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2024-04-25",
-      "icon": "101070141_rank5_command.webp"
+      "icon": "101070141_rank5_command.webp",
+      "alterOf": "isuka"
     },
     {
       "id": "anabel_es",
@@ -1676,7 +1685,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2024-01-22",
-      "icon": "101020181_rank5_command.webp"
+      "icon": "101020181_rank5_command.webp",
+      "alterOf": "shigure"
     },
     {
       "id": "thillelille_es",
@@ -1923,7 +1933,8 @@
       "ls": "light",
       "acq": "gacha",
       "date": "2023-10-25",
-      "icon": "101000361_rank5_command.webp"
+      "icon": "101000361_rank5_command.webp",
+      "alterOf": "chiyo"
     },
     {
       "id": "kamlanage",
@@ -2037,7 +2048,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2023-09-26",
-      "icon": "101000351_rank5_command.webp"
+      "icon": "101000351_rank5_command.webp",
+      "alterOf": "dunarith"
     },
     {
       "id": "melody_as",
@@ -2151,7 +2163,8 @@
       "ls": "shadow",
       "acq": "buddy",
       "date": "2023-08-04",
-      "icon": "101030181_rank5_command.webp"
+      "icon": "101030181_rank5_command.webp",
+      "alterOf": "thillelille"
     },
     {
       "id": "limil",
@@ -2322,7 +2335,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2023-06-21",
-      "icon": "101010151_rank5_command.webp"
+      "icon": "101010151_rank5_command.webp",
+      "alterOf": "melina"
     },
     {
       "id": "yakumo",
@@ -2398,7 +2412,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2023-04-26",
-      "icon": "101040191_rank5_command.webp"
+      "icon": "101040191_rank5_command.webp",
+      "alterOf": "tsukiha"
     },
     {
       "id": "mariel_es",
@@ -2645,7 +2660,8 @@
       "ls": "light",
       "acq": "gacha",
       "date": "2023-01-11",
-      "icon": "101040181_rank5_command.webp"
+      "icon": "101040181_rank5_command.webp",
+      "alterOf": "hismena"
     },
     {
       "id": "necoco_as",
@@ -2721,7 +2737,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2022-12-20",
-      "icon": "101010141_rank5_command.webp"
+      "icon": "101010141_rank5_command.webp",
+      "alterOf": "heena"
     },
     {
       "id": "lloyd",
@@ -2987,7 +3004,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2022-08-12",
-      "icon": "101000301_rank5_command.webp"
+      "icon": "101000301_rank5_command.webp",
+      "alterOf": "hardy"
     },
     {
       "id": "radias_as",
@@ -3196,7 +3214,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2022-04-27",
-      "icon": "101050151_rank5_command.webp"
+      "icon": "101050151_rank5_command.webp",
+      "alterOf": "shanie"
     },
     {
       "id": "starky",
@@ -3234,7 +3253,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2022-04-15",
-      "icon": "101040171_rank5_command.webp"
+      "icon": "101040171_rank5_command.webp",
+      "alterOf": "soira"
     },
     {
       "id": "flammelapis",
@@ -3291,7 +3311,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2022-03-16",
-      "icon": "101030161_rank5_command.webp"
+      "icon": "101030161_rank5_command.webp",
+      "alterOf": "miyu"
     },
     {
       "id": "red_clad_flam_alter",
@@ -3310,7 +3331,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2022-02-25",
-      "icon": "101060141_rank5_command.webp"
+      "icon": "101060141_rank5_command.webp",
+      "alterOf": "aldo"
     },
     {
       "id": "zeviro_as",
@@ -3348,7 +3370,8 @@
       "ls": "shadow",
       "acq": "gacha",
       "date": "2022-02-07",
-      "icon": "101020141_rank5_command.webp"
+      "icon": "101020141_rank5_command.webp",
+      "alterOf": "deirdre"
     },
     {
       "id": "eva",
