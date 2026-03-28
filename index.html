@@ -319,8 +319,8 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   <h1 id="header-title" onclick="showIntro()" title="Home">어나더에덴 티어표 빌더</h1>
   <div class="header-actions">
     <div class="toggle-group">
-      <button id="btn-viewer" onclick="setMode('viewer')">뷰어</button>
       <button id="btn-builder" class="active" onclick="setMode('builder')">빌더</button>
+      <button id="btn-viewer" onclick="setMode('viewer')">뷰어</button>
     </div>
     <div class="toggle-group">
       <button id="btn-tier" class="active" onclick="setView('tier')">티어</button>
@@ -798,6 +798,7 @@ function loadFromURL() {
       S.workspace.placements = state.placements || {};
       S.workspace.activeCategory = S.workspace.categories.length ? S.workspace.categories[0].id : null;
       setMode('viewer');
+      setView('all');
     }
   } catch(e) { console.error('URL decode failed', e); }
 }
