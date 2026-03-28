@@ -1681,9 +1681,17 @@ function renderPool() {
     _poolChars.push(c);
   });
 
-  // 정렬
+  // 정렬: 검색어가 있으면 이름 시작 매치 우선 → 포함 매치, 그 안에서 기존 정렬 유지
   const [sortKey, sortDir] = _poolSort.includes('-desc') ? [_poolSort.replace('-desc',''), -1] : [_poolSort, 1];
+  const q = S.ui.query.toLowerCase();
   _poolChars.sort((a, b) => {
+    if (q) {
+      const aName = charName(a).toLowerCase();
+      const bName = charName(b).toLowerCase();
+      const aStarts = aName.startsWith(q) ? 0 : 1;
+      const bStarts = bName.startsWith(q) ? 0 : 1;
+      if (aStarts !== bStarts) return aStarts - bStarts;
+    }
     const va = a[sortKey] || '', vb = b[sortKey] || '';
     return String(va).localeCompare(String(vb), 'ko') * sortDir;
   });
