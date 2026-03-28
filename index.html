@@ -2083,7 +2083,7 @@ function debounceSearch(val) {
   clearTimeout(_searchTimer);
   _searchTimer = setTimeout(() => {
     S.ui.query = val;
-    renderAll();
+    renderPool();
   }, 150);
 }
 
@@ -2091,7 +2091,7 @@ function setupSearchIME() {
   document.addEventListener('compositionstart', () => { _isComposing = true; });
   document.addEventListener('compositionend', (e) => {
     _isComposing = false;
-    if (e.target.classList.contains('search-input')) {
+    if (e.target.classList.contains('pool-search') || e.target.classList.contains('search-input')) {
       debounceSearch(e.target.value);
     }
   });
