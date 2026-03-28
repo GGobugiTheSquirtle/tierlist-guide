@@ -236,6 +236,11 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .mcat-mini{width:52px;text-align:center;padding:2px}
 .mcat-mini img{width:36px;height:36px;border-radius:4px;display:block;margin:0 auto}
 .mcat-mini .mm-name{font-size:0.52rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;margin-top:1px;line-height:1.2}
+.mcat-mini{position:relative}
+.mcat-remove{position:absolute;top:-2px;right:-2px;width:14px;height:14px;border-radius:50%;background:rgba(231,76,60,0.85);color:#fff;font-size:0.5rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;opacity:0;transition:opacity .15s;line-height:1}
+.mcat-mini:hover .mcat-remove{opacity:1}
+.mcat-add-btn{display:block;margin:4px auto 0;width:20px;height:20px;border-radius:50%;background:rgba(201,168,76,0.15);color:var(--accent);font-size:0.7rem;border:1px solid rgba(201,168,76,0.3);cursor:pointer;line-height:1;padding:0;transition:all .15s}
+.mcat-add-btn:hover{background:rgba(201,168,76,0.3);border-color:var(--accent)}
 .mcat-empty{color:var(--text-dim);font-size:0.7rem;padding:12px;text-align:center;font-style:italic}
 
 /* ─── Capture Area ─── */
@@ -1761,6 +1766,7 @@ function renderAllView() {
   const container = document.getElementById('all-view');
   const cats = S.workspace.categories;
   const tds = S.workspace.tierDefs;
+  const isBuilder = S.mode === 'builder';
 
   if (!cats.length) {
     container.innerHTML = `<p class="mcat-empty">${T('noCatsYet')}</p>`;
@@ -1782,14 +1788,17 @@ function renderAllView() {
       });
 
       html += `<div class="mcat-tier-row">`;
-      html += `<div class="mcat-tier-label" style="background:${td.color}22;color:${td.color}">${esc(td.label)}</div>`;
+      html += `<div class="mcat-tier-label" style="background:${td.color}22;color:${td.color}">${esc(td.label)}`;
+      if (isBuilder) html += `<button class="mcat-add-btn" data-cat="${cat.id}" data-tier="${td.id}" title="${T('addChar')}">+</button>`;
+      html += `</div>`;
       html += `<div class="mcat-tier-cards">`;
 
       if (chars.length) {
         hasAny = true;
         chars.forEach(cid => {
           const c = charById(cid);
-          html += `<div class="mcat-mini" title="${esc(c.nameEn + ' / ' + c.nameKo)}">`;
+          html += `<div class="mcat-mini" data-cid="${cid}" data-cat="${cat.id}" title="${esc(c.nameEn + ' / ' + c.nameKo)}">`;
+          if (isBuilder) html += `<span class="mcat-remove" data-cid="${cid}" data-cat="${cat.id}">✕</span>`;
           html += `<img src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy">`;
           html += `<span class="mm-name">${esc(charName(c))}</span>`;
           html += `</div>`;
@@ -1807,6 +1816,44 @@ function renderAllView() {
 
   html += '</div>';
   container.innerHTML = html;
+
+  // 이벤트 바인딩 (빌더 모드)
+  if (isBuilder) {
+    // + 버튼 → 피커 열기
+    container.querySelectorAll('.mcat-add-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const catId = btn.dataset.cat;
+        const tierId = btn.dataset.tier;
+        const td = tds.find(t => t.id === tierId);
+        const prevCat = S.workspace.activeCategory;
+        S.workspace.activeCategory = catId;
+        openCharPicker(td, catId);
+        // 피커 닫힐 때 원래 카테고리 복원은 불필요 (renderAll이 처리)
+      });
+    });
+    // 카드 탭 → 이동 메뉴 (같은 카테고리 내 티어 이동)
+    container.querySelectorAll('.mcat-mini[data-cid]').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', e => {
+        if (e.target.classList.contains('mcat-remove')) return;
+        const cid = card.dataset.cid;
+        const catId = card.dataset.cat;
+        const c = charById(cid);
+        if (!c) return;
+        S.workspace.activeCategory = catId;
+        showMoveMenu(c, e);
+      });
+    });
+    // X 버튼 → 배치 해제
+    container.querySelectorAll('.mcat-remove').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        removePlacement(btn.dataset.cat, btn.dataset.cid);
+        autoSave(); renderAll();
+      });
+    });
+  }
 }
 
 /* ─── Table View ─── */
