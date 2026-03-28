@@ -1406,16 +1406,11 @@ function openCharPicker(tierDef, catId) {
   input.placeholder = T('pickerSearch');
   let _pickerTimer = null;
   input.addEventListener('input', () => {
-    if (_isComposing) return;
     clearTimeout(_pickerTimer);
     _pickerTimer = setTimeout(() => {
       _picker.query = input.value;
       renderPickerGrid();
-    }, 150);
-  });
-  input.addEventListener('compositionend', () => {
-    _picker.query = input.value;
-    renderPickerGrid();
+    }, 120);
   });
   input.focus();
 
@@ -1959,8 +1954,10 @@ function dragEnd(e) {
   _drag.ghost.remove();
 
   if (!_drag.moved) {
-    // Tap without drag — do nothing (placement via Picker or drag only)
+    // Tap without drag — show move menu for quick placement
+    const c = DB.characters.find(ch => ch.id === _drag.charId);
     _drag = null;
+    if (c) showMoveMenu(c, e);
     return;
   }
 
