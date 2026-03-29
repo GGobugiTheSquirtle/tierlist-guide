@@ -130,7 +130,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .search-input{width:240px;padding:6px 12px;font-size:0.85rem}
 .ftag{padding:5px 10px;border-radius:14px;font-size:0.8rem;border:1px solid var(--border);color:var(--text-secondary);transition:all .12s;white-space:nowrap;display:inline-flex;align-items:center;gap:4px;min-height:28px}
 .ftag:hover{border-color:var(--text-secondary)}
-.ftag.on{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);box-shadow:0 0 6px rgba(201,168,76,0.15)}
+.ftag.on{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);box-shadow:0 0 6px rgba(230,199,122,0.15)}
 .ftag img{flex-shrink:0}
 .filter-reset{font-size:0.8rem;color:var(--text-dim);text-decoration:underline;cursor:pointer;margin-left:8px}
 .filter-reset:hover{color:var(--accent)}
@@ -1738,12 +1738,14 @@ function renderFilterBar() {
           ${['NS','AS','ES','Alter'].map(s =>
             `<button class="ftag ${f.styles.includes(s)?'on':''}" onclick="toggleFilter('styles','${s}')">${s}</button>`
           ).join('')}
-          <span style="margin-left:8px"></span>
+          <span style="width:1px;height:20px;background:var(--border);margin:0 4px"></span>
           ${[4,5].map(r =>
             `<button class="ftag ${f.rarities.includes(r)?'on':''}" onclick="toggleFilter('rarities',${r})">${r}★</button>`
           ).join('')}
           <button class="ftag ${f.sa===true?'on':''}" onclick="S.ui.filters.sa=S.ui.filters.sa?null:true;renderAll()">SA</button>
-          <span style="margin-left:8px"></span>
+        </div>
+        <div class="filter-row">
+          <label>L/S</label>
           <button class="ftag ${f.ls==='light'?'on':''}" onclick="S.ui.filters.ls=S.ui.filters.ls==='light'?null:'light';renderAll()" style="color:var(--ls-light)">${T('lightLabel')}</button>
           <button class="ftag ${f.ls==='shadow'?'on':''}" onclick="S.ui.filters.ls=S.ui.filters.ls==='shadow'?null:'shadow';renderAll()" style="color:var(--ls-shadow)">${T('shadowLabel')}</button>
         </div>
@@ -2209,12 +2211,12 @@ function renderCardHTML(c, opts = {}) {
       (el1Src ? `<img src="${el1Src}" alt="${c.elementKo}">` : '') +
       (el2Src ? `<img src="${el2Src}" alt="${c.element2Ko || ''}">` : '') +
       (wpSrc ? `<img src="${wpSrc}" alt="${c.weaponKo}">` : '') +
-      `<span class="st-badge ${stClass}">${c.style}</span>` +
     `</span>`;
   if (!opts.compact) {
     html +=
       `<span class="card-sub">` +
         `<span class="rarity-badge r${c.rarity}">${c.rarity}★</span>` +
+        `<span class="st-badge ${stClass}">${c.style}</span>` +
         (c.sa ? `<span class="sa-badge">SA</span>` : '') +
       `</span>`;
   }
