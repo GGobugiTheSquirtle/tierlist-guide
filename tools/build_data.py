@@ -224,11 +224,18 @@ def find_korean_name(name_en, style, name_mapping):
 def scrape_characters():
     """anothereden.wiki/w/Characters 테이블에서 전체 캐릭터 파싱"""
     import requests
+    import cloudscraper
     from bs4 import BeautifulSoup
 
     print("  위키 Characters 페이지 스크래핑 중...")
-    resp = requests.get(WIKI_CHARACTERS_URL, headers=HEADERS, timeout=30)
-    resp.raise_for_status()
+    scraper = cloudscraper.create_scraper()
+    try:
+        resp = scraper.get(WIKI_CHARACTERS_URL, headers=HEADERS, timeout=30)
+        resp.raise_for_status()
+    except Exception as e:
+        print(f"  [오류] 위키 접근 실패 (Cloudflare 차단 등). 작업을 중단합니다: {e}")
+        import sys
+        sys.exit(0)
     soup = BeautifulSoup(resp.text, 'html.parser')
 
     characters = []
@@ -365,6 +372,7 @@ def apply_korean_names(characters, name_mapping):
 def download_icons(characters):
     """위키에서 아이콘 다운로드 → 64x64 WebP 변환"""
     import requests
+    import cloudscraper
     from PIL import Image
     from io import BytesIO
 
@@ -372,6 +380,7 @@ def download_icons(characters):
     downloaded = 0
     skipped = 0
     failed = 0
+    scraper = cloudscraper.create_scraper()
 
     for i, char in enumerate(characters):
         icon = char["icon"]
@@ -390,7 +399,7 @@ def download_icons(characters):
 
         url = f"{WIKI_THUMB_URL}?f={icon}&width=80"
         try:
-            resp = requests.get(url, headers=HEADERS, timeout=10)
+            resp = scraper.get(url, headers=HEADERS, timeout=10)
             resp.raise_for_status()
             img = Image.open(BytesIO(resp.content))
             img = img.resize((64, 64), Image.LANCZOS)
@@ -419,15 +428,17 @@ LS_ICONS = {
 def download_ls_icons():
     """Guiding Light / Luring Shadow 아이콘을 위키에서 다운로드"""
     import requests
+    import cloudscraper
 
     OUTPUT_LS_ICON_DIR.mkdir(parents=True, exist_ok=True)
+    scraper = cloudscraper.create_scraper()
     for ls_type, filename in LS_ICONS.items():
         dst = OUTPUT_LS_ICON_DIR / f"{ls_type}.png"
         if dst.exists():
             continue
         url = f"{WIKI_THUMB_URL}?f={filename}&width=26"
         try:
-            resp = requests.get(url, headers=HEADERS, timeout=10)
+            resp = scraper.get(url, headers=HEADERS, timeout=10)
             resp.raise_for_status()
             dst.write_bytes(resp.content)
             print(f"  LS 아이콘 다운로드: {ls_type}.png")
@@ -441,11 +452,13 @@ def download_ls_icons():
 def fetch_banner():
     """위키 메인에서 최신 버전 배너 이미지 파일명 감지 + 다운로드"""
     import requests
+    import cloudscraper
     from bs4 import BeautifulSoup
 
     print("\n  배너 감지 중...")
+    scraper = cloudscraper.create_scraper()
     try:
-        resp = requests.get(f"{WIKI_BASE}/w/Another_Eden_Wiki", headers=HEADERS, timeout=15)
+        resp = scraper.get(f"{WIKI_BASE}/w/Another_Eden_Wiki", headers=HEADERS, timeout=15)
         resp.raise_for_status()
         soup = BeautifulSoup(resp.text, 'html.parser')
 
@@ -470,7 +483,7 @@ def fetch_banner():
 
                 # src에서 전체 경로를 그대로 사용
                 banner_url = f"{WIKI_BASE}{src}" if src.startswith('/') else src
-                banner_resp = requests.get(banner_url, headers=HEADERS, timeout=15)
+                banner_resp = scraper.get(banner_url, headers=HEADERS, timeout=15)
                 banner_resp.raise_for_status()
 
                 banner_path = PROJECT_DIR / "images" / "banner.png"
@@ -671,9 +684,10 @@ def run_check(characters):
 
     # 7) 파서 건강도 (위키 구조 변경 감지)
     try:
-        import requests
+        import cloudscraper
         from bs4 import BeautifulSoup
-        resp = requests.get(WIKI_CHARACTERS_URL, headers=HEADERS, timeout=15)
+        scraper = cloudscraper.create_scraper()
+        resp = scraper.get(WIKI_CHARACTERS_URL, headers=HEADERS, timeout=15)
         soup = BeautifulSoup(resp.text, 'html.parser')
         rows = soup.find_all('tr', class_='character-row-entry')
         if len(rows) == 0:

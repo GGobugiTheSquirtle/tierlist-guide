@@ -20,7 +20,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install requests
+        run: pip install requests cloudscraper
 
       - name: Run banner update script
         run: python _tools/update_tierlist_banner.py

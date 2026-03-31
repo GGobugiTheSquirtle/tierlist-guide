@@ -4,6 +4,7 @@
 # 2026-03-27
 """
 import requests, re, os, json
+import cloudscraper
 
 WIKI_API = "https://anothereden.wiki/api.php"
 BANNER_DIR = os.path.join(os.path.dirname(__file__), "..", "images")
@@ -16,13 +17,19 @@ BANNER_PATTERN = re.compile(r'\d+\.\d+\.\d+\.png$', re.IGNORECASE)
 
 def get_main_page_images():
     """위키 메인 페이지의 이미지 목록 가져오기"""
-    resp = requests.get(WIKI_API, params={
-        "action": "parse",
-        "page": "Another_Eden_Wiki",
-        "prop": "images",
-        "format": "json"
-    }, timeout=15)
-    resp.raise_for_status()
+    scraper = cloudscraper.create_scraper()
+    try:
+        resp = scraper.get(WIKI_API, params={
+            "action": "parse",
+            "page": "Another_Eden_Wiki",
+            "prop": "images",
+            "format": "json"
+        }, timeout=15)
+        resp.raise_for_status()
+    except Exception as e:
+        print(f"  [FAIL] 위키 API 접근 실패 (Cloudflare 차단 등): {e}")
+        import sys
+        sys.exit(0)
     data = resp.json()
     return data.get("parse", {}).get("images", [])
 
@@ -48,14 +55,20 @@ def find_banner_image(images):
 
 def get_image_url(filename):
     """MediaWiki API로 이미지 실제 URL 가져오기"""
-    resp = requests.get(WIKI_API, params={
-        "action": "query",
-        "titles": f"File:{filename}",
-        "prop": "imageinfo",
-        "iiprop": "url|size",
-        "format": "json"
-    }, timeout=15)
-    resp.raise_for_status()
+    scraper = cloudscraper.create_scraper()
+    try:
+        resp = scraper.get(WIKI_API, params={
+            "action": "query",
+            "titles": f"File:{filename}",
+            "prop": "imageinfo",
+            "iiprop": "url|size",
+            "format": "json"
+        }, timeout=15)
+        resp.raise_for_status()
+    except Exception as e:
+        print(f"  [FAIL] 위키 API(이미지 URL) 접근 실패: {e}")
+        import sys
+        sys.exit(0)
     pages = resp.json().get("query", {}).get("pages", {})
     for page in pages.values():
         info = page.get("imageinfo", [{}])[0]
@@ -65,8 +78,14 @@ def get_image_url(filename):
 
 def download_banner(url, dest):
     """이미지 다운로드"""
-    resp = requests.get(url, timeout=30, stream=True)
-    resp.raise_for_status()
+    scraper = cloudscraper.create_scraper()
+    try:
+        resp = scraper.get(url, timeout=30, stream=True)
+        resp.raise_for_status()
+    except Exception as e:
+        print(f"  [FAIL] 배너 다운로드 실패: {e}")
+        import sys
+        sys.exit(0)
     os.makedirs(os.path.dirname(dest), exist_ok=True)
     with open(dest, "wb") as f:
         for chunk in resp.iter_content(8192):

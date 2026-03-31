@@ -23,7 +23,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4 Pillow
+        run: pip install requests cloudscraper beautifulsoup4 Pillow
 
       - name: Run build with check
         run: python tools/build_data.py --check
