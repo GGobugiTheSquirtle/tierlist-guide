@@ -258,7 +258,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .mcat-mini{position:relative}
 .mcat-remove{position:absolute;top:-2px;right:-2px;width:14px;height:14px;border-radius:50%;background:rgba(231,76,60,0.85);color:#fff;font-size:0.5rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;opacity:0;transition:opacity .15s;line-height:1}
 .mcat-mini:hover .mcat-remove{opacity:1}
-.mcat-add-btn{display:block;margin:4px auto 0;width:20px;height:20px;border-radius:50%;background:rgba(201,168,76,0.15);color:var(--accent);font-size:0.7rem;border:1px solid rgba(201,168,76,0.3);cursor:pointer;line-height:1;padding:0;transition:all .15s}
+.mcat-add-btn{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(201,168,76,0.15);color:var(--accent);font-size:0.7rem;border:1px solid rgba(201,168,76,0.3);cursor:pointer;line-height:1;padding:0;transition:all .15s;vertical-align:middle;flex-shrink:0}
 .mcat-add-btn:hover{background:rgba(201,168,76,0.3);border-color:var(--accent)}
 .mcat-empty{color:var(--text-dim);font-size:0.7rem;padding:12px;text-align:center;font-style:italic}
 
@@ -426,15 +426,6 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
       <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
       <span class="tb-label" id="tb-share">공유</span>
     </button>
-    <button class="tb-btn" onclick="exportJSON()">
-      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      <span class="tb-label" id="tb-export">내보내기</span>
-    </button>
-    <label class="tb-btn" style="cursor:pointer">
-      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      <span class="tb-label" id="tb-import">가져오기</span>
-      <input type="file" accept=".json" style="display:none" onchange="importJSON(this.files[0])">
-    </label>
   </div>
   <button class="overflow-toggle" onclick="toggleOverflow()" aria-label="More actions">&#8942;</button>
 </div>
@@ -1051,10 +1042,7 @@ function updateStaticUI() {
   _s('tb-addchar','addChar'); _s('tb-template','template');
   _s('tb-addcat','addCatBtn'); _s('tb-reset','resetBtn');
   _s('tb-copyimg','copyImage'); _s('tb-savejpg','saveJpg');
-  _s('tb-share','share'); _s('tb-export','export');
-  // Import label — preserve the hidden input
-  const impEl = document.getElementById('tb-import');
-  if (impEl) { const inp = impEl.querySelector('input'); impEl.textContent = T('import'); if(inp) impEl.appendChild(inp); }
+  _s('tb-share','share');
   // Restore seg-control active states
   const segPairs = [
     ['seg-mode', S.mode === 'builder' ? 'btn-builder' : 'btn-viewer'],
@@ -1956,9 +1944,7 @@ function renderAllView() {
       });
 
       html += `<div class="mcat-tier-row">`;
-      html += `<div class="mcat-tier-label" style="background:${td.color}22;color:${td.color}">${esc(td.label)}`;
-      if (isBuilder) html += `<button class="mcat-add-btn" data-cat="${cat.id}" data-tier="${td.id}" title="${T('addChar')}">+</button>`;
-      html += `</div>`;
+      html += `<div class="mcat-tier-label" style="background:${td.color}22;color:${td.color}">${esc(td.label)}</div>`;
       html += `<div class="mcat-tier-cards">`;
 
       if (chars.length) {
@@ -1972,6 +1958,7 @@ function renderAllView() {
           html += `</div>`;
         });
       }
+      if (isBuilder) html += `<button class="mcat-add-btn" data-cat="${cat.id}" data-tier="${td.id}" title="${T('addChar')}">+</button>`;
 
       html += `</div></div>`;
     });
@@ -2328,7 +2315,6 @@ function renderOverflowPanel() {
     items.push({cls:'btn btn-outline btn-danger',fn:'toggleOverflow();resetAll()',label:T('resetBtn')});
   }
   items.push({cls:'btn btn-outline',fn:'toggleOverflow();shareURL()',label:T('share')});
-  items.push({cls:'btn btn-outline',fn:'toggleOverflow();exportJSON()',label:T('export')});
   items.push({cls:'btn btn-primary',fn:'toggleOverflow();copyAsImage()',label:T('copyImage')});
   items.push({cls:'btn btn-outline',fn:'toggleOverflow();saveAsImage()',label:T('saveJpg')});
   panel.textContent = '';
@@ -2342,18 +2328,6 @@ function renderOverflowPanel() {
     btn.setAttribute('onclick', item.fn);
     panel.appendChild(btn);
   });
-  // Import button with file input
-  const importLabel = document.createElement('label');
-  importLabel.className = 'btn btn-outline';
-  importLabel.style.cursor = 'pointer';
-  importLabel.textContent = T('import');
-  const fileInput = document.createElement('input');
-  fileInput.type = 'file';
-  fileInput.accept = '.json';
-  fileInput.style.display = 'none';
-  fileInput.onchange = function(){ importJSON(this.files[0]); toggleOverflow(); };
-  importLabel.appendChild(fileInput);
-  panel.appendChild(importLabel);
 }
 
 /* ═══════════════════════════════════════════
