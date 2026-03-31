@@ -821,14 +821,30 @@ function showPresetModal() {
 
   const modal = document.getElementById('preset-modal');
   const list = document.getElementById('preset-list');
-  list.innerHTML = '';
+  list.textContent = '';
   for (const [key, p] of Object.entries(getPresets())) {
     const btn = document.createElement('button');
     btn.className = 'preset-btn';
-    btn.innerHTML = `<strong>${p.name}</strong><small>${p.desc}</small>`;
+    const strong = document.createElement('strong');
+    strong.textContent = p.name;
+    const small = document.createElement('small');
+    small.textContent = p.desc;
+    btn.appendChild(strong);
+    btn.appendChild(small);
     btn.onclick = () => { applyPreset(key); modal.style.display='none'; };
     list.appendChild(btn);
   }
+  // 취소 버튼
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'preset-btn';
+  cancelBtn.style.borderColor = 'var(--text-dim)';
+  const cancelStrong = document.createElement('strong');
+  cancelStrong.textContent = T('cancel');
+  cancelBtn.appendChild(cancelStrong);
+  cancelBtn.onclick = () => { modal.style.display='none'; };
+  list.appendChild(cancelBtn);
+  // 배경 클릭으로 닫기
+  modal.onclick = (e) => { if (e.target === modal) modal.style.display='none'; };
   modal.style.display = 'flex';
 }
 
@@ -1169,17 +1185,33 @@ function renderCategoryTabs() {
 }
 
 function addCategory() {
-  const bar = document.getElementById('cat-bar');
-  if (bar.querySelector('.inline-input')) return;
-  const wrap = document.createElement('span');
-  wrap.className = 'inline-input';
-  wrap.innerHTML = `<input type="text" placeholder="${T('catNamePrompt')}" autofocus>
-    <button class="btn btn-sm btn-primary" data-action="ok">OK</button>
-    <button class="btn btn-sm btn-outline" data-action="cancel">&#10005;</button>`;
-  bar.appendChild(wrap);
-  const input = wrap.querySelector('input');
-  input.focus();
-  const confirm = () => {
+  // 이미 열려있으면 무시
+  if (document.getElementById('add-cat-overlay')) return;
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'add-cat-overlay';
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.style.maxWidth = '360px';
+  const title = document.createElement('h2');
+  title.style.cssText = 'font-family:var(--font-display);color:var(--accent);margin-bottom:12px;font-size:1rem';
+  title.textContent = T('addCatBtn');
+  modal.appendChild(title);
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = T('catNamePrompt');
+  input.style.cssText = 'width:100%;margin-bottom:12px';
+  modal.appendChild(input);
+  const actions = document.createElement('div');
+  actions.style.cssText = 'display:flex;gap:8px;justify-content:flex-end';
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'btn btn-sm btn-outline';
+  cancelBtn.textContent = T('cancel');
+  cancelBtn.onclick = () => overlay.remove();
+  const okBtn = document.createElement('button');
+  okBtn.className = 'btn btn-sm btn-primary';
+  okBtn.textContent = T('okBtn');
+  const doAdd = () => {
     const name = input.value.trim();
     if (name) {
       const id = 'cat_' + Date.now();
@@ -1187,14 +1219,21 @@ function addCategory() {
       S.workspace.activeCategory = id;
       autoSave();
     }
-    wrap.remove(); renderAll();
+    overlay.remove();
+    renderAll();
   };
-  wrap.querySelector('[data-action="ok"]').onclick = confirm;
-  wrap.querySelector('[data-action="cancel"]').onclick = () => { wrap.remove(); };
+  okBtn.onclick = doAdd;
+  actions.appendChild(cancelBtn);
+  actions.appendChild(okBtn);
+  modal.appendChild(actions);
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
   input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') confirm();
-    if (e.key === 'Escape') wrap.remove();
+    if (e.key === 'Enter') doAdd();
+    if (e.key === 'Escape') overlay.remove();
   });
+  setTimeout(() => input.focus(), 50);
 }
 
 function delCategory(id) {
