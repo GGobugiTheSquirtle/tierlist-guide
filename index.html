@@ -44,24 +44,24 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .row2{display:flex;align-items:center;padding:5px 16px;background:var(--bg-secondary);border-bottom:1px solid var(--border-gold);gap:4px;overflow-x:auto;flex-wrap:nowrap}
 .toolbar-group{display:flex;align-items:center;gap:4px}
 .toolbar-sep{width:1px;height:20px;background:var(--border);margin:0 4px;flex-shrink:0}
-.tb-btn{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:5px;font-size:0.78rem;color:var(--text-secondary);border:1px solid var(--border);white-space:nowrap;transition:all .15s;background:none;cursor:pointer;font-family:var(--font-body)}
+.tb-btn{display:flex;align-items:center;gap:4px;padding:5px 11px;border-radius:5px;font-size:0.9rem;color:var(--text-secondary);border:1px solid var(--border);white-space:nowrap;transition:all .15s;background:none;cursor:pointer;font-family:var(--font-body)}
 .tb-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
-.tb-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.tb-btn svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .tb-btn.tb-danger{color:#e74c3c;border-color:rgba(231,76,60,0.3)}
 .tb-btn.tb-danger:hover{background:rgba(231,76,60,0.1);border-color:#e74c3c}
 .tb-btn.tb-primary{background:linear-gradient(135deg,#d4a44a,var(--accent));color:#0d1117;font-weight:600;border:1px solid rgba(255,255,255,0.1)}
 .tb-btn.tb-primary:hover{background:linear-gradient(135deg,var(--accent),var(--accent-hover))}
 
 /* ─── Buttons (shared) ─── */
-.btn{padding:6px 14px;border-radius:4px;font-size:0.85rem;font-family:var(--font-body);transition:all .15s;letter-spacing:0.3px}
+.btn{padding:7px 16px;border-radius:4px;font-size:0.98rem;font-family:var(--font-body);transition:all .15s;letter-spacing:0.3px}
 .btn-primary{background:linear-gradient(135deg,#d4a44a,var(--accent));color:#0d1117;font-weight:600;border:1px solid rgba(255,255,255,0.1);box-shadow:0 1px 4px rgba(230,199,122,0.2)}
 .btn-primary:hover{background:linear-gradient(135deg,var(--accent),var(--accent-hover));box-shadow:0 3px 10px rgba(230,199,122,0.3)}
 .btn-outline{border:1px solid var(--border);color:var(--text-secondary)}.btn-outline:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
-.btn-sm{padding:4px 10px;font-size:0.8rem}
+.btn-sm{padding:5px 12px;font-size:0.92rem}
 .btn-danger{color:#e74c3c;border-color:#e74c3c}.btn-danger:hover{background:#e74c3c;color:#fff}
 
 /* ─── Overflow Menu (mobile) ─── */
-.overflow-toggle{display:none;padding:4px 10px;border-radius:5px;border:1px solid var(--border);color:var(--text-secondary);align-items:center;justify-content:center;flex-shrink:0;background:none;cursor:pointer;transition:all .15s}
+.overflow-toggle{display:none;padding:5px 11px;border-radius:5px;border:1px solid var(--border);color:var(--text-secondary);align-items:center;justify-content:center;flex-shrink:0;background:none;cursor:pointer;transition:all .15s}
 .overflow-toggle:hover{border-color:var(--accent);color:var(--accent)}
 .overflow-sheet{position:fixed;inset:0;z-index:2500;display:none;flex-direction:column;justify-content:flex-end}
 .overflow-sheet.open{display:flex}
@@ -74,9 +74,9 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 /* ─── Segmented Control ─── */
 .seg-control{display:flex;position:relative;background:var(--bg-primary);border-radius:8px;padding:3px;border:1px solid var(--border);overflow:hidden}
 .seg-indicator{position:absolute;top:3px;height:calc(100% - 6px);border-radius:6px;background:linear-gradient(135deg,rgba(230,199,122,0.15),rgba(230,199,122,0.08));border:1px solid rgba(230,199,122,0.2);transition:left .3s cubic-bezier(.4,0,.2,1),width .3s cubic-bezier(.4,0,.2,1);z-index:0;pointer-events:none}
-.seg-btn{position:relative;z-index:1;padding:5px 14px;font-size:0.75rem;color:var(--text-secondary);transition:color .2s;display:flex;align-items:center;gap:4px;white-space:nowrap;cursor:pointer;background:none;border:none;font-family:var(--font-body)}
+.seg-btn{position:relative;z-index:1;padding:6px 16px;font-size:0.86rem;color:var(--text-secondary);transition:color .2s;display:flex;align-items:center;gap:4px;white-space:nowrap;cursor:pointer;background:none;border:none;font-family:var(--font-body)}
 .seg-btn.active{color:var(--accent);font-weight:600}
-.seg-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.5;flex-shrink:0}
+.seg-btn svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.5;flex-shrink:0}
 .seg-btn.active svg{opacity:1}
 
 /* ─── Category Tabs ─── */
@@ -298,16 +298,16 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   .picker-modal{width:100%;max-height:95vh;border-radius:12px 12px 0 0;margin:auto 0 0 0}
   .picker-grid .char-card{width:76px}
   .picker-grid .char-card .card-icon{width:50px;height:50px}
-  .seg-btn{padding:4px 10px;font-size:0.7rem}
+  .seg-btn{padding:5px 12px;font-size:0.8rem}
   .seg-control .seg-label{display:none}
   .row2{padding:4px 12px;gap:3px}
-  .tb-btn{padding:3px 7px;font-size:0.72rem}
+  .tb-btn{padding:4px 8px;font-size:0.83rem}
   .tb-btn .tb-label{display:none}
-  .tb-btn svg{width:18px;height:18px}
+  .tb-btn svg{width:21px;height:21px}
   .toolbar-sep{margin:0 2px}
   .cat-bar{padding:6px 12px}
   .cat-tab{font-size:0.8rem;padding:4px 10px}
-  .overflow-toggle{display:flex;padding:3px 7px}
+  .overflow-toggle{display:flex;padding:4px 8px}
   .filter-row{flex-wrap:wrap}
   .filter-row label{width:100%;margin-bottom:2px}
   .mcat-grid{grid-template-columns:1fr}
@@ -427,7 +427,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
       <span class="tb-label" id="tb-share">공유</span>
     </button>
   </div>
-  <button class="overflow-toggle" onclick="toggleOverflow()" aria-label="More actions"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button>
+  <button class="overflow-toggle" onclick="toggleOverflow()" aria-label="More actions"><svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button>
 </div>
 
 <!-- ─── Overflow Bottom Sheet (mobile) ─── -->
@@ -613,6 +613,8 @@ const I18N = {
     urlTooLong:function(kb){return `URL이 너무 깁니다 (${kb}KB). JSON 내보내기를 사용하세요.`;},
     shareUrlCopied:function(kb){return `공유 URL 복사됨! (${kb}KB)`;},
     copyShareUrl:'이 URL을 복사하세요:',
+    shareTitle:'공유 방식 선택', shareFull:'전체 공유', shareFullDesc:'세팅 + 캐릭터 배치 모두 포함',
+    shareLite:'티어만 공유', shareLiteDesc:'캐릭터 배치만 (받는 쪽은 기본 템플릿 사용)',
     html2canvasWait:'html2canvas 로딩 중... 잠시 후 다시 시도하세요.',
     imageCopied:function(kb){return `복사됨! (${kb}KB) Ctrl+V로 붙여넣기`;},
     gameVerPrefix:'게임 버전: ',
@@ -681,6 +683,8 @@ const I18N = {
     urlTooLong:function(kb){return `URL is too long (${kb}KB). Use Export JSON instead.`;},
     shareUrlCopied:function(kb){return `Share URL copied! (${kb}KB)`;},
     copyShareUrl:'Copy this URL:',
+    shareTitle:'Share Options', shareFull:'Full Share', shareFullDesc:'Includes settings + all character placements',
+    shareLite:'Tier Only', shareLiteDesc:'Character placements only (receiver uses default template)',
     html2canvasWait:'html2canvas is loading... Try again in a moment.',
     imageCopied:function(kb){return `Copied! (${kb}KB) Ctrl+V to paste.`;},
     gameVerPrefix:'Game Version: ',
@@ -939,7 +943,34 @@ function compactToPlacements(compact) {
 }
 
 function shareURL() {
-  const state = { v:2, c:S.workspace.categories, t:S.workspace.tierDefs, p:placementsToCompact(S.workspace.placements) };
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `<div class="modal">
+    <h2>${T('shareTitle')}</h2>
+    <div class="preset-list">
+      <button class="preset-btn" data-mode="full"><strong>${T('shareFull')}</strong><small>${T('shareFullDesc')}</small></button>
+      <button class="preset-btn" data-mode="lite"><strong>${T('shareLite')}</strong><small>${T('shareLiteDesc')}</small></button>
+      <button class="preset-btn" style="border-color:var(--text-dim)"><strong>${T('cancel')}</strong></button>
+    </div>
+  </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.onclick = () => {
+      const mode = btn.dataset.mode;
+      if (mode) doShare(mode);
+      overlay.remove();
+    };
+  });
+}
+
+function doShare(mode) {
+  let state;
+  if (mode === 'full') {
+    state = { v:2, c:S.workspace.categories, t:S.workspace.tierDefs, p:placementsToCompact(S.workspace.placements) };
+  } else {
+    // v3 lite: placements only
+    state = { v:3, p:placementsToCompact(S.workspace.placements) };
+  }
   const json = JSON.stringify(state);
   const hash = LZString.compressToEncodedURIComponent(json);
   const url = location.origin + location.pathname + '#s=' + hash;
@@ -963,7 +994,14 @@ function loadFromURL() {
     const json = LZString.decompressFromEncodedURIComponent(hash);
     if (!json) return;
     const state = JSON.parse(json);
-    if (state.v === 2) {
+    if (state.v === 3) {
+      // v3 lite: placements only — use default template
+      applyPreset('prydwen');
+      S.workspace.placements = compactToPlacements(state.p || {});
+      S.workspace.activeCategory = S.workspace.categories.length ? S.workspace.categories[0].id : null;
+      setMode('viewer');
+      setView('all');
+    } else if (state.v === 2) {
       S.workspace.categories = state.c || [];
       S.workspace.tierDefs = state.t || [];
       S.workspace.placements = compactToPlacements(state.p || {});
