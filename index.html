@@ -303,7 +303,11 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   .char-card .card-icon{width:60px;height:60px}
 }
 @media(max-width:640px){
-  :root{--card-w:76px}
+  :root{--card-w:calc((100vw - 32px - 48px - 18px) / 4);--sp-2:4px}
+  .pool-grid{padding:var(--sp-2);gap:4px}
+  .pool-area{padding:6px 8px 12px}
+  .filter-bar{padding:10px 8px}
+  .tier-area{padding:6px 8px}
   .char-card .card-icon{width:52px;height:52px}
   .card-meta img,.card-sub img{width:18px;height:18px}
   .card-name{font-size:0.75rem}
@@ -1212,6 +1216,7 @@ function setLang(l) {
 }
 
 function charName(c) { return lang === 'ko' ? c.nameKo : c.nameEn; }
+function styleLabel(s) { return s === 'Alter' ? 'AC' : s; }
 
 /* ─── Category Tabs ─── */
 function renderCategoryTabs() {
@@ -1876,7 +1881,7 @@ function renderFilterBar() {
         <div class="filter-row">
           <label>${T('styleLabel')}</label>
           ${['NS','AS','ES','Alter'].map(s =>
-            `<button class="ftag ${f.styles.includes(s)?'on':''}" onclick="toggleFilter('styles','${s}')">${s}</button>`
+            `<button class="ftag ${f.styles.includes(s)?'on':''}" onclick="toggleFilter('styles','${s}')">${styleLabel(s)}</button>`
           ).join('')}
           <span style="width:1px;height:20px;background:var(--border);margin:0 4px"></span>
           ${[4,5].map(r =>
@@ -2165,7 +2170,7 @@ function renderTableView() {
       <td style="color:var(--text-dim)">${esc(lang==='ko'?c.nameEn:c.nameKo)}</td>
       <td>${elIcon}</td>
       <td>${wpIcon}</td>
-      <td><span class="st-badge ${tvStClass}">${c.style}</span></td>
+      <td><span class="st-badge ${tvStClass}">${styleLabel(c.style)}</span></td>
       <td>${c.rarity}★</td>
       <td>${c.sa ? '<span class="sa-badge">SA</span>' : ''}</td>
       <td>${lsText}</td>
@@ -2355,7 +2360,7 @@ function renderCardHTML(c, opts = {}) {
     html +=
       `<span class="card-sub">` +
         `<span class="rarity-badge r${c.rarity}">${c.rarity}★</span>` +
-        `<span class="st-badge ${stClass}">${c.style}</span>` +
+        `<span class="st-badge ${stClass}">${styleLabel(c.style)}</span>` +
         (c.sa ? `<span class="sa-badge">SA</span>` : '') +
       `</span>`;
   }
