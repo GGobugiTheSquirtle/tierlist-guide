@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tier List Color Palette Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#111;color:#eee;font-family:'Noto Serif KR',serif;padding:24px;max-width:1200px;margin:0 auto}
+h1{font-family:'Cinzel',serif;text-align:center;margin-bottom:8px;font-size:1.6rem;color:#ddd}
+.subtitle{text-align:center;color:#888;font-size:0.85rem;margin-bottom:32px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+
+.palette-card{border-radius:12px;overflow:hidden;border:2px solid transparent;cursor:pointer;transition:all .2s}
+.palette-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.palette-card.selected{border-color:#fff;box-shadow:0 0 20px rgba(255,255,255,.2)}
+
+.pal-header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.pal-header h2{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:1px}
+.pal-header .tag{font-size:0.65rem;padding:3px 8px;border-radius:10px;font-weight:600}
+
+.swatches{display:flex;gap:4px;padding:0 18px 12px}
+.sw{width:36px;height:36px;border-radius:6px;position:relative;border:1px solid rgba(255,255,255,.1)}
+.sw span{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:0.5rem;color:#888;white-space:nowrap}
+
+/* Mini tier list mockup */
+.mini-tier{margin:0 18px 18px;border-radius:8px;overflow:hidden}
+.tier-row{display:flex;align-items:stretch;min-height:52px}
+.tier-row+.tier-row{border-top:1px solid rgba(255,255,255,.08)}
+.tier-label{width:44px;min-width:44px;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:0.9rem}
+.tier-cards{flex:1;display:flex;gap:4px;padding:6px 8px;flex-wrap:wrap;align-items:center}
+.mini-card{width:44px;height:56px;border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:0.5rem;gap:2px}
+.mini-card .icon{width:28px;height:28px;border-radius:4px;opacity:.7}
+.mini-card .name{font-size:0.48rem;opacity:.7;white-space:nowrap}
+
+.pal-footer{padding:10px 18px 16px;font-size:0.72rem;line-height:1.5;opacity:.8}
+
+/* Selection indicator */
+.vote-bar{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;border-top:1px solid #333;padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:12px;z-index:100}
+.vote-bar span{color:#aaa;font-size:0.85rem}
+.selected-label{color:#fff;font-weight:700;font-size:0.9rem}
+</style>
+</head>
+<body>
+
+<h1>Color Palette Options</h1>
+<p class="subtitle">티어리스트 빌더 색감 방향 — 클릭으로 선택</p>
+
+<div class="grid">
+
+<!-- A: Current Refined -->
+<div class="palette-card" onclick="selectPalette(this,'A')" style="background:#0e0b18">
+  <div class="pal-header">
+    <h2 style="color:#c9a84c">A. 현재 정제</h2>
+    <span class="tag" style="background:rgba(201,168,76,.15);color:#c9a84c">현재 기반</span>
+  </div>
+  <div class="swatches">
+    <div class="sw" style="background:#0e0b18"><span>BG</span></div>
+    <div class="sw" style="background:#161230"><span>2nd</span></div>
+    <div class="sw" style="background:#1c1640"><span>Card</span></div>
+    <div class="sw" style="background:#c9a84c"><span>Gold</span></div>
+    <div class="sw" style="background:#a08cc8"><span>Purple</span></div>
+    <div class="sw" style="background:#2e2450"><span>Border</span></div>
+  </div>
+  <div class="mini-tier" style="background:#14102a;border:1px solid #2e2450">
+    <div class="tier-row">
+      <div class="tier-label" style="color:#ffd700;border-right:1px solid #2e2450">SS</div>
+      <div class="tier-cards">
+        <div class="mini-card" style="background:#1c1640;border:1px solid #c9a84c"><div class="icon" style="background:#2a2060"></div><div class="name" style="color:#ede8f2">마리엘</div></div>
+        <div class="mini-card" style="background:#1c1640;border:1px solid transparent"><div class="icon" style="background:#2a2060"></div><div class="name" style="color:#ede8f2">멜리나</div></div>
+        <div class="mini-card" style="background:#1c1640;border:1px solid transparent"><div class="icon" style="background:#2a2060"></div><div class="name" style="color:#ede8f2">하디</div></div>
+      </div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-label" style="color:#ff4444;border-right:1px solid #2e2450">S</div>
+      <div class="tier-cards">
+        <div class="mini-card" style="background:#1c1640"><div class="icon" style="background:#2a2060"></div><div class="name" style="color:#a8a0b8">키드</div></div>
+        <div class="mini-card" style="background:#1c1640"><div class="icon" style="background:#2a2060"></div><div class="name" style="color:#a8a0b8">알도</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pal-footer" style="color:#a8a0b8">
+    현재 딥 퍼플 + 골드 조합 유지. 채도/명도를 미세 조정하여 더 고급스럽게. 안정적이지만 변화 폭 작음.
+  </div>
+</div>
+
+<!-- B: Midnight Slate -->
+<div class="palette-card" onclick="selectPalette(this,'B')" style="background:#0d1117">
+  <div class="pal-header">
+    <h2 style="color:#e6c77a">B. Midnight Slate</h2>
+    <span class="tag" style="background:rgba(230,199,122,.12);color:#e6c77a">모던</span>
+  </div>
+  <div class="swatches">
+    <div class="sw" style="background:#0d1117"><span>BG</span></div>
+    <div class="sw" style="background:#161b22"><span>2nd</span></div>
+    <div class="sw" style="background:#1c2333"><span>Card</span></div>
+    <div class="sw" style="background:#e6c77a"><span>Champ</span></div>
+    <div class="sw" style="background:#7c8aaa"><span>Muted</span></div>
+    <div class="sw" style="background:#30363d"><span>Border</span></div>
+  </div>
+  <div class="mini-tier" style="background:#161b22;border:1px solid #30363d">
+    <div class="tier-row">
+      <div class="tier-label" style="color:#ffd700;border-right:1px solid #30363d">SS</div>
+      <div class="tier-cards">
+        <div class="mini-card" style="background:#1c2333;border:1px solid #e6c77a"><div class="icon" style="background:#252d3a"></div><div class="name" style="color:#e6edf3">마리엘</div></div>
+        <div class="mini-card" style="background:#1c2333;border:1px solid transparent"><div class="icon" style="background:#252d3a"></div><div class="name" style="color:#e6edf3">멜리나</div></div>
+        <div class="mini-card" style="background:#1c2333;border:1px solid transparent"><div class="icon" style="background:#252d3a"></div><div class="name" style="color:#e6edf3">하디</div></div>
+      </div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-label" style="color:#ff4444;border-right:1px solid #30363d">S</div>
+      <div class="tier-cards">
+        <div class="mini-card" style="background:#1c2333"><div class="icon" style="background:#252d3a"></div><div class="name" style="color:#7c8aaa">키드</div></div>
+        <div class="mini-card" style="background:#1c2333"><div class="icon" style="background:#252d3a"></div><div class="name" style="color:#7c8aaa">알도</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pal-footer" style="color:#8b949e">
+    GitHub 스타일 뉴트럴 슬레이트 + 샴페인 골드. 깔끔하고 모던. Prydwen 느낌이되 촌스럽지 않음. 게임 캐릭터 아이콘이 잘 부각됨.
+  </div>
+</div>
+
+<!-- C: Crystal Frost -->
+<div class="palette-card" onclick="selectPalette(this,'C')" style="background:#080e1a">
+  <div class="pal-header">
+    <h2 style="color:#5eccd6">C. Crystal Frost</h2>
+    <span class="tag" style="background:rgba(94,204,214,.12);color:#5eccd6">차가운</span>
+  </div>
+  <div class="swatches">
+    <div class="sw" style="background:#080e1a"><span>BG</span></div>
+    <div class="sw" style="background:#0f1a2e"><span>2nd</span></div>
+    <div class="sw" style="background:#132040"><span>Card</span></div>
+    <div class="sw" style="background:#5eccd6"><span>Cyan</span></div>
+    <div class="sw" style="background:#b8cce0"><span>Ice</span></div>
+    <div class="sw" style="background:#1a3050"><span>Border</span></div>
+  </div>
+  <div class="mini-tier" style="background:#0f1a2e;border:1px solid #1a3050">
+    <div class="tier-row">
+      <div class="tier-label" style="color:#ffd700;border-right:1px solid #1a3050">SS</div>
+      <div class="tier-cards">
+        <div class="mini-card" style="background:#132040;border:1px solid #5eccd6"><div class="icon" style="background:#1a2850"></div><div class="name" style="color:#e0eaf4">마리엘</div></div>
+        <div class="mini-card" style="background:#132040;border:1px solid transparent"><div class="icon" style="background:#1a2850"></div><div class="name" style="color:#e0eaf4">멜리나</div></div>
+        <div class="mini-card" style="background:#132040;border:1px solid transparent"><div class="icon" style="background:#1a2850"></div><div class="name" style="color:#e0eaf4">하디</div></div>
+      </div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-label" style="color:#ff4444;border-right:1px solid #1a3050">S</div>
+      <div class="tier-cards">
+        <div class="mini-card" style="background:#132040"><div class="icon" style="background:#1a2850"></div><div class="name" style="color:#7090b0">키드</div></div>
+        <div class="mini-card" style="background:#132040"><div class="icon" style="background:#1a2850"></div><div class="name" style="color:#7090b0">알도</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pal-footer" style="color:#7090b0">
+    어나덴 크리스탈 속성에서 영감. 차갑고 미래적. 독특하지만 게임 전체 분위기(동양 판타지)와 약간 괴리 가능.
+  </div>
+</div>
+
+<!-- D: Obsidian Amber -->
+<div class="palette-card" onclick="selectPalette(this,'D')" style="background:#0a0a0a">
+  <div class="pal-header">
+    <h2 style="color:#d4a04a">D. Obsidian Amber</h2>
+    <span class="tag" style="background:rgba(212,160,74,.12);color:#d4a04a">프리미엄</span>
+  </div>
+  <div class="swatches">
+    <div class="sw" style="background:#0a0a0a"><span>BG</span></div>
+    <div class="sw" style="background:#141414"><span>2nd</span></div>
+    <div class="sw" style="background:#1a1a1a"><span>Card</span></div>
+    <div class="sw" style="background:#d4a04a"><span>Amber</span></div>
+    <div class="sw" style="background:#a08870"><span>Warm</span></div>
+    <div class="sw" style="background:#2a2520"><span>Border</span></div>
+  </div>
+  <div class="mini-tier" style="background:#141414;border:1px solid #2a2520">
+    <div class="tier-row">
+      <div class="tier-label" style="color:#ffd700;border-right:1px solid #2a2520">SS</div>
+      <div class="tier-cards">
+        <div class="mini-card" style="background:#1a1a1a;border:1px solid #d4a04a"><div class="icon" style="background:#252018"></div><div class="name" style="color:#e8e0d4">마리엘</div></div>
+        <div class="mini-card" style="background:#1a1a1a;border:1px solid transparent"><div class="icon" style="background:#252018"></div><div class="name" style="color:#e8e0d4">멜리나</div></div>
+        <div class="mini-card" style="background:#1a1a1a;border:1px solid transparent"><div class="icon" style="background:#252018"></div><div class="name" style="color:#e8e0d4">하디</div></div>
+      </div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-label" style="color:#ff4444;border-right:1px solid #2a2520">S</div>
+      <div class="tier-cards">
+        <div class="mini-card" style="background:#1a1a1a"><div class="icon" style="background:#252018"></div><div class="name" style="color:#a08870">키드</div></div>
+        <div class="mini-card" style="background:#1a1a1a"><div class="icon" style="background:#252018"></div><div class="name" style="color:#a08870">알도</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="pal-footer" style="color:#a08870">
+    퓨어 블랙 + 따뜻한 앰버. 고서적/시간여행 분위기. 캐릭터 아이콘 대비 극대화. 어나덴의 '시공을 넘는 고양이' 테마와 부합.
+  </div>
+</div>
+
+</div>
+
+<div style="height:60px"></div>
+
+<div class="vote-bar" id="vote-bar">
+  <span>팔레트를 클릭하여 선택하세요</span>
+  <span class="selected-label" id="selected-label" style="display:none"></span>
+</div>
+
+<script>
+let currentSelection = null;
+function selectPalette(el, id) {
+  document.querySelectorAll('.palette-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  currentSelection = id;
+  const label = document.getElementById('selected-label');
+  const names = {A:'현재 정제', B:'Midnight Slate', C:'Crystal Frost', D:'Obsidian Amber'};
+  label.textContent = '선택: ' + id + ' — ' + names[id];
+  label.style.display = 'inline';
+  document.querySelector('#vote-bar span').style.display = 'none';
+
+  // Record event
+  fetch('/event', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({type:'click', choice: id, text: names[id], timestamp: Math.floor(Date.now()/1000)})
+  }).catch(() => {});
+}
+</script>
+</body>
+</html>

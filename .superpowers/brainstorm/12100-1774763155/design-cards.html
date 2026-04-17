@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Section 1 — Color System + Card Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0a;color:#eee;font-family:'Inter','Noto Serif KR',sans-serif;padding:24px;max-width:1100px;margin:0 auto}
+h1{font-family:'Cinzel',serif;text-align:center;margin-bottom:4px;font-size:1.4rem;color:#e6c77a}
+.sub{text-align:center;color:#666;font-size:0.8rem;margin-bottom:28px}
+h2{font-size:1rem;color:#e6c77a;margin:28px 0 12px;font-family:'Cinzel',serif;letter-spacing:0.5px}
+h2:first-of-type{margin-top:0}
+
+/* Color System */
+.color-system{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.cs-group{background:#111;border-radius:8px;padding:12px;border:1px solid #1a1a1a}
+.cs-group .label{font-size:0.6rem;text-transform:uppercase;letter-spacing:1.5px;color:#555;margin-bottom:8px;font-weight:600}
+.cs-swatch{height:36px;border-radius:6px;margin-bottom:4px;border:1px solid rgba(255,255,255,.05)}
+.cs-value{font-size:0.65rem;color:#888;font-family:monospace}
+.cs-name{font-size:0.7rem;color:#bbb;margin-top:2px}
+
+.divider{height:1px;background:linear-gradient(90deg,transparent,#333,transparent);margin:28px 0}
+
+/* Card comparison */
+.card-compare{display:flex;gap:40px;justify-content:center;align-items:flex-start;flex-wrap:wrap;margin:20px 0}
+.card-col{text-align:center}
+.card-col .cl{font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:#555;margin-bottom:12px;font-weight:600}
+
+/* BEFORE card */
+.b-card{width:88px;background:#1c1640;border-radius:8px;padding:4px;text-align:center;border:2px solid transparent;position:relative;display:inline-block}
+.b-card.hl{border-color:#c9a84c}
+.b-icon{width:64px;height:64px;border-radius:6px;display:block;margin:0 auto;background:#2a2060}
+.b-name{display:block;font-size:0.78rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ede8f2;font-weight:500}
+.b-meta{display:flex;justify-content:center;align-items:center;gap:2px;margin-top:2px}
+.b-meta .el{width:20px;height:20px;border-radius:3px}
+.b-meta .wp{width:20px;height:20px;border-radius:3px}
+.b-sub{display:flex;justify-content:center;align-items:center;gap:3px;margin-top:2px;font-size:0.68rem;color:#5a5070}
+.b-stbadge{font-size:0.58rem;padding:1px 4px;border-radius:3px;font-weight:600;display:inline-block}
+.b-rbadge{font-weight:600;font-size:0.68rem;color:#f1c40f}
+
+/* AFTER card */
+.a-card{width:92px;background:linear-gradient(180deg,#1c2333 0%,#171e2c 100%);border-radius:10px;padding:5px 4px 4px;text-align:center;border:1px solid rgba(48,54,61,.7);position:relative;display:inline-block;transition:all .25s;overflow:hidden}
+.a-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent)}
+.a-card:hover{border-color:rgba(230,199,122,.5);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.4),0 0 12px rgba(230,199,122,.08)}
+.a-card.hl{border-color:rgba(230,199,122,.4);box-shadow:0 2px 16px rgba(230,199,122,.08)}
+.a-card.hl::after{content:'';position:absolute;inset:0;border-radius:10px;background:linear-gradient(180deg,rgba(230,199,122,.04) 0%,transparent 40%);pointer-events:none}
+.a-icon-wrap{position:relative;display:inline-block;margin:0 auto}
+.a-icon{width:64px;height:64px;border-radius:8px;display:block;margin:0 auto;box-shadow:0 2px 8px rgba(0,0,0,.4);background:linear-gradient(180deg,#252d3a,#1a2030)}
+.a-ls{position:absolute;bottom:1px;left:1px;width:16px;height:16px;border-radius:3px;z-index:5;display:flex;align-items:center;justify-content:center;font-size:0.5rem;font-weight:700}
+.a-ls.light{background:rgba(255,234,167,.2);color:#ffeaa7;text-shadow:0 0 4px rgba(255,234,167,.3)}
+.a-ls.shadow{background:rgba(99,110,114,.25);color:#b2bec3}
+.a-name{display:block;font-size:0.78rem;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#e6edf3;font-weight:500;letter-spacing:0.2px}
+.a-meta{display:flex;justify-content:center;align-items:center;gap:3px;margin-top:3px}
+.a-meta .el{width:18px;height:18px;border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.a-meta .wp{width:18px;height:18px;border-radius:3px;opacity:.7}
+.a-stbadge{font-size:0.56rem;padding:1px 5px;border-radius:4px;font-weight:600;display:inline-block;letter-spacing:0.3px}
+.a-sub{display:flex;justify-content:center;align-items:center;gap:3px;margin-top:3px;font-size:0.66rem;color:#7c8aaa}
+.a-rbadge{font-weight:600;font-size:0.66rem}
+.a-r5{color:#f1c40f;text-shadow:0 0 6px rgba(241,196,15,.2)}
+.a-r4{color:#c0c0c0}
+.a-sabadge{font-size:0.55rem;padding:1px 5px;border-radius:3px;font-weight:700;background:linear-gradient(135deg,#50E8E8,#3090D0,#6050C8);color:#fff;border:1px solid rgba(64,192,208,.4);letter-spacing:0.3px}
+
+/* Remove button */
+.a-remove{position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:rgba(231,76,60,.85);color:#fff;font-size:0.55rem;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;cursor:pointer}
+.a-card:hover .a-remove{opacity:1}
+
+/* Style badges colors */
+.st-ns{background:linear-gradient(135deg,#FCF0A0,#E8C850,#B89018);color:#111;border:1px solid #C8A830;text-shadow:0 1px 0 rgba(255,255,255,.4);box-shadow:0 0 3px rgba(232,200,80,.3)}
+.st-as{background:linear-gradient(135deg,#B0C8F8,#6890D0,#3858A8);color:#fff;border:1px solid #4870B8;text-shadow:0 1px 1px rgba(0,0,0,.35);box-shadow:0 0 3px rgba(104,144,208,.3)}
+.st-es{background:linear-gradient(135deg,#A0B8E8,#6080C0,#3050A0);color:#fff;border:1px solid #4060A8;text-shadow:0 1px 1px rgba(0,0,0,.35);box-shadow:0 0 3px rgba(96,128,192,.3)}
+.st-alter{background:linear-gradient(135deg,#FF9090,#E04848,#B02020);color:#fff;border:1px solid #C83030;text-shadow:0 1px 1px rgba(0,0,0,.35);box-shadow:0 0 3px rgba(224,72,72,.3)}
+
+/* Element colors */
+.el-fire{background:#e74c3c}.el-water{background:#3498db}.el-wind{background:#2ecc71}
+.el-earth{background:#8B6914}.el-thunder{background:#f1c40f}.el-shade{background:#9b59b6}
+
+/* Changes list */
+.changes{background:#111;border:1px solid #1a1a1a;border-radius:10px;padding:18px 20px;margin:20px 0}
+.changes h3{font-size:0.82rem;color:#e6c77a;margin-bottom:10px}
+.changes ul{list-style:none;padding:0}
+.changes li{font-size:0.78rem;color:#aaa;padding:5px 0;border-bottom:1px solid #1a1a1a;display:flex;gap:8px;align-items:baseline}
+.changes li:last-child{border-bottom:none}
+.changes li::before{content:'→';color:#e6c77a;font-weight:700;flex-shrink:0}
+.changes .tag{font-size:0.6rem;padding:2px 6px;border-radius:4px;background:rgba(230,199,122,.1);color:#e6c77a;font-weight:600;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<h1>Section 1: Color System + Card Design</h1>
+<p class="sub">Midnight Slate 팔레트 적용 + 캐릭터 카드 리디자인</p>
+
+<!-- ====== COLOR SYSTEM ====== -->
+<h2>1. CSS Variable System — Midnight Slate</h2>
+
+<div class="color-system">
+  <div class="cs-group">
+    <div class="label">Background</div>
+    <div class="cs-swatch" style="background:#0d1117"></div>
+    <div class="cs-value">#0d1117</div>
+    <div class="cs-name">--bg-primary</div>
+  </div>
+  <div class="cs-group">
+    <div class="label">Surface</div>
+    <div class="cs-swatch" style="background:#161b22"></div>
+    <div class="cs-value">#161b22</div>
+    <div class="cs-name">--bg-secondary</div>
+  </div>
+  <div class="cs-group">
+    <div class="label">Card</div>
+    <div class="cs-swatch" style="background:#1c2333"></div>
+    <div class="cs-value">#1c2333</div>
+    <div class="cs-name">--bg-card</div>
+  </div>
+  <div class="cs-group">
+    <div class="label">Accent</div>
+    <div class="cs-swatch" style="background:#e6c77a"></div>
+    <div class="cs-value">#e6c77a</div>
+    <div class="cs-name">--accent</div>
+  </div>
+  <div class="cs-group">
+    <div class="label">Text Primary</div>
+    <div class="cs-swatch" style="background:#e6edf3"></div>
+    <div class="cs-value">#e6edf3</div>
+    <div class="cs-name">--text-primary</div>
+  </div>
+  <div class="cs-group">
+    <div class="label">Text Secondary</div>
+    <div class="cs-swatch" style="background:#8b949e"></div>
+    <div class="cs-value">#8b949e</div>
+    <div class="cs-name">--text-secondary</div>
+  </div>
+  <div class="cs-group">
+    <div class="label">Text Dim</div>
+    <div class="cs-swatch" style="background:#484f58"></div>
+    <div class="cs-value">#484f58</div>
+    <div class="cs-name">--text-dim</div>
+  </div>
+  <div class="cs-group">
+    <div class="label">Border</div>
+    <div class="cs-swatch" style="background:#30363d"></div>
+    <div class="cs-value">#30363d</div>
+    <div class="cs-name">--border</div>
+  </div>
+  <div class="cs-group">
+    <div class="label">Border Gold</div>
+    <div class="cs-swatch" style="background:rgba(230,199,122,0.2);border:1px solid rgba(230,199,122,0.3)"></div>
+    <div class="cs-value">rgba(230,199,122,.2)</div>
+    <div class="cs-name">--border-gold</div>
+  </div>
+</div>
+
+<p style="font-size:0.75rem;color:#666;line-height:1.6;margin-bottom:8px">
+  기존 퍼플 계열(#0e0b18, #161230, #1c1640)을 뉴트럴 슬레이트(#0d1117, #161b22, #1c2333)로 전환.
+  골드 악센트는 #c9a84c → <strong style="color:#e6c77a">#e6c77a</strong> (약간 밝고 따뜻한 샴페인 톤)으로 업그레이드.
+  속성/무기/스타일 색상은 유지 (게임 원본 기반).
+</p>
+
+<div class="divider"></div>
+
+<!-- ====== CARD DESIGN ====== -->
+<h2>2. Character Card — Before vs After</h2>
+
+<div class="card-compare">
+  <!-- BEFORE -->
+  <div class="card-col">
+    <div class="cl">Before (현재)</div>
+    <div style="background:#0e0b18;padding:12px;border-radius:8px;display:inline-flex;gap:6px">
+      <div class="b-card hl">
+        <div class="b-icon"></div>
+        <span class="b-name">마리엘</span>
+        <div class="b-meta">
+          <div class="el el-wind" style="width:20px;height:20px;border-radius:3px"></div>
+          <div class="wp" style="width:20px;height:20px;border-radius:3px;background:#555"></div>
+        </div>
+        <span class="b-stbadge st-ns">NS</span>
+        <div class="b-sub"><span class="b-rbadge">5★</span></div>
+      </div>
+      <div class="b-card">
+        <div class="b-icon"></div>
+        <span class="b-name">멜리나ES</span>
+        <div class="b-meta">
+          <div class="el el-water" style="width:20px;height:20px;border-radius:3px"></div>
+          <div class="wp" style="width:20px;height:20px;border-radius:3px;background:#555"></div>
+        </div>
+        <span class="b-stbadge st-es">ES</span>
+        <div class="b-sub"><span class="b-rbadge">5★</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AFTER -->
+  <div class="card-col">
+    <div class="cl">After (리디자인)</div>
+    <div style="background:#0d1117;padding:14px;border-radius:10px;display:inline-flex;gap:8px">
+      <div class="a-card hl">
+        <span class="a-remove">×</span>
+        <div class="a-icon-wrap">
+          <div class="a-icon"></div>
+          <div class="a-ls light">천</div>
+        </div>
+        <span class="a-name">마리엘</span>
+        <div class="a-meta">
+          <div class="el el-wind" style="width:18px;height:18px;border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div>
+          <div class="wp" style="width:18px;height:18px;border-radius:3px;background:#555;opacity:.7"></div>
+          <span class="a-stbadge st-ns">NS</span>
+        </div>
+        <div class="a-sub"><span class="a-rbadge a-r5">5★</span></div>
+      </div>
+      <div class="a-card">
+        <span class="a-remove">×</span>
+        <div class="a-icon-wrap">
+          <div class="a-icon"></div>
+          <div class="a-ls shadow">명</div>
+        </div>
+        <span class="a-name">멜리나ES</span>
+        <div class="a-meta">
+          <div class="el el-water" style="width:18px;height:18px;border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div>
+          <div class="wp" style="width:18px;height:18px;border-radius:3px;background:#555;opacity:.7"></div>
+          <span class="a-stbadge st-es">ES</span>
+        </div>
+        <div class="a-sub"><span class="a-rbadge a-r5">5★</span> <span class="a-sabadge">SA</span></div>
+      </div>
+      <div class="a-card">
+        <span class="a-remove">×</span>
+        <div class="a-icon-wrap">
+          <div class="a-icon"></div>
+          <div class="a-ls light">천</div>
+        </div>
+        <span class="a-name">하디Alter</span>
+        <div class="a-meta">
+          <div class="el el-earth" style="width:18px;height:18px;border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,.3)"></div>
+          <div class="wp" style="width:18px;height:18px;border-radius:3px;background:#555;opacity:.7"></div>
+          <span class="a-stbadge st-alter">Alter</span>
+        </div>
+        <div class="a-sub"><span class="a-rbadge a-r5">5★</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Changes summary -->
+<div class="changes">
+  <h3>카드 디자인 변경 사항</h3>
+  <ul>
+    <li><span class="tag">배경</span> 단색 → subtle gradient (top-to-bottom, 2-stop)</li>
+    <li><span class="tag">테두리</span> flat → 1px border + top-edge highlight line (::before)</li>
+    <li><span class="tag">하이라이트</span> border-color만 → glow shadow + gradient overlay 추가</li>
+    <li><span class="tag">아이콘</span> flat → box-shadow 추가 (깊이감), border-radius 6→8px</li>
+    <li><span class="tag">메타 행</span> 속성+무기+스타일 뱃지를 한 행으로 통합 (공간 절약)</li>
+    <li><span class="tag">L/S</span> 아이콘 위 오버레이 → 텍스트+배경으로 더 명확하게</li>
+    <li><span class="tag">호버</span> translateY(-2px) → translateY(-3px) + 더 강한 glow shadow</li>
+    <li><span class="tag">삭제</span> 버튼 위치 유지, 사이즈 약간 축소 (18→16px)</li>
+    <li><span class="tag">카드폭</span> 88px → 92px (정보 가독성 개선)</li>
+  </ul>
+</div>
+
+<p style="font-size:0.78rem;color:#888;text-align:center;margin:24px 0;line-height:1.6">
+  이 섹션이 괜찮으면 다음으로 <strong style="color:#e6c77a">티어 행 + 헤더 + 캡처 출력</strong> 디자인을 보여드리겠습니다.<br>
+  수정하고 싶은 부분이 있으면 말씀해주세요.
+</p>
+
+</body>
+</html>

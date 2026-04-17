@@ -73,6 +73,12 @@ WEAPON_TO_ATTACK_TYPE = {
 
 BUDDY_PATTERN = re.compile(r"Buddy[_ ]equipment", re.IGNORECASE)
 
+# 2026-04-17 제외 목록 — 한글명/아이콘 매칭 불가, 위키 재수집 시에도 제외
+# 초기 게임 테스트/프로토 캐릭터로 추정. EN 이름 기준 (대소문자 무시)
+EXCLUDE_NAMES_EN = {
+    "caromina", "kekelle", "miriam", "misner", "moyna", "rajah",
+}
+
 # ─────────────────────────────────────────────
 # 1. 한글 이름 로드 (자체 CSV)
 # ─────────────────────────────────────────────
@@ -263,6 +269,10 @@ def scrape_characters():
 
         # 2) 스타일
         base_name_en, style = extract_style(name_en_raw)
+
+        # 제외 목록 체크 (한글명/아이콘 매칭 불가 캐릭터)
+        if base_name_en.strip().lower() in EXCLUDE_NAMES_EN:
+            continue
 
         # 3) data 속성
         data_type = row.get('data-type', '')
