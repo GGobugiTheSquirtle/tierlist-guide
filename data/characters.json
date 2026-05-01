@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "2026-03-31",
-    "total": 393,
+    "version": "2026-05-01",
+    "total": 395,
     "source": "anothereden.wiki",
     "generatedBy": "build_tierlist_data.py"
   },
@@ -7472,6 +7472,44 @@
       "acq": "gacha",
       "date": "2019-01-28",
       "icon": "101100021_command.webp"
+    },
+    {
+      "id": "hameow",
+      "nameKo": "하냐모",
+      "nameEn": "Hameow",
+      "style": "NS",
+      "rarity": 4,
+      "sa": false,
+      "element": "null",
+      "elementKo": "무",
+      "element2": "",
+      "element2Ko": "",
+      "weapon": "",
+      "weaponKo": "",
+      "attackType": "",
+      "ls": "",
+      "acq": "buddy",
+      "date": "2026-04-23",
+      "icon": "hameow.webp"
+    },
+    {
+      "id": "noble_blossom_alter_as",
+      "nameKo": "꽃피우는 공주 AS",
+      "nameEn": "Noble Blossom AS",
+      "style": "Alter AS",
+      "rarity": 5,
+      "sa": true,
+      "element": "fire",
+      "elementKo": "불",
+      "element2": "",
+      "element2Ko": "",
+      "weapon": "lance",
+      "weaponKo": "창",
+      "attackType": "pierce",
+      "ls": "light",
+      "acq": "gacha",
+      "date": "2026-04-23",
+      "icon": "noble_blossom_alter_as.webp"
     }
   ]
 }
