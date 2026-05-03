@@ -155,18 +155,16 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
 /* ─── Tier Rows ─── */
 .tier-area{padding:var(--sp-2) var(--sp-4)}
-.tier-row{display:flex;align-items:stretch;margin:6px 0;border-radius:var(--r-card);background:linear-gradient(180deg,var(--bg-tier-row),rgba(13,17,23,0.4));border:1px solid var(--border);overflow:hidden;transition:border-color var(--motion-base),box-shadow var(--motion-base)}
-.tier-row:hover{border-color:var(--accent-a20);box-shadow:0 1px 0 var(--accent-a08) inset}
-.tier-label{width:56px;min-width:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:var(--text-lg);cursor:pointer;user-select:none;padding:var(--sp-1);text-align:center;position:relative;background:linear-gradient(135deg,var(--accent-a04),transparent 70%);transition:filter var(--motion-fast),background var(--motion-base)}
-.tier-label:hover{filter:brightness(1.2);background:linear-gradient(135deg,var(--accent-a08),transparent 70%)}
-.tier-label::after{content:'';position:absolute;right:0;top:18%;bottom:18%;width:1px;background:linear-gradient(180deg,transparent,var(--accent-a35),transparent)}
+.tier-row{display:flex;align-items:stretch;margin:var(--sp-1) 0;border-radius:var(--r-card);background:var(--bg-tier-row);border:1px solid var(--border);overflow:hidden;transition:border-color var(--motion-base)}
+.tier-row:hover{border-color:var(--accent-a20)}
+.tier-label{width:64px;min-width:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:var(--text-lg);cursor:pointer;user-select:none;padding:var(--sp-1);text-align:center;position:relative;transition:filter var(--motion-fast)}
+.tier-label:hover{filter:brightness(1.15)}
+.tier-label::after{content:'';position:absolute;right:0;top:15%;bottom:15%;width:1px;background:linear-gradient(180deg,transparent,var(--accent-a20),transparent)}
 .tier-label small{font-size:var(--text-2xs);font-weight:400;color:var(--text-dim);margin-top:2px;letter-spacing:1px}
-.tier-drop{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:var(--sp-2);padding:var(--sp-2) var(--sp-3);min-height:60px;transition:background var(--motion-fast);position:relative}
-.tier-drop:empty::before{content:'';position:absolute;inset:var(--sp-2);border-radius:var(--r-control);background-image:linear-gradient(135deg,transparent 49%,rgba(255,255,255,0.018) 49%,rgba(255,255,255,0.018) 51%,transparent 51%);background-size:14px 14px;pointer-events:none;opacity:.6}
+.tier-drop{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:var(--sp-2);padding:var(--sp-2) var(--sp-3);min-height:56px;transition:background var(--motion-fast);position:relative}
 .tier-drop.drag-over{background:var(--accent-a08);box-shadow:inset 0 0 0 2px var(--accent-a35),var(--glow-accent-soft);animation:dropPulse 1.6s ease-in-out infinite}
-.tier-drop.drag-over:empty::before{display:none}
 .tier-actions{display:flex;justify-content:center;gap:var(--sp-2);margin:var(--sp-2) 0}
-.tier-actions .btn{padding:var(--sp-1) var(--sp-3);font-size:var(--text-xs);background:transparent;border:1px solid var(--border);color:var(--text-dim);opacity:.6;transition:all var(--motion-base) var(--ease-standard)}
+.tier-actions .btn{padding:var(--sp-1) var(--sp-3);font-size:var(--text-xs);background:transparent;border:1px solid var(--border);color:var(--text-dim);opacity:.55;transition:all var(--motion-base) var(--ease-standard)}
 .tier-actions .btn:hover{opacity:1;border-color:var(--accent-a35);color:var(--accent);background:var(--accent-a04)}
 
 /* ─── Character Card ─── */
@@ -256,8 +254,8 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 @keyframes fadeSlideUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
 /* ─── Tier Add Button ─── */
-.tier-add-btn{width:38px;height:38px;min-width:38px;border-radius:50%;background:radial-gradient(circle at 50% 40%,var(--accent-a12),var(--accent-a04));color:var(--accent);font-size:var(--text-md);font-weight:300;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--motion-base) var(--ease-standard);border:1px solid var(--accent-a20);opacity:.55;align-self:center;margin:0 var(--sp-2);flex-shrink:0;line-height:1;letter-spacing:0;box-shadow:inset 0 1px 0 rgba(255,255,255,0.04)}
-.tier-add-btn:hover{opacity:1;background:radial-gradient(circle at 50% 40%,var(--accent-a20),var(--accent-a08));border-color:var(--accent);transform:scale(1.08);box-shadow:var(--glow-accent-mid),inset 0 1px 0 rgba(255,255,255,0.08)}
+.tier-add-btn{width:40px;height:40px;min-width:40px;border-radius:50%;background:var(--accent-a08);color:var(--accent);font-size:var(--text-md);font-weight:300;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--motion-base) var(--ease-standard);border:1px solid var(--accent-a20);opacity:.65;align-self:center;margin:0 var(--sp-2);flex-shrink:0;line-height:1}
+.tier-add-btn:hover{opacity:1;background:var(--accent-a12);border-color:var(--accent);transform:scale(1.06);box-shadow:var(--glow-accent-soft)}
 
 /* ─── Character Picker Modal ─── */
 .picker-overlay{position:fixed;inset:0;background:var(--scrim-deep);z-index:2000;display:flex;flex-direction:column;animation:pickerFadeIn var(--motion-base) ease-out}
@@ -414,12 +412,12 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 }
 
 /* ─── Intro Screen ─── */
-.intro{position:fixed;inset:0;z-index:3000;background:radial-gradient(ellipse at 50% 30%,var(--accent-a08) 0%,transparent 50%),radial-gradient(ellipse at 50% 30%,#1a2030 0%,#0a0e14 70%,#050810 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity var(--motion-slow);overflow:hidden}
-.intro::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,var(--accent-a04),transparent 40%),radial-gradient(circle at 80% 20%,var(--accent-a04),transparent 40%);pointer-events:none;animation:introGlow 8s ease-in-out infinite alternate}
-@keyframes introGlow{from{opacity:0.5}to{opacity:1}}
+.intro{position:fixed;inset:0;z-index:3000;background-color:#050810;background-image:radial-gradient(ellipse at 50% 30%,var(--accent-a08) 0%,transparent 55%),radial-gradient(ellipse at 50% 30%,#1a2030 0%,#0a0e14 70%,#050810 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity var(--motion-slow);overflow:hidden}
+.intro::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,var(--accent-a04),transparent 45%),radial-gradient(circle at 80% 20%,var(--accent-a04),transparent 45%);pointer-events:none;animation:introGlow 8s ease-in-out infinite alternate;z-index:0}
+@keyframes introGlow{from{opacity:0.4}to{opacity:0.9}}
 .intro.hidden{opacity:0;pointer-events:none}
 .intro-banner{max-width:560px;width:90%;border-radius:var(--r-card);margin-bottom:24px;box-shadow:0 8px 40px var(--scrim-deep),0 0 0 1px var(--accent-a12),0 0 60px var(--accent-a08);border:1px solid var(--border-gold);position:relative;z-index:1}
-.intro h1{font-family:var(--font-display);font-size:var(--text-2xl);background:linear-gradient(180deg,var(--accent-hover),var(--accent-deep));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px;letter-spacing:2px;filter:drop-shadow(0 2px 12px var(--accent-a35));position:relative}
+.intro h1{font-family:var(--font-display);font-size:var(--text-2xl);color:var(--accent);margin-bottom:8px;letter-spacing:2px;text-shadow:0 2px 12px var(--accent-a35);position:relative;z-index:1}
 .intro .intro-sub{color:var(--text-secondary);font-size:var(--text-sm);margin-bottom:4px;font-style:italic}
 .intro .intro-ver{color:var(--text-dim);font-size:var(--text-2xs);margin-bottom:24px}
 .intro .intro-team{color:var(--text-dim);font-size:var(--text-2xs);margin-bottom:28px;letter-spacing:1px}
@@ -2720,7 +2718,7 @@ async function loadIntroBanner() {
 function dismissIntro() {
   const intro = document.getElementById('intro-screen');
   intro.classList.add('hidden');
-  setTimeout(() => intro.style.display = 'none', 500);
+  setTimeout(() => intro.style.display = 'none', 360);
   sessionStorage.setItem('ae_intro_dismissed', '1');
 }
 
