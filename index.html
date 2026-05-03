@@ -217,12 +217,12 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .filter-body{max-height:0;overflow:hidden;transition:max-height var(--motion-base) ease-out}
 .filter-body.open{max-height:500px;overflow:visible}
 .filter-row{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
-.filter-row label{font-size:var(--text-sm);color:var(--text-secondary);min-width:52px;font-weight:500}
+.filter-row label{font-size:var(--text-sm);color:var(--text-secondary);min-width:58px;font-weight:500;display:inline-flex;align-items:center;height:30px;letter-spacing:0.3px}
 .search-input{width:240px;padding:6px 12px;font-size:var(--text-sm)}
-.ftag{padding:5px 10px;border-radius:var(--r-pill);font-size:var(--text-sm);border:1px solid var(--border);color:var(--text-secondary);transition:all var(--motion-fast);white-space:nowrap;display:inline-flex;align-items:center;gap:4px;min-height:28px}
+.ftag{padding:6px 12px;border-radius:var(--r-pill);font-size:var(--text-sm);border:1px solid var(--border);color:var(--text-secondary);transition:all var(--motion-fast);white-space:nowrap;display:inline-flex;align-items:center;gap:6px;min-height:30px;line-height:1}
 .ftag:hover{border-color:var(--text-secondary)}
 .ftag.on{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);box-shadow:0 0 6px var(--accent-a12)}
-.ftag img{flex-shrink:0}
+.ftag img{flex-shrink:0;width:22px;height:22px}
 .filter-reset{font-size:var(--text-xs);color:var(--text-dim);text-decoration:underline;cursor:pointer;margin-left:8px}
 .filter-reset:hover{color:var(--accent)}
 
@@ -230,9 +230,9 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .pool-area{padding:8px 16px 16px;background:var(--bg-pool)}
 .pool-header{font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .pool-header .pool-search{flex:1;min-width:120px;max-width:240px;padding:5px 10px;font-size:var(--text-sm)}
-.pool-header .pool-sort{padding:3px 8px;font-size:var(--text-xs);border:1px solid var(--border);border-radius:var(--r-control);color:var(--text-secondary);cursor:pointer;background:var(--bg-card);white-space:nowrap}
-.pool-header .pool-sort:hover{border-color:var(--accent);color:var(--accent)}
-.pool-header .pool-sort.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
+.pool-header .pool-sort{padding:6px 12px;font-size:var(--text-sm);border:1px solid var(--border);border-radius:var(--r-pill);color:var(--text-secondary);cursor:pointer;background:transparent;white-space:nowrap;min-height:30px;display:inline-flex;align-items:center;line-height:1;transition:all var(--motion-fast)}
+.pool-header .pool-sort:hover{border-color:var(--text-secondary);color:var(--text-primary)}
+.pool-header .pool-sort.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);box-shadow:0 0 6px var(--accent-a12)}
 .pool-grid{display:flex;flex-wrap:wrap;gap:var(--sp-2);min-height:80px;padding:var(--sp-3);border:1px dashed var(--border);border-radius:var(--r-card)}
 .pool-grid.drag-over{border-color:var(--accent);background:var(--accent-a04);box-shadow:inset 0 0 0 1px var(--accent-a20)}
 .pool-sentinel{height:1px;width:100%;flex-basis:100%}
@@ -385,7 +385,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   .tier-label{width:48px;min-width:48px;font-size:var(--text-base)}
   .search-input{width:160px;font-size:var(--text-base)}
   .filter-row label{font-size:var(--text-sm);min-width:46px}
-  .ftag{padding:var(--sp-1) var(--sp-2);font-size:var(--text-xs);min-height:32px}
+  .ftag{padding:var(--sp-1) var(--sp-3);font-size:var(--text-xs);min-height:32px}
+  .ftag img{width:18px;height:18px}
+  .filter-row label{height:32px}
+  .pool-header .pool-sort{padding:var(--sp-1) var(--sp-3);font-size:var(--text-xs);min-height:32px}
   /* P0 fix: 터치타겟 44px 확보 */
   .tier-add-btn{width:44px;height:44px;min-width:44px;font-size:var(--text-md)}
   .picker-modal{width:100%;max-height:95vh;border-radius:var(--r-modal) var(--r-modal) 0 0;margin:auto 0 0 0}
