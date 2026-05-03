@@ -154,15 +154,20 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .cat-add{font-size:var(--text-sm);color:var(--accent);padding:5px 10px;opacity:.7}.cat-add:hover{opacity:1}
 
 /* ─── Tier Rows ─── */
-.tier-area{padding:8px 16px}
-.tier-row{display:flex;align-items:stretch;margin:var(--sp-1) 0;border-radius:var(--r-card);background:var(--bg-tier-row);border:1px solid rgba(48,54,61,0.4);overflow:hidden}
-.tier-label{width:56px;min-width:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:var(--text-lg);cursor:pointer;user-select:none;padding:var(--sp-1);text-align:center;position:relative}
-.tier-label:hover{filter:brightness(1.15)}
-.tier-label::after{content:'';position:absolute;right:0;top:12%;bottom:12%;width:1px;background:linear-gradient(180deg,transparent,var(--accent-a12),transparent)}
-.tier-label small{font-size:var(--text-2xs);font-weight:400;color:var(--text-dim);margin-top:2px}
-.tier-drop{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:var(--sp-2);padding:var(--sp-2) var(--sp-3);min-height:52px;transition:background var(--motion-fast)}
+.tier-area{padding:var(--sp-2) var(--sp-4)}
+.tier-row{display:flex;align-items:stretch;margin:6px 0;border-radius:var(--r-card);background:linear-gradient(180deg,var(--bg-tier-row),rgba(13,17,23,0.4));border:1px solid var(--border);overflow:hidden;transition:border-color var(--motion-base),box-shadow var(--motion-base)}
+.tier-row:hover{border-color:var(--accent-a20);box-shadow:0 1px 0 var(--accent-a08) inset}
+.tier-label{width:56px;min-width:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:var(--text-lg);cursor:pointer;user-select:none;padding:var(--sp-1);text-align:center;position:relative;background:linear-gradient(135deg,var(--accent-a04),transparent 70%);transition:filter var(--motion-fast),background var(--motion-base)}
+.tier-label:hover{filter:brightness(1.2);background:linear-gradient(135deg,var(--accent-a08),transparent 70%)}
+.tier-label::after{content:'';position:absolute;right:0;top:18%;bottom:18%;width:1px;background:linear-gradient(180deg,transparent,var(--accent-a35),transparent)}
+.tier-label small{font-size:var(--text-2xs);font-weight:400;color:var(--text-dim);margin-top:2px;letter-spacing:1px}
+.tier-drop{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:var(--sp-2);padding:var(--sp-2) var(--sp-3);min-height:60px;transition:background var(--motion-fast);position:relative}
+.tier-drop:empty::before{content:'';position:absolute;inset:var(--sp-2);border-radius:var(--r-control);background-image:linear-gradient(135deg,transparent 49%,rgba(255,255,255,0.018) 49%,rgba(255,255,255,0.018) 51%,transparent 51%);background-size:14px 14px;pointer-events:none;opacity:.6}
 .tier-drop.drag-over{background:var(--accent-a08);box-shadow:inset 0 0 0 2px var(--accent-a35),var(--glow-accent-soft);animation:dropPulse 1.6s ease-in-out infinite}
-.tier-actions{display:flex;justify-content:center;gap:8px;margin:4px 0 8px}
+.tier-drop.drag-over:empty::before{display:none}
+.tier-actions{display:flex;justify-content:center;gap:var(--sp-2);margin:var(--sp-2) 0}
+.tier-actions .btn{padding:var(--sp-1) var(--sp-3);font-size:var(--text-xs);background:transparent;border:1px solid var(--border);color:var(--text-dim);opacity:.6;transition:all var(--motion-base) var(--ease-standard)}
+.tier-actions .btn:hover{opacity:1;border-color:var(--accent-a35);color:var(--accent);background:var(--accent-a04)}
 
 /* ─── Character Card ─── */
 .char-card{width:var(--card-w);background:linear-gradient(180deg,#1c2333 0%,#171e2c 100%);border-radius:var(--r-card);padding:5px var(--sp-1) var(--sp-1);text-align:center;cursor:grab;user-select:none;border:1px solid rgba(48,54,61,0.7);transition:border-color var(--motion-base),transform var(--motion-fast),box-shadow var(--motion-base);position:relative;overflow:hidden}
@@ -175,25 +180,28 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .card-icon-wrap{position:relative;display:inline-block;margin:0 auto}
 .card-ls{position:absolute;bottom:1px;left:1px;width:16px;height:16px;border-radius:3px;z-index:5;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
 @media(max-width:640px){.card-ls{width:14px;height:14px}}
+/* SA 뱃지 — 아이콘 좌상단 absolute, hover 시 살짝 부각 */
+.card-sa-overlay{position:absolute;top:1px;left:1px;font-size:var(--text-3xs);font-weight:700;padding:1px 4px;border-radius:3px;background:linear-gradient(135deg,#50E8E8,#3090D0,#6050C8);color:#fff;border:1px solid #40C0D0;text-shadow:0 1px 1px var(--scrim-base);filter:drop-shadow(0 1px 2px var(--scrim-base));z-index:6;letter-spacing:0.3px;pointer-events:none;line-height:1;transition:transform var(--motion-base) var(--ease-spring),filter var(--motion-base)}
+.char-card:hover .card-sa-overlay{transform:scale(1.08);filter:drop-shadow(0 2px 6px var(--accent-a35))}
+@media(max-width:640px){.card-sa-overlay{font-size:8px;padding:0 3px}}
 .char-card .card-icon{width:68px;height:68px;border-radius:var(--r-card);display:block;background:var(--bg-secondary);box-shadow:var(--shadow-sm)}
 .card-meta img,.card-sub img{width:20px;height:20px;display:inline-block;vertical-align:middle;flex-shrink:0}
-.card-name{display:block;font-size:var(--text-sm);margin-top:var(--sp-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;font-weight:500}
+.card-name{display:block;font-size:var(--text-sm);margin-top:var(--sp-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;font-weight:500;letter-spacing:0.2px}
 .card-meta{display:flex;justify-content:center;align-items:center;gap:2px;margin-top:2px}
 /* ─── Badge primitive (공통 base) ─── */
-.badge,.st-badge,.ls-badge,.sa-badge{display:inline-block;padding:1px 4px;border-radius:3px;font-size:var(--text-2xs);line-height:1.4}
+.badge,.st-badge,.ls-badge,.sa-badge,.alter-badge{display:inline-block;padding:1px 4px;border-radius:3px;font-size:var(--text-2xs);line-height:1.4}
 .badge{font-weight:700;letter-spacing:0.2px}
 .st-badge{font-weight:600}
-.ls-badge,.sa-badge{font-weight:700}
-.rarity-badge{font-weight:600;font-size:var(--text-xs)}
+.ls-badge,.sa-badge,.alter-badge{font-weight:700}
+.alter-badge{background:linear-gradient(135deg,#FF9090 0%,#E04848 40%,#B02020 100%);color:#fff;border:1px solid #C83030;text-shadow:0 1px 1px var(--scrim-soft);letter-spacing:0.5px;box-shadow:0 0 3px rgba(224,72,72,0.4)}
 /* style badges (NS/AS/ES/Alter) — 게임 별 하이라이트→메인→에지 + glow */
 .st-NS{background:linear-gradient(135deg,#FCF0A0 0%,#E8C850 40%,#B89018 100%);color:#111;border:1px solid #C8A830;text-shadow:0 1px 0 rgba(255,255,255,0.4);box-shadow:0 0 3px rgba(232,200,80,0.4)}
 .st-AS{background:linear-gradient(135deg,#B0C8F8 0%,#6890D0 40%,#3858A8 100%);color:#fff;border:1px solid #4870B8;text-shadow:0 1px 1px rgba(0,0,0,0.35);box-shadow:0 0 3px rgba(104,144,208,0.4)}
 .st-ES{background:linear-gradient(135deg,#A0B8E8 0%,#6080C0 40%,#3050A0 100%);color:#fff;border:1px solid #4060A8;text-shadow:0 1px 1px rgba(0,0,0,0.35);box-shadow:0 0 3px rgba(96,128,192,0.35)}
 .st-Alter{background:linear-gradient(135deg,#FF9090 0%,#E04848 40%,#B02020 100%);color:#fff;border:1px solid #C83030;text-shadow:0 1px 1px rgba(0,0,0,0.35);box-shadow:0 0 3px rgba(224,72,72,0.4)}
-.card-sub{display:flex;justify-content:center;align-items:center;gap:3px;margin-top:2px;font-size:var(--text-2xs);color:var(--text-dim)}
+.card-sub{display:flex;justify-content:center;align-items:center;gap:2px;margin-top:3px;font-size:var(--text-2xs);color:var(--text-dim);min-height:14px}
 .ls-light{background:rgba(255,234,167,0.2);color:var(--ls-light)}
 .ls-shadow{background:rgba(99,110,114,0.3);color:#b2bec3}
-.r5{color:#f1c40f}.r4{color:#c0c0c0}.r3{color:#cd7f32}
 .sa-badge{background:linear-gradient(135deg,#50E8E8,#3090D0,#6050C8);color:#fff;border:1px solid #40C0D0;text-shadow:0 1px 1px var(--scrim-soft)}
 
 
@@ -248,8 +256,8 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 @keyframes fadeSlideUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
 /* ─── Tier Add Button ─── */
-.tier-add-btn{width:42px;height:42px;min-width:42px;border-radius:50%;background:rgba(212,164,74,0.15);color:var(--accent);font-size:var(--text-lg);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--motion-fast);border:2px dashed var(--accent);opacity:.7;align-self:center;margin:0 6px;flex-shrink:0}
-.tier-add-btn:hover{opacity:1;background:rgba(212,164,74,0.3);transform:scale(1.1)}
+.tier-add-btn{width:38px;height:38px;min-width:38px;border-radius:50%;background:radial-gradient(circle at 50% 40%,var(--accent-a12),var(--accent-a04));color:var(--accent);font-size:var(--text-md);font-weight:300;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--motion-base) var(--ease-standard);border:1px solid var(--accent-a20);opacity:.55;align-self:center;margin:0 var(--sp-2);flex-shrink:0;line-height:1;letter-spacing:0;box-shadow:inset 0 1px 0 rgba(255,255,255,0.04)}
+.tier-add-btn:hover{opacity:1;background:radial-gradient(circle at 50% 40%,var(--accent-a20),var(--accent-a08));border-color:var(--accent);transform:scale(1.08);box-shadow:var(--glow-accent-mid),inset 0 1px 0 rgba(255,255,255,0.08)}
 
 /* ─── Character Picker Modal ─── */
 .picker-overlay{position:fixed;inset:0;background:var(--scrim-deep);z-index:2000;display:flex;flex-direction:column;animation:pickerFadeIn var(--motion-base) ease-out}
@@ -1187,7 +1195,7 @@ function charMatchesFilter(c) {
   if (q && !c.nameKo.toLowerCase().includes(q) && !c.nameEn.toLowerCase().includes(q) && !c.id.includes(q)) return false;
   if (f.elements.length && !f.elements.includes(c.element) && !(c.element2 && f.elements.includes(c.element2))) return false;
   if (f.weapons.length && !f.weapons.includes(c.weapon)) return false;
-  if (f.styles.length && !f.styles.includes(c.style)) return false;
+  if (!styleFilterMatch(f.styles, c.style)) return false;
   if (f.rarities.length && !f.rarities.includes(c.rarity)) return false;
   if (f.sa === true && !c.sa) return false;
   if (f.ls && c.ls !== f.ls) return false;
@@ -1317,6 +1325,28 @@ function setLang(l) {
 
 function charName(c) { return lang === 'ko' ? c.nameKo : c.nameEn; }
 function styleLabel(s) { return s === 'Alter' ? 'AC' : s; }
+
+// style 필드("NS"/"AS"/"ES"/"Alter"/"Alter AS")를 base+alter 두 차원으로 분해
+// 'Alter' 단독은 base 정보 없으므로 NS default (대부분 alter 캐릭터의 base)
+function parseStyle(rawStyle) {
+  if (!rawStyle) return { base: 'NS', alter: false };
+  const s = String(rawStyle).trim();
+  if (s === 'Alter') return { base: 'NS', alter: true };
+  if (s.startsWith('Alter ')) return { base: s.slice(6).trim(), alter: true };
+  if (s.endsWith(' Alter')) return { base: s.slice(0, -6).trim(), alter: true };
+  return { base: s, alter: false };
+}
+
+// filter style: 'Alter' 토글은 alter:true 매치, NS/AS/ES 토글은 base 매치 (같은 카테고리 OR)
+function styleFilterMatch(filterStyles, charStyle) {
+  if (!filterStyles || !filterStyles.length) return true;
+  const ps = parseStyle(charStyle);
+  for (const f of filterStyles) {
+    if (f === 'Alter') { if (ps.alter) return true; }
+    else if (ps.base === f) return true;
+  }
+  return false;
+}
 
 /* ─── Category Tabs ─── */
 function renderCategoryTabs() {
@@ -1670,7 +1700,7 @@ function showTooltip(c, e) {
   const tt = document.getElementById('tooltip');
   tt.innerHTML = `<div class="tt-name">${esc(c.nameKo)}</div>` +
     `<div class="tt-row">${esc(c.nameEn)}</div>` +
-    `<div class="tt-row">${c.style} / ${c.rarity}★${c.sa?' SA':''}</div>` +
+    (() => { const ps = parseStyle(c.style); const styleText = (ps.alter ? 'AC ' : '') + (ps.base || ''); return `<div class="tt-row">${styleText.trim()}${c.sa ? ' · SA' : ''}</div>`; })() +
     `<div class="tt-row">${c.elementKo || ''}${c.element2Ko ? '+'+c.element2Ko : ''} / ${c.weaponKo || ''}</div>` +
     (c.ls ? `<div class="tt-row">${c.ls==='light'?T('lightLabel'):T('shadowLabel')}</div>` : '') +
     (c.date ? `<div class="tt-row">${c.date}</div>` : '');
@@ -1881,7 +1911,7 @@ function pickerCharMatches(c) {
   }
   if (f.elements.length && !f.elements.includes(c.element) && !(c.element2 && f.elements.includes(c.element2))) return false;
   if (f.weapons.length && !f.weapons.includes(c.weapon)) return false;
-  if (f.styles.length && !f.styles.includes(c.style)) return false;
+  if (!styleFilterMatch(f.styles, c.style)) return false;
   if (f.rarities.length && !f.rarities.includes(c.rarity)) return false;
   if (f.sa === true && !c.sa) return false;
   if (f.ls && c.ls !== f.ls) return false;
@@ -2248,7 +2278,6 @@ function renderTableView() {
     {key:'element', label:T('thElement')},
     {key:'weapon', label:T('thWeapon')},
     {key:'style', label:T('thStyle')},
-    {key:'rarity', label:T('thRarity')},
     {key:'sa', label:T('thSA')},
     {key:'ls', label:T('thLS')},
     {key:'attackType', label:T('thAttack')},
@@ -2268,7 +2297,9 @@ function renderTableView() {
     if (c.element2 && EL_ICON[c.element2]) elIcon += ` <img class="tv-el-icon" src="images/elements/${EL_ICON[c.element2]}" alt="${c.element2Ko||''}"> ${c.element2Ko||''}`;
     const wpIcon = c.weapon && WP_ICON[c.weapon] ? `<img class="tv-wp-icon" src="images/weapons/${WP_ICON[c.weapon]}" alt="${c.weaponKo}"> ${c.weaponKo}` : c.weaponKo || '';
     const lsText = c.ls === 'light' ? `<span class="u-ls-light">${T('lightLabel')}</span>` : c.ls === 'shadow' ? `<span class="u-ls-shadow">${T('shadowLabel')}</span>` : '';
-    const tvStClass = 'st-' + c.style;
+    const ps = parseStyle(c.style);
+    const styleCell = (ps.alter ? `<span class="alter-badge">AC</span>` : '') +
+                      (ps.base ? `<span class="st-badge st-${ps.base}"${ps.alter?' style="margin-left:3px"':''}>${ps.base}</span>` : '');
 
     html += `<tr>
       <td><img class="tv-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy"></td>
@@ -2276,8 +2307,7 @@ function renderTableView() {
       <td class="u-text-dim">${esc(lang==='ko'?c.nameEn:c.nameKo)}</td>
       <td>${elIcon}</td>
       <td>${wpIcon}</td>
-      <td><span class="st-badge ${tvStClass}">${styleLabel(c.style)}</span></td>
-      <td>${c.rarity}★</td>
+      <td>${styleCell}</td>
       <td>${c.sa ? '<span class="sa-badge">SA</span>' : ''}</td>
       <td>${lsText}</td>
       <td>${c.attackType || ''}</td>
@@ -2466,7 +2496,8 @@ function tierLabelTextColor(bgColor) {
 }
 
 function renderCardHTML(c, opts = {}) {
-  const stClass = 'st-' + c.style;
+  // base style + alter 분리 (단일 'style' 필드를 두 차원으로 해석)
+  const { base, alter } = parseStyle(c.style);
   // 속성 아이콘 (다중속성 = element2 필드 지원)
   const el1Src = c.element && EL_ICON[c.element] ? `images/elements/${EL_ICON[c.element]}` : '';
   const el2Src = c.element2 && EL_ICON[c.element2] ? `images/elements/${EL_ICON[c.element2]}` : '';
@@ -2478,6 +2509,7 @@ function renderCardHTML(c, opts = {}) {
     `<div class="card-icon-wrap">` +
     `<img class="card-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy">` +
     (lsIcon ? `<img class="card-ls" src="${lsIcon}" alt="${c.ls}">` : '') +
+    (c.sa ? `<span class="card-sa-overlay">SA</span>` : '') +
     `</div>` +
     `<span class="card-name">${esc(charName(c))}</span>` +
     `<span class="card-meta">` +
@@ -2486,12 +2518,11 @@ function renderCardHTML(c, opts = {}) {
       (wpSrc ? `<img src="${wpSrc}" alt="${c.weaponKo}">` : '') +
     `</span>`;
   if (!opts.compact) {
-    html +=
-      `<span class="card-sub">` +
-        `<span class="rarity-badge r${c.rarity}">${c.rarity}★</span>` +
-        `<span class="st-badge ${stClass}">${styleLabel(c.style)}</span>` +
-        (c.sa ? `<span class="sa-badge">SA</span>` : '') +
-      `</span>`;
+    const baseBadge = base ? `<span class="st-badge st-${base}">${base}</span>` : '';
+    const alterBadge = alter ? `<span class="alter-badge">AC</span>` : '';
+    if (baseBadge || alterBadge) {
+      html += `<span class="card-sub">${alterBadge}${baseBadge}</span>`;
+    }
   }
   return html;
 }
@@ -2507,7 +2538,7 @@ function showInfoToast(c) {
     <div class="it-details">
       <div class="it-name">${esc(c.nameKo)}</div>
       <div class="it-sub">${esc(c.nameEn)}</div>
-      <div class="it-sub">${c.elementKo||''}${c.element2Ko?'+'+c.element2Ko:''} / ${c.weaponKo||''} | ${c.style} ${c.rarity}★${c.sa?' SA':''}</div>
+      <div class="it-sub">${c.elementKo||''}${c.element2Ko?'+'+c.element2Ko:''} / ${c.weaponKo||''}${(()=>{const ps=parseStyle(c.style);const t=((ps.alter?'AC ':'')+(ps.base||'')).trim();return t?' | '+t:'';})()}${c.sa?' · SA':''}</div>
     </div>`;
   document.body.appendChild(el);
   _toastEl = el;
