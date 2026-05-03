@@ -307,9 +307,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 /* ─── Edit popover ─── */
 .edit-pop{position:absolute;z-index:1500;background:linear-gradient(180deg,var(--surface-1),var(--surface-modal-bottom));border:1px solid var(--border-gold);border-radius:var(--r-card);padding:14px;box-shadow:var(--shadow-md)}
 .edit-pop input{margin-bottom:6px;width:100%}
-.edit-pop .color-row{display:flex;gap:4px;margin-bottom:6px}
-.edit-pop .color-swatch{width:24px;height:24px;border-radius:var(--r-control);cursor:pointer;border:2px solid transparent}
-.edit-pop .color-swatch.sel{border-color:#fff}
+.edit-pop .color-row{display:grid;grid-template-columns:repeat(8,24px);gap:4px;margin-bottom:8px}
+.edit-pop .color-swatch{width:24px;height:24px;border-radius:var(--r-control);cursor:pointer;border:2px solid transparent;transition:transform var(--motion-fast),border-color var(--motion-fast);box-shadow:inset 0 1px 2px rgba(0,0,0,0.3)}
+.edit-pop .color-swatch:hover{transform:scale(1.15)}
+.edit-pop .color-swatch.sel{border-color:#fff;box-shadow:0 0 8px currentColor,inset 0 1px 2px rgba(0,0,0,0.3)}
 .edit-pop .pop-actions{display:flex;gap:6px;justify-content:flex-end}
 
 /* ─── Stats ─── */
@@ -872,14 +873,25 @@ function initAllSegControls() {
 }
 
 const TIER_COLORS = [
+  // Warm 계열 (상위 등급용)
   '#f5b800',  // amber
-  '#e63946',  // crimson
+  '#ffd166',  // warm yellow
   '#ff8c42',  // orange
-  '#ffd166',  // yellow
-  '#06b89d',  // teal-mint
-  '#4cc9f0',  // sky blue
+  '#e63946',  // crimson
+  '#ff6b9d',  // rose pink
+  '#bc6c25',  // bronze
+  // Cool 계열 (중하위 등급용)
   '#9d4edd',  // violet
-  '#6c757d'   // slate grey
+  '#5b8def',  // royal blue
+  '#4cc9f0',  // sky blue
+  '#06b89d',  // teal mint
+  '#52b788',  // sage green
+  '#80b918',  // lime
+  // Neutral
+  '#dda15e',  // sandy
+  '#a8a29e',  // warm grey
+  '#6c757d',  // slate grey
+  '#495057'   // dark slate
 ];
 
 /* 정제된 등급 팔레트 (warm→cool 자연 그라디언트, saturation 균형)
@@ -1516,17 +1528,11 @@ function renderTierRows() {
 
     const label = document.createElement('div');
     label.className = 'tier-label';
-    const lum = relativeLuminance(td.color);
+    // 모든 라벨에 동일한 subtle 그라디언트 + 색깔 텍스트 (위계 통일)
+    // 어두운 색만 lighten해서 가독성 보장. solid 형광 bg 제거.
     label.style.color = tierLabelTextColor(td.color);
-    if (lum > 0.55) {
-      // 밝은 색: solid 그라디언트 + 짙은 텍스트
-      label.style.background = `linear-gradient(135deg, ${td.color}, ${td.color}cc)`;
-      label.style.textShadow = '0 1px 2px rgba(255,255,255,0.4)';
-    } else {
-      // 어두운 색: subtle gradient + 색깔 글씨에 글로우
-      label.style.background = `linear-gradient(135deg, ${td.color}33, ${td.color}0d)`;
-      label.style.textShadow = `0 0 12px ${td.color}80, 0 1px 2px rgba(0,0,0,0.6)`;
-    }
+    label.style.background = `linear-gradient(135deg, ${td.color}26 0%, ${td.color}0a 100%)`;
+    label.style.textShadow = `0 0 10px ${td.color}99, 0 1px 2px rgba(0,0,0,0.85)`;
     label.innerHTML = esc(td.label);
     if (S.mode === 'builder') {
       label.title = T('clickToEdit');
@@ -2511,9 +2517,9 @@ function relativeLuminance(hex) {
   return 0.2126*r + 0.7152*g + 0.0722*b;
 }
 function tierLabelTextColor(bgColor) {
-  // 매우 어두운 색은 lighten해서 가독성 보장
+  // 모든 라벨에 색깔 글씨로 통일. 매우 어두운 색만 lighten해서 가독성 보장.
+  // (이전 luminance>0.55 → 검정 글씨 분기 제거: yellow 등이 형광으로 튀지 않게)
   const lum = relativeLuminance(bgColor);
-  if (lum > 0.55) return '#0d1117';   // 밝은 색 → 짙은 텍스트
   if (lum < 0.22) {
     const rgb = _hexToRgb(bgColor);
     if (rgb) {
