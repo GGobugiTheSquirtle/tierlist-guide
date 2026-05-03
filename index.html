@@ -161,7 +161,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .tier-label::after{content:'';position:absolute;right:0;top:12%;bottom:12%;width:1px;background:linear-gradient(180deg,transparent,var(--accent-a12),transparent)}
 .tier-label small{font-size:var(--text-2xs);font-weight:400;color:var(--text-dim);margin-top:2px}
 .tier-drop{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;gap:var(--sp-2);padding:var(--sp-2) var(--sp-3);min-height:52px;transition:background var(--motion-fast)}
-.tier-drop.drag-over{background:rgba(212,164,74,0.12);outline:2px dashed var(--accent)}
+.tier-drop.drag-over{background:var(--accent-a08);box-shadow:inset 0 0 0 2px var(--accent-a35),var(--glow-accent-soft);animation:dropPulse 1.6s ease-in-out infinite}
 .tier-actions{display:flex;justify-content:center;gap:8px;margin:4px 0 8px}
 
 /* ─── Character Card ─── */
@@ -228,7 +228,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .pool-header .pool-sort:hover{border-color:var(--accent);color:var(--accent)}
 .pool-header .pool-sort.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
 .pool-grid{display:flex;flex-wrap:wrap;gap:var(--sp-2);min-height:80px;padding:var(--sp-3);border:1px dashed var(--border);border-radius:var(--r-card)}
-.pool-grid.drag-over{border-color:var(--accent);background:rgba(212,164,74,0.06)}
+.pool-grid.drag-over{border-color:var(--accent);background:var(--accent-a04);box-shadow:inset 0 0 0 1px var(--accent-a20)}
 .pool-sentinel{height:1px;width:100%;flex-basis:100%}
 .pool-load-more{text-align:center;padding:8px;font-size:var(--text-xs);color:var(--text-dim);flex-basis:100%}
 
@@ -278,7 +278,14 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .picker-footer .btn{padding:12px 48px;font-size:var(--text-sm);font-family:var(--font-display);letter-spacing:0.5px}
 
 /* ─── Ghost (drag) ─── */
-.drag-ghost{position:fixed;pointer-events:none;z-index:999;opacity:.85;transform:scale(1.05)}
+.drag-ghost{position:fixed;pointer-events:none;z-index:999;opacity:.92;transform:scale(1.08) rotate(-2deg);filter:drop-shadow(0 12px 24px var(--scrim-base));transition:transform var(--motion-fast) var(--ease-spring)}
+@keyframes dropPulse{0%,100%{box-shadow:inset 0 0 0 2px var(--accent-a35)}50%{box-shadow:inset 0 0 0 2px var(--accent),var(--glow-accent-soft)}}
+
+/* ─── View Transitions (mode/view 전환) ─── */
+@keyframes vtFadeOut{to{opacity:0}}
+@keyframes vtFadeIn{from{opacity:0}}
+::view-transition-old(root){animation:vtFadeOut var(--motion-base) var(--ease-emphasized) forwards}
+::view-transition-new(root){animation:vtFadeIn var(--motion-base) var(--ease-emphasized) forwards}
 
 /* ─── Start Modal ─── */
 .modal-overlay{position:fixed;inset:0;background:var(--scrim-deep);z-index:2000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
@@ -336,13 +343,15 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
 /* ─── Capture Area ─── */
 #capture-area{background:var(--bg-primary)}
-.capture-banner{background:linear-gradient(135deg,#161b22,#0d1117,#161b22);padding:16px 20px;display:none;align-items:center;justify-content:space-between;border-bottom:1px solid var(--accent-a08)}
-.capture-banner h2{font-family:var(--font-display);color:var(--accent);font-size:var(--text-sm);letter-spacing:1px}
+.capture-banner{background:linear-gradient(135deg,var(--surface-1),var(--surface-0),var(--surface-1));padding:16px 20px;display:none;align-items:center;justify-content:space-between;border-bottom:1px solid var(--accent-a12);position:relative}
+.capture-banner::after{content:'';position:absolute;left:20%;right:20%;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--accent-a35),transparent)}
+.capture-banner h2{font-family:var(--font-display);color:var(--accent);font-size:var(--text-base);letter-spacing:1.5px;text-shadow:0 1px 8px var(--accent-a20)}
 .cap-info{font-size:var(--text-3xs);color:var(--text-dim);text-align:right;line-height:1.5}
-.capture-footer{background:#161b22;padding:8px 20px;display:none;align-items:center;justify-content:space-between;border-top:1px solid var(--accent-a08)}
+.capture-footer{background:var(--surface-1);padding:8px 20px;display:none;align-items:center;justify-content:space-between;border-top:1px solid var(--accent-a08);position:relative}
+.capture-footer::before{content:'';position:absolute;left:20%;right:20%;top:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--accent-a35),transparent)}
 .cap-credit{font-size:var(--text-3xs);color:var(--text-dim)}
 .cap-credit a{color:var(--accent);text-decoration:none}
-.cap-watermark{font-family:var(--font-display);font-size:var(--text-3xs);color:var(--accent-a20);letter-spacing:2px}
+.cap-watermark{font-family:var(--font-display);font-size:var(--text-3xs);color:var(--accent-a35);letter-spacing:4px;text-shadow:0 1px 2px var(--scrim-base)}
 
 /* ─── Credits ─── */
 .credits{padding:8px 16px;text-align:center;font-size:var(--text-2xs);color:var(--text-dim);border-top:1px solid var(--border-gold);background:var(--bg-primary)}
@@ -397,10 +406,12 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 }
 
 /* ─── Intro Screen ─── */
-.intro{position:fixed;inset:0;z-index:3000;background:radial-gradient(ellipse at 50% 30%,#1a2030 0%,#0a0e14 70%,#050810 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity var(--motion-slow)}
+.intro{position:fixed;inset:0;z-index:3000;background:radial-gradient(ellipse at 50% 30%,var(--accent-a08) 0%,transparent 50%),radial-gradient(ellipse at 50% 30%,#1a2030 0%,#0a0e14 70%,#050810 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity var(--motion-slow);overflow:hidden}
+.intro::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,var(--accent-a04),transparent 40%),radial-gradient(circle at 80% 20%,var(--accent-a04),transparent 40%);pointer-events:none;animation:introGlow 8s ease-in-out infinite alternate}
+@keyframes introGlow{from{opacity:0.5}to{opacity:1}}
 .intro.hidden{opacity:0;pointer-events:none}
-.intro-banner{max-width:560px;width:90%;border-radius:var(--r-control);margin-bottom:24px;box-shadow:0 8px 40px rgba(0,0,0,.6);border:1px solid var(--border-gold)}
-.intro h1{font-family:var(--font-display);font-size:var(--text-2xl);color:var(--accent);margin-bottom:8px;letter-spacing:2px;text-shadow:0 2px 12px rgba(201,168,76,0.3)}
+.intro-banner{max-width:560px;width:90%;border-radius:var(--r-card);margin-bottom:24px;box-shadow:0 8px 40px var(--scrim-deep),0 0 0 1px var(--accent-a12),0 0 60px var(--accent-a08);border:1px solid var(--border-gold);position:relative;z-index:1}
+.intro h1{font-family:var(--font-display);font-size:var(--text-2xl);background:linear-gradient(180deg,var(--accent-hover),var(--accent-deep));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px;letter-spacing:2px;filter:drop-shadow(0 2px 12px var(--accent-a35));position:relative}
 .intro .intro-sub{color:var(--text-secondary);font-size:var(--text-sm);margin-bottom:4px;font-style:italic}
 .intro .intro-ver{color:var(--text-dim);font-size:var(--text-2xs);margin-bottom:24px}
 .intro .intro-team{color:var(--text-dim);font-size:var(--text-2xs);margin-bottom:28px;letter-spacing:1px}
@@ -918,12 +929,16 @@ async function init() {
    MODE
    ═══════════════════════════════════════════ */
 function setMode(m) {
-  S.mode = m;
-  document.body.className = 'mode-' + m;
-  const seg = document.getElementById('seg-mode');
-  const btn = document.getElementById(m === 'builder' ? 'btn-builder' : 'btn-viewer');
-  if (seg && btn) updateSegControl(seg, btn);
-  renderAll();
+  const apply = () => {
+    S.mode = m;
+    document.body.className = 'mode-' + m;
+    const seg = document.getElementById('seg-mode');
+    const btn = document.getElementById(m === 'builder' ? 'btn-builder' : 'btn-viewer');
+    if (seg && btn) updateSegControl(seg, btn);
+    renderAll();
+  };
+  if (document.startViewTransition) document.startViewTransition(apply);
+  else apply();
 }
 
 /* ═══════════════════════════════════════════
@@ -1279,12 +1294,16 @@ function renderAll(trigger) {
 }
 
 function setView(v) {
-  currentView = v;
-  const seg = document.getElementById('seg-view');
-  const btnId = v === 'tier' ? 'btn-tier' : v === 'all' ? 'btn-all' : 'btn-table';
-  const btn = document.getElementById(btnId);
-  if (seg && btn) updateSegControl(seg, btn);
-  renderAll();
+  const apply = () => {
+    currentView = v;
+    const seg = document.getElementById('seg-view');
+    const btnId = v === 'tier' ? 'btn-tier' : v === 'all' ? 'btn-all' : 'btn-table';
+    const btn = document.getElementById(btnId);
+    if (seg && btn) updateSegControl(seg, btn);
+    renderAll();
+  };
+  if (document.startViewTransition) document.startViewTransition(apply);
+  else apply();
 }
 
 function setLang(l) {
@@ -1440,11 +1459,20 @@ function renderTierRows() {
 
     const label = document.createElement('div');
     label.className = 'tier-label';
-    label.style.color = td.color;
+    const lum = relativeLuminance(td.color);
+    label.style.color = tierLabelTextColor(td.color);
     const labelUpper = td.label.toUpperCase();
-    if (labelUpper === 'SS' || labelUpper === 'TOP') label.style.background = 'rgba(255,215,0,0.03)';
-    else if (labelUpper === 'S') label.style.background = 'rgba(255,107,107,0.02)';
-    else label.style.background = 'transparent';
+    if (lum > 0.55) {
+      // 밝은 색: solid 배경에 짙은 텍스트
+      label.style.background = `linear-gradient(135deg, ${td.color}, ${td.color}cc)`;
+      label.style.textShadow = '0 1px 2px rgba(255,255,255,0.3)';
+    } else if (labelUpper === 'SS' || labelUpper === 'TOP') {
+      label.style.background = 'rgba(255,215,0,0.03)';
+    } else if (labelUpper === 'S') {
+      label.style.background = 'rgba(255,107,107,0.02)';
+    } else {
+      label.style.background = 'transparent';
+    }
     label.innerHTML = esc(td.label);
     if (S.mode === 'builder') {
       label.title = T('clickToEdit');
@@ -2413,6 +2441,29 @@ function getInsertIndex(dropZone, clientX) {
    UTILS
    ═══════════════════════════════════════════ */
 function esc(s) { if(!s)return''; const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+// Color luminance (WCAG) — tier label 가독성 자동 매칭
+function _hexToRgb(hex) {
+  if (!hex) return null;
+  const m = hex.replace('#','').match(/^([0-9a-f]{3}|[0-9a-f]{6})$/i);
+  if (!m) return null;
+  let h = m[1];
+  if (h.length === 3) h = h.split('').map(c => c+c).join('');
+  return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+}
+function relativeLuminance(hex) {
+  const rgb = _hexToRgb(hex);
+  if (!rgb) return 0.5;
+  const [r,g,b] = rgb.map(v => {
+    v = v/255;
+    return v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4);
+  });
+  return 0.2126*r + 0.7152*g + 0.0722*b;
+}
+function tierLabelTextColor(bgColor) {
+  // 어두운 색이면 색상을 텍스트로, 밝은 색이면 짙은 텍스트 (가독성 보장)
+  return relativeLuminance(bgColor) > 0.55 ? '#0d1117' : bgColor;
+}
 
 function renderCardHTML(c, opts = {}) {
   const stClass = 'st-' + c.style;
