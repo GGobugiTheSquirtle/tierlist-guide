@@ -1611,10 +1611,9 @@ function showTierEdit(e, td, idx) {
   pop.style.left = Math.min(e.clientX + 10, window.innerWidth - 220) + 'px';
   pop.style.top = Math.min(e.clientY - 10, window.innerHeight - 200) + 'px';
 
-  const colors = ['#ffd700','#ff4444','#ff8c00','#ffdd00','#44bb44','#888888','#5dade2','#af7ac5','#e74c3c','#1abc9c'];
   pop.innerHTML = `
     <input type="text" value="${esc(td.label)}" id="edit-label" autofocus>
-    <div class="color-row">${colors.map(c =>
+    <div class="color-row">${TIER_COLORS.map(c =>
       `<div class="color-swatch ${c===td.color?'sel':''}" style="background:${c}" data-c="${c}"></div>`
     ).join('')}</div>
     <div class="pop-actions">
