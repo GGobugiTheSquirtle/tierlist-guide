@@ -155,7 +155,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
 /* ─── Tier Rows ─── */
 .tier-area{padding:var(--sp-2) var(--sp-4)}
-.tier-row{display:flex;align-items:stretch;margin:var(--sp-1) 0;border-radius:var(--r-card);background:var(--bg-tier-row);border:1px solid var(--border);overflow:hidden;transition:border-color var(--motion-base),box-shadow var(--motion-base);position:relative}
+.tier-row{display:flex;align-items:stretch;margin:6px 0;border-radius:var(--r-card);background:var(--bg-tier-row);border:1px solid rgba(48,54,61,0.5);overflow:hidden;transition:border-color var(--motion-base),box-shadow var(--motion-base);position:relative}
 .tier-row:hover{border-color:var(--accent-a20);box-shadow:0 2px 12px rgba(0,0,0,0.25)}
 .tier-label{width:64px;min-width:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:var(--text-xl);cursor:pointer;user-select:none;padding:var(--sp-2) var(--sp-1);text-align:center;position:relative;transition:filter var(--motion-fast),transform var(--motion-fast);letter-spacing:0.5px}
 .tier-label:hover{filter:brightness(1.18)}
@@ -168,7 +168,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .tier-actions .btn:hover{opacity:1;border-color:var(--accent-a35);color:var(--accent);background:var(--accent-a04)}
 
 /* ─── Character Card ─── */
-.char-card{width:var(--card-w);background:linear-gradient(180deg,#1c2333 0%,#171e2c 100%);border-radius:var(--r-card);padding:5px var(--sp-1) var(--sp-1);text-align:center;cursor:grab;user-select:none;border:1px solid rgba(48,54,61,0.7);transition:border-color var(--motion-base),transform var(--motion-fast),box-shadow var(--motion-base);position:relative;overflow:hidden}
+.char-card{width:var(--card-w);background:linear-gradient(180deg,#1c2333 0%,#171e2c 100%);border-radius:var(--r-card);padding:5px var(--sp-1) var(--sp-1);text-align:center;cursor:grab;user-select:none;border:1px solid rgba(48,54,61,0.5);transition:border-color var(--motion-base),transform var(--motion-fast),box-shadow var(--motion-base);position:relative;overflow:hidden}
 .char-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent)}
 .char-card:hover{border-color:var(--accent-a35);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.4),0 0 12px var(--accent-a08)}
 .char-card:active{cursor:grabbing}
@@ -871,26 +871,49 @@ function initAllSegControls() {
   document.querySelectorAll('.seg-control').forEach(initSegControl);
 }
 
-const TIER_COLORS = ['#ffd700','#ff4444','#ff8c00','#ffdd00','#44bb44','#888888','#5dade2','#af7ac5'];
+const TIER_COLORS = [
+  '#f5b800',  // amber
+  '#e63946',  // crimson
+  '#ff8c42',  // orange
+  '#ffd166',  // yellow
+  '#06b89d',  // teal-mint
+  '#4cc9f0',  // sky blue
+  '#9d4edd',  // violet
+  '#6c757d'   // slate grey
+];
+
+/* 정제된 등급 팔레트 (warm→cool 자연 그라디언트, saturation 균형)
+   TOP(amber) → S(crimson) → A(orange) → B(yellow) → C(mint) → D(slate)
+   각 색은 채도 비슷, hue rotation으로 위계 표현 */
+const TIER_PALETTE = {
+  TOP: '#f5b800',  // mustard amber (gold보다 차분)
+  SS:  '#f5b800',
+  S:   '#e63946',  // crimson (강함/위험)
+  A:   '#ff8c42',  // vivid orange
+  B:   '#ffd166',  // warm yellow (덜 강렬)
+  C:   '#06b89d',  // teal-mint (cool 톤)
+  D:   '#6c757d',  // slate grey
+  E:   '#495057'
+};
 
 function getPresets() { return {
   blank: { name:T('presetBlank'), desc:T('presetBlankDesc'), categories:[], tierDefs:[
-    {label:'S',color:'#ff4444'},{label:'A',color:'#ff8c00'},{label:'B',color:'#ffdd00'},{label:'C',color:'#44bb44'},{label:'D',color:'#888888'}
+    {label:'S',color:TIER_PALETTE.S},{label:'A',color:TIER_PALETTE.A},{label:'B',color:TIER_PALETTE.B},{label:'C',color:TIER_PALETTE.C},{label:'D',color:TIER_PALETTE.D}
   ]},
   altema: { name:T('presetAltema'), desc:T('presetAltemaDesc'), categories:[
     {name:T('catOverall')},{name:T('catSlash')},{name:T('catPierce')},{name:T('catBlunt')},{name:T('catMagic')},{name:T('catSupport')},{name:T('catTank')}
   ], tierDefs:[
-    {label:'SS',color:'#ffd700'},{label:'S',color:'#ff4444'},{label:'A',color:'#ff8c00'},{label:'B',color:'#ffdd00'},{label:'C',color:'#888888'}
+    {label:'SS',color:TIER_PALETTE.SS},{label:'S',color:TIER_PALETTE.S},{label:'A',color:TIER_PALETTE.A},{label:'B',color:TIER_PALETTE.B},{label:'C',color:TIER_PALETTE.D}
   ]},
   prydwen: { name:T('presetPrydwen'), desc:T('presetRoleDesc'), categories:[
     {name:T('catDPS')},{name:T('catAmplifier')},{name:T('catSustain')},{name:T('catSpecialist')}
   ], tierDefs:[
-    {label:'TOP',color:'#ffd700'},{label:'S',color:'#ff4444'},{label:'A',color:'#ff8c00'},{label:'B',color:'#ffdd00'},{label:'C',color:'#44bb44'}
+    {label:'TOP',color:TIER_PALETTE.TOP},{label:'S',color:TIER_PALETTE.S},{label:'A',color:TIER_PALETTE.A},{label:'B',color:TIER_PALETTE.B},{label:'C',color:TIER_PALETTE.C}
   ]},
   simple: { name:T('presetSimple'), desc:T('presetSimpleDesc'), categories:[
     {name:T('catAll')}
   ], tierDefs:[
-    {label:'S',color:'#ff4444'},{label:'A',color:'#ff8c00'},{label:'B',color:'#ffdd00'},{label:'C',color:'#44bb44'},{label:'D',color:'#888888'}
+    {label:'S',color:TIER_PALETTE.S},{label:'A',color:TIER_PALETTE.A},{label:'B',color:TIER_PALETTE.B},{label:'C',color:TIER_PALETTE.C},{label:'D',color:TIER_PALETTE.D}
   ]}
 }; }
 
