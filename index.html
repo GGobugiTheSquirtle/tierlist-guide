@@ -882,7 +882,7 @@ function getPresets() { return {
   prydwen: { name:T('presetPrydwen'), desc:T('presetRoleDesc'), categories:[
     {name:T('catDPS')},{name:T('catAmplifier')},{name:T('catSustain')},{name:T('catSpecialist')}
   ], tierDefs:[
-    {label:'TOP',color:'#ffd700'},{label:'S',color:'#ff4444'},{label:'A',color:'#ff8c00'},{label:'B',color:'#ffdd00'},{label:'C',color:'#888888'}
+    {label:'TOP',color:'#ffd700'},{label:'S',color:'#ff4444'},{label:'A',color:'#ff8c00'},{label:'B',color:'#ffdd00'},{label:'C',color:'#44bb44'}
   ]},
   simple: { name:T('presetSimple'), desc:T('presetSimpleDesc'), categories:[
     {name:T('catAll')}
@@ -1849,21 +1849,15 @@ function renderPickerFilters() {
     html += `<button class="ftag ${f.weapons.includes(w)?'on':''}" data-ftype="weapons" data-fval="${w}"><img src="images/weapons/${WP_ICON[w]}" width="24" height="24"></button>`;
   });
   html += '<span class="u-toolbar-spacer"></span>';
-  // 스타일
+  // 스타일 + Alter + SA
   ['NS','AS','ES','Alter'].forEach(s => {
-    html += `<button class="ftag ${f.styles.includes(s)?'on':''}" data-ftype="styles" data-fval="${s}">${s}</button>`;
+    html += `<button class="ftag ${f.styles.includes(s)?'on':''}" data-ftype="styles" data-fval="${s}">${styleLabel(s)}</button>`;
   });
-  html += '<span class="u-toolbar-spacer"></span>';
-  // 레어도
-  [4,5].forEach(r => {
-    html += `<button class="ftag ${f.rarities.includes(r)?'on':''}" data-ftype="rarities" data-fval="${r}">${r}★</button>`;
-  });
-  // SA
   html += `<button class="ftag ${f.sa===true?'on':''}" data-ftype="sa" data-fval="true">SA</button>`;
   html += '<span class="u-toolbar-spacer"></span>';
   // L/S
-  html += `<button class="ftag ${f.ls==='light'?'on':''}" data-ftype="ls" data-fval="light">${T('lightLabel')}</button>`;
-  html += `<button class="ftag ${f.ls==='shadow'?'on':''}" data-ftype="ls" data-fval="shadow" class="u-ls-shadow">${T('shadowLabel')}</button>`;
+  html += `<button class="ftag u-ls-light ${f.ls==='light'?'on':''}" data-ftype="ls" data-fval="light">${T('lightLabel')}</button>`;
+  html += `<button class="ftag u-ls-shadow ${f.ls==='shadow'?'on':''}" data-ftype="ls" data-fval="shadow">${T('shadowLabel')}</button>`;
   html += '<span class="u-toolbar-spacer"></span>';
   // 획득처
   ['free','gacha','buddy'].forEach(a => {
@@ -2017,16 +2011,13 @@ function renderFilterBar() {
           ${['NS','AS','ES','Alter'].map(s =>
             `<button class="ftag ${f.styles.includes(s)?'on':''}" onclick="toggleFilter('styles','${s}')">${styleLabel(s)}</button>`
           ).join('')}
-          <span class="u-toolbar-divider"></span>
-          ${[4,5].map(r =>
-            `<button class="ftag ${f.rarities.includes(r)?'on':''}" onclick="toggleFilter('rarities',${r})">${r}★</button>`
-          ).join('')}
+          <span class="u-toolbar-spacer"></span>
           <button class="ftag ${f.sa===true?'on':''}" onclick="S.ui.filters.sa=S.ui.filters.sa?null:true;renderAll()">SA</button>
         </div>
         <div class="filter-row">
           <label>L/S</label>
-          <button class="ftag ${f.ls==='light'?'on':''}" onclick="S.ui.filters.ls=S.ui.filters.ls==='light'?null:'light';renderAll()" class="u-ls-light">${T('lightLabel')}</button>
-          <button class="ftag ${f.ls==='shadow'?'on':''}" onclick="S.ui.filters.ls=S.ui.filters.ls==='shadow'?null:'shadow';renderAll()" class="u-ls-shadow">${T('shadowLabel')}</button>
+          <button class="ftag u-ls-light ${f.ls==='light'?'on':''}" onclick="S.ui.filters.ls=S.ui.filters.ls==='light'?null:'light';renderAll()">${T('lightLabel')}</button>
+          <button class="ftag u-ls-shadow ${f.ls==='shadow'?'on':''}" onclick="S.ui.filters.ls=S.ui.filters.ls==='shadow'?null:'shadow';renderAll()">${T('shadowLabel')}</button>
         </div>
         <div class="filter-row">
           <label>${T('acquireLabel')}</label>
@@ -2063,6 +2054,13 @@ const POOL_BATCH = 60;
 let _poolChars = [];
 let _poolRendered = 0;
 let _poolSort = 'nameKo'; // 'nameKo' | 'nameKo-desc' | 'date' | 'date-desc'
+function cyclePoolSort(field) {
+  // 같은 필드면 ▲ ↔ ▼ 토글, 다른 필드면 ▲로 시작
+  if (_poolSort === field) _poolSort = field + '-desc';
+  else if (_poolSort === field + '-desc') _poolSort = field;
+  else _poolSort = field;
+  renderPool();
+}
 let _poolObserver = null;
 
 function renderPool() {
@@ -2109,10 +2107,8 @@ function renderPool() {
       <span class="pool-count">${T('unrankedFmt')(_poolChars.length, total, DB.characters.length)}</span>
       <input class="pool-search" type="text" placeholder="${T('searchPlaceholder')}" value="${esc(S.ui.query)}"
         oninput="debounceSearch(this.value)" onclick="event.stopPropagation()">
-      <button class="pool-sort ${_poolSort==='nameKo'?'active':''}" onclick="_poolSort='nameKo';renderPool()">${nameLabel} ▲</button>
-      <button class="pool-sort ${_poolSort==='nameKo-desc'?'active':''}" onclick="_poolSort='nameKo-desc';renderPool()">${nameLabel} ▼</button>
-      <button class="pool-sort ${_poolSort==='date'?'active':''}" onclick="_poolSort='date';renderPool()">${dateLabel} ▲</button>
-      <button class="pool-sort ${_poolSort==='date-desc'?'active':''}" onclick="_poolSort='date-desc';renderPool()">${dateLabel} ▼</button>`;
+      <button class="pool-sort ${_poolSort.startsWith('nameKo')?'active':''}" onclick="cyclePoolSort('nameKo')">${nameLabel} ${_poolSort==='nameKo'?'▲':_poolSort==='nameKo-desc'?'▼':'⇅'}</button>
+      <button class="pool-sort ${_poolSort.startsWith('date')?'active':''}" onclick="cyclePoolSort('date')">${dateLabel} ${_poolSort==='date'?'▲':_poolSort==='date-desc'?'▼':'⇅'}</button>`;
   }
 
   _poolRendered = 0;
@@ -2489,8 +2485,17 @@ function relativeLuminance(hex) {
   return 0.2126*r + 0.7152*g + 0.0722*b;
 }
 function tierLabelTextColor(bgColor) {
-  // 어두운 색이면 색상을 텍스트로, 밝은 색이면 짙은 텍스트 (가독성 보장)
-  return relativeLuminance(bgColor) > 0.55 ? '#0d1117' : bgColor;
+  // 매우 어두운 색은 lighten해서 가독성 보장
+  const lum = relativeLuminance(bgColor);
+  if (lum > 0.55) return '#0d1117';   // 밝은 색 → 짙은 텍스트
+  if (lum < 0.22) {
+    const rgb = _hexToRgb(bgColor);
+    if (rgb) {
+      const lifted = rgb.map(v => Math.min(255, v + 90));
+      return `rgb(${lifted[0]},${lifted[1]},${lifted[2]})`;
+    }
+  }
+  return bgColor;
 }
 
 function renderCardHTML(c, opts = {}) {
