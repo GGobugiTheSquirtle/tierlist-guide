@@ -872,29 +872,27 @@ function initAllSegControls() {
   document.querySelectorAll('.seg-control').forEach(initSegControl);
 }
 
-/* 티어 위계 그라데이션 — vivid 우선, neutral 최소화
-   Row 1 (1-8): 게임 컨벤션 위계 — gold → red → orange → yellow → lime → emerald → teal → sky
-                자동 할당 시 TOP/S/A/B/C/D 순으로 자연스러운 warm→cool flow
-   Row 2 (9-16): 다양한 vivid 변형 + slate 2개 (neutral 최소) */
+/* 티어 위계 단일 그라데이션 (Row 1+2 통합)
+   Hue 흐름: gold → red → coral → magenta → orange → peach → yellow → lime
+            → emerald → teal → cyan → sky → blue → violet → slate × 2
+   강조(상위) → 부드러움(중) → 차가움(하위) → neutral 자연스러운 위계 */
 const TIER_COLORS = [
-  // Row 1 — Hue 그라데이션 (warm → cool, 모두 vivid)
-  '#f5b800',  // 1. amber gold (TOP/SS)
-  '#e63946',  // 2. crimson (S)
-  '#ff8c42',  // 3. orange (A)
-  '#ffd166',  // 4. warm yellow (B)
-  '#80b918',  // 5. lime
-  '#00c853',  // 6. emerald green (vivid, 이전 sage 대체)
-  '#06b89d',  // 7. teal mint
-  '#4cc9f0',  // 8. sky blue (D)
-  // Row 2 — vivid 변형 (이전 칙칙한 4종 → vivid 4종으로 교체)
-  '#3b82f6',  // 9. electric blue (이전 royal blue를 좀 더 vivid)
-  '#9d4edd',  // 10. violet
-  '#e91e63',  // 11. magenta (이전 rose pink → 더 saturated)
-  '#ff6b6b',  // 12. coral (이전 bronze 대체)
-  '#ffb088',  // 13. peach (이전 sandy 대체, 부드러운 vivid)
-  '#00bcd4',  // 14. cyan (이전 warm grey 대체)
-  '#6c757d',  // 15. slate (neutral)
-  '#495057'   // 16. dark slate (neutral)
+  '#f5b800',  // 1. amber gold     — TOP/SS
+  '#e63946',  // 2. crimson        — S (강)
+  '#ff6b6b',  // 3. coral          — S- 변형
+  '#e91e63',  // 4. magenta        — 강한 변형
+  '#ff8c42',  // 5. orange         — A
+  '#ffb088',  // 6. peach          — A 변형 (부드러움)
+  '#ffd166',  // 7. warm yellow    — B
+  '#80b918',  // 8. lime           — B+/C+
+  '#00c853',  // 9. emerald        — C
+  '#06b89d',  // 10. teal mint     — C-
+  '#00bcd4',  // 11. cyan          — D+
+  '#4cc9f0',  // 12. sky blue      — D
+  '#3b82f6',  // 13. electric blue — D-
+  '#9d4edd',  // 14. violet        — E
+  '#6c757d',  // 15. slate         — neutral
+  '#495057'   // 16. dark slate    — neutral
 ];
 
 /* 정제된 등급 팔레트 (warm→cool 자연 그라디언트, saturation 균형)
