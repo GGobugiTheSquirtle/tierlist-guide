@@ -872,26 +872,29 @@ function initAllSegControls() {
   document.querySelectorAll('.seg-control').forEach(initSegControl);
 }
 
+/* 티어 위계 그라데이션:
+   Row 1 (1-8): 게임 티어 컨벤션 — gold → red → orange → yellow → lime → green → teal → blue
+                자동 할당 시 TOP/S/A/B/C/D 순으로 자연스러운 warm→cool flow
+   Row 2 (9-16): 변형 색 + neutral — royal/violet/pink/bronze/sandy + grey 3종 */
 const TIER_COLORS = [
-  // Warm 계열 (상위 등급용)
-  '#f5b800',  // amber
-  '#ffd166',  // warm yellow
-  '#ff8c42',  // orange
-  '#e63946',  // crimson
-  '#ff6b9d',  // rose pink
-  '#bc6c25',  // bronze
-  // Cool 계열 (중하위 등급용)
-  '#9d4edd',  // violet
-  '#5b8def',  // royal blue
-  '#4cc9f0',  // sky blue
-  '#06b89d',  // teal mint
-  '#52b788',  // sage green
-  '#80b918',  // lime
-  // Neutral
-  '#dda15e',  // sandy
-  '#a8a29e',  // warm grey
-  '#6c757d',  // slate grey
-  '#495057'   // dark slate
+  // Row 1 — Hue 그라데이션 (warm → cool)
+  '#f5b800',  // 1. amber gold (TOP/SS)
+  '#e63946',  // 2. crimson (S)
+  '#ff8c42',  // 3. orange (A)
+  '#ffd166',  // 4. warm yellow (B)
+  '#80b918',  // 5. lime
+  '#52b788',  // 6. sage green (C)
+  '#06b89d',  // 7. teal mint
+  '#4cc9f0',  // 8. sky blue (D)
+  // Row 2 — 변형 색 + neutral
+  '#5b8def',  // 9. royal blue
+  '#9d4edd',  // 10. violet
+  '#ff6b9d',  // 11. rose pink
+  '#bc6c25',  // 12. bronze
+  '#dda15e',  // 13. sandy
+  '#a8a29e',  // 14. warm grey
+  '#6c757d',  // 15. slate grey
+  '#495057'   // 16. dark slate
 ];
 
 /* 정제된 등급 팔레트 (warm→cool 자연 그라디언트, saturation 균형)
