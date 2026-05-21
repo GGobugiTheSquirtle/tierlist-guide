@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "2026-05-01",
-    "total": 395,
+    "version": "2026-05-21",
+    "total": 397,
     "source": "anothereden.wiki",
     "generatedBy": "build_tierlist_data.py"
   },
@@ -7510,6 +7510,44 @@
       "acq": "gacha",
       "date": "2026-04-23",
       "icon": "noble_blossom_alter_as.webp"
+    },
+    {
+      "id": "melpiphia_as",
+      "nameKo": "멜피피아 AS",
+      "nameEn": "Melpiphia AS",
+      "style": "AS",
+      "rarity": 5,
+      "sa": true,
+      "element": "wind",
+      "elementKo": "바람",
+      "element2": "",
+      "element2Ko": "",
+      "weapon": "sword",
+      "weaponKo": "검",
+      "attackType": "slash",
+      "ls": "light",
+      "acq": "gacha",
+      "date": "2026-05-21",
+      "icon": "101010171_s2_rank5_command.webp"
+    },
+    {
+      "id": "kuchinawa_as",
+      "nameKo": "쿠치나와 AS",
+      "nameEn": "Kuchinawa AS",
+      "style": "AS",
+      "rarity": 5,
+      "sa": true,
+      "element": "earth",
+      "elementKo": "땅",
+      "element2": "",
+      "element2Ko": "",
+      "weapon": "staff",
+      "weaponKo": "지팡이",
+      "attackType": "magic",
+      "ls": "shadow",
+      "acq": "gacha",
+      "date": "2026-05-07",
+      "icon": "101000371_s2_rank5_command.webp"
     }
   ]
 }
