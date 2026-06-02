@@ -948,7 +948,8 @@ async function init() {
   try {
     const res = await fetch('data/characters.json');
     DB = await res.json();
-    DB.characters.forEach(c => DB_MAP[c.id] = c);
+    // 2026-06-02: attackType 누락(25명) 시 무기→공격유형 폴백 (표 정렬 빈칸 쏠림 방지)
+    DB.characters.forEach(c => { DB_MAP[c.id] = c; if(!c.attackType && c.weapon) c.attackType = ATK_TYPE[c.weapon] || ''; });
     restoreCustomChars();
     console.log(`Loaded ${DB.characters.length} characters (incl. custom)`);
   } catch(e) {
