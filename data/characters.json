@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "2026-05-21",
-    "total": 397,
+    "version": "2026-06-15",
+    "total": 398,
     "source": "anothereden.wiki",
     "generatedBy": "build_tierlist_data.py"
   },
@@ -6966,7 +6966,7 @@
       "nameEn": "Rovella",
       "style": "NS",
       "rarity": 4,
-      "sa": false,
+      "sa": true,
       "element": "water",
       "elementKo": "물",
       "element2": "",
@@ -7548,6 +7548,25 @@
       "acq": "gacha",
       "date": "2026-05-07",
       "icon": "101000371_s2_rank5_command.webp"
+    },
+    {
+      "id": "havoc",
+      "nameKo": "하보크",
+      "nameEn": "Havoc",
+      "style": "NS",
+      "rarity": 5,
+      "sa": true,
+      "element": "crystal",
+      "elementKo": "결정",
+      "element2": "",
+      "element2Ko": "",
+      "weapon": "fist",
+      "weaponKo": "권갑",
+      "attackType": "blunt",
+      "ls": "shadow",
+      "acq": "gacha",
+      "date": "2026-06-04",
+      "icon": "101060231_rank5_command.webp"
     }
   ]
 }
