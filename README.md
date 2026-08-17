@@ -7,7 +7,7 @@
 - 순수 HTML + inline CSS + vanilla JS (빌드 도구 없음)
 - Noto Serif KR + Cinzel 웹폰트
 - html2canvas (CDN) -- 티어표 이미지 내보내기
-- 외부 JSON 데이터 파일 (`data/characters.json`, 185KB)
+- 외부 JSON 데이터 파일 (`data/characters.json`, 184KB / 403명)
 - GitHub Actions CI/CD (cloudscraper로 자동 데이터 수집)
 
 ## 구조
@@ -16,7 +16,7 @@
 tierlist-guide/
 ├── index.html              # SPA 전체 (2,680줄)
 ├── data/
-│   ├── characters.json     # 캐릭터 데이터 (185KB)
+│   ├── characters.json     # 캐릭터 데이터 (184KB, 403명)
 │   ├── ls_alter_cache.json # Light/Shadow + Alter 캐시
 │   └── name_ko.csv         # 한국어 이름 매핑
 ├── images/
@@ -44,7 +44,7 @@ tierlist-guide/
 
 ### 데이터 흐름
 1. `tools/build_data.py` -- 외부 소스(altema 등)에서 캐릭터 데이터 수집/빌드
-2. `data/characters.json`으로 출력 (185KB, 전체 캐릭터 정보)
+2. `data/characters.json`으로 출력 (184KB, 전체 캐릭터 정보)
 3. `index.html`에서 fetch로 JSON 로드 후 UI 렌더링
 4. GitHub Actions `weekly-update.yml`이 주 1회 자동 갱신 (cloudscraper로 Cloudflare 우회)
 
