@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "2026-08-17",
-    "total": 403,
+    "version": "2026-09-02",
+    "total": 404,
     "source": "anothereden.wiki",
     "generatedBy": "build_tierlist_data.py"
   },
@@ -6016,7 +6016,7 @@
       "nameEn": "Gariyu",
       "style": "NS",
       "rarity": 5,
-      "sa": false,
+      "sa": true,
       "element": "fire",
       "elementKo": "불",
       "element2": "",
@@ -7662,6 +7662,25 @@
       "acq": "gacha",
       "date": "2026-06-18",
       "icon": "101000381_s2_rank5_command.webp"
+    },
+    {
+      "id": "twinkling_illustrator_alter",
+      "nameKo": "번쩍번쩍 화가",
+      "nameEn": "Twinkling Illustrator",
+      "style": "Alter",
+      "rarity": 5,
+      "sa": true,
+      "element": "null",
+      "elementKo": "무",
+      "element2": "",
+      "element2Ko": "",
+      "weapon": "lance",
+      "weaponKo": "창",
+      "attackType": "pierce",
+      "ls": "shadow",
+      "acq": "gacha",
+      "date": "2026-08-20",
+      "icon": "101040221_rank5_command.webp"
     }
   ]
 }
