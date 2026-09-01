@@ -7,7 +7,7 @@
 - 순수 HTML + inline CSS + vanilla JS (빌드 도구 없음)
 - Noto Serif KR + Cinzel 웹폰트
 - html2canvas (CDN) -- 티어표 이미지 내보내기
-- 외부 JSON 데이터 파일 (`data/characters.json`, 184KB / 403명)
+- 외부 JSON 데이터 파일 (`data/characters.json`, 184KB / 404명)
 - GitHub Actions CI/CD (cloudscraper로 자동 데이터 수집)
 
 ## 구조
@@ -16,7 +16,7 @@
 tierlist-guide/
 ├── index.html              # SPA 전체 (2,680줄)
 ├── data/
-│   ├── characters.json     # 캐릭터 데이터 (184KB, 403명)
+│   ├── characters.json     # 캐릭터 데이터 (184KB, 404명)
 │   ├── ls_alter_cache.json # Light/Shadow + Alter 캐시
 │   └── name_ko.csv         # 한국어 이름 매핑
 ├── images/
