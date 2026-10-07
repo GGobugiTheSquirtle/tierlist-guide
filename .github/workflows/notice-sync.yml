@@ -1,0 +1,38 @@
+# 2026-10-07 — 공식 인게임 공지 → 신규 캐릭터 · SA 자동 반영 (tools/notice_sync.py)
+# 위키(CF 차단) 의존이던 weekly-update.yml 대체. 공지는 보통 업데이트 전날 올라온다.
+name: Notice Sync
+
+on:
+  schedule:
+    - cron: '7 3,11 * * *'   # 매일 12:07 · 20:07 KST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install opencv-python-headless Pillow numpy
+
+      - name: Scan official notices
+        run: python tools/notice_sync.py
+        env:
+          PYTHONIOENCODING: utf-8
+
+      - name: Commit and push
+        run: |
+          git add data/characters.json data/name_ko.csv data/notice_state.json images/icons/
+          if git diff --cached --quiet; then echo "변경 없음"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: 공식 공지 자동 동기화 $(TZ=Asia/Seoul date +%Y-%m-%d)"
+          git push
