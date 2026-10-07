@@ -46,7 +46,7 @@
     },
     {
       "id": "eleanor",
-      "nameKo": "엘레노어",
+      "nameKo": "엘레노아",
       "nameEn": "Eleanor",
       "style": "NS",
       "rarity": 5,
@@ -160,9 +160,9 @@
     },
     {
       "id": "noble_specturr",
-      "nameKo": "고답의 오묘",
+      "nameKo": "고답의 요묘",
       "nameEn": "Noble Specturr",
-      "style": "NS",
+      "style": "Alter",
       "rarity": 5,
       "sa": true,
       "element": "thunder",
@@ -179,7 +179,7 @@
     },
     {
       "id": "lovinia_as",
-      "nameKo": "라비나",
+      "nameKo": "라비나 AS",
       "nameEn": "Lovinia AS",
       "style": "AS",
       "rarity": 5,
@@ -1319,7 +1319,7 @@
     },
     {
       "id": "undercover_scribe_alter",
-      "nameKo": "도희의 자객",
+      "nameKo": "도회의 자객",
       "nameEn": "Undercover Scribe",
       "style": "Alter",
       "rarity": 5,
@@ -1718,7 +1718,7 @@
     },
     {
       "id": "blooming_blade_alter",
-      "nameKo": "국화의검색",
+      "nameKo": "국화의 검객",
       "nameEn": "Blooming Blade",
       "style": "Alter",
       "rarity": 5,
