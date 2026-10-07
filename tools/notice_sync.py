@@ -36,8 +36,8 @@ import urllib.request
 from collections import Counter
 from pathlib import Path
 
-if sys.platform == 'win32':
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+if sys.platform == 'win32' and hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')   # 감싸지 않는다 — import 하는 쪽 stdout 을 닫음
 
 ROOT = Path(__file__).resolve().parent.parent
 CHARS = ROOT / 'data' / 'characters.json'
@@ -292,6 +292,37 @@ def write(local_doc, added, sa_set, state):
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
+PENDING_MD = ROOT.parent / '_tmp' / 'tierlist_pending.md'
+FIELD_KO = {'element': '속성', 'weapon': '무기', 'ls': '천명', 'icon': '아이콘', 'date': '날짜', 'acq': '획득처'}
+
+
+def write_pending(path=PENDING_MD):
+    """확인 필요 목록 — characters.json 의 provisional + 상태 파일의 unresolved · wiki_notes 로 매번 재생성 (2026-10-07)."""
+    chars = load_local()['characters']
+    state = json.loads(STATE.read_text(encoding='utf-8')) if STATE.exists() else {}
+    now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime('%Y-%m-%d %H:%M')
+    prov = [c for c in chars if c.get('provisional')]
+    un = state.get('unresolved', [])
+    wiki = state.get('wiki_notes', {})
+    out = [f'# 티어리스트 확인 필요 목록', '', f'갱신 {now} (KST) · 위키 마지막 대조 {wiki.get("date", "없음")}', '',
+           f'## 1. 위키 확인 전 임시값 — {len(prov)}명', '']
+    if prov:
+        out += ['| 캐릭터 | 임시 필드 | 공지 |', '|---|---|---|']
+        out += [f"| {c['nameKo']} ({c['nameEn']}) | {' · '.join(FIELD_KO.get(f, f) for f in c['provisional'])} | "
+                f"{('#' + str(c['notice'])) if c.get('notice') else ''} |" for c in prov]
+        out += ['', '→ `tierlist_update.bat` 을 돌리면 위키에 올라온 것부터 채워진다(보통 출시 후 며칠).']
+    else:
+        out += ['없음']
+    out += ['', f'## 2. 공지에서 판단 보류 — {len(un)}건', '']
+    out += [f'- {u}' for u in un] or ['없음']
+    out += ['', '→ 직접 확인 후 characters.json 을 고치고 notice_state.json 의 unresolved 에서 지운다.',
+            '', f'## 3. 위키 대조 — {len(wiki.get("lines", []))}건', '']
+    out += [f'- {x}' for x in wiki.get('lines', [])] or ['없음']
+    path.parent.mkdir(exist_ok=True)
+    path.write_text('\n'.join(out) + '\n', encoding='utf-8')
+    return path
+
+
 def replay(nids):
     """과거 공지로 make_entry 를 돌려 기존 데이터와 필드별 대조 — 추정 규칙 정확도 측정."""
     local = load_local()['characters']
@@ -339,6 +370,7 @@ def main():
     state['unresolved'] = sorted(set(state.get('unresolved', [])) | set(unresolved))
     if not a.dry_run:
         write(doc, added, sa_set, state)
+        print(f'확인 필요 목록: {write_pending()}')
 
 
 if __name__ == '__main__':
