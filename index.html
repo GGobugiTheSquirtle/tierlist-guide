@@ -201,6 +201,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .card-sub{display:flex;justify-content:center;align-items:center;gap:2px;margin-top:3px;font-size:var(--text-2xs);color:var(--text-dim);min-height:14px}
 .ls-light{background:rgba(255,234,167,0.2);color:var(--ls-light)}
 .ls-shadow{background:rgba(99,110,114,0.3);color:#b2bec3}
+.prov-badge{display:inline-block;padding:0 4px;border-radius:3px;font-size:var(--text-2xs);line-height:1.4;border:1px dashed #d4a437;color:#d4a437;font-weight:600;cursor:help}
 .sa-badge{background:linear-gradient(135deg,#50E8E8,#3090D0,#6050C8);color:#fff;border:1px solid #40C0D0;text-shadow:0 1px 1px var(--scrim-soft)}
 
 
@@ -725,6 +726,7 @@ const I18N = {
     searchLabel:'검색', searchPlaceholder:'이름 검색', resetLabel:'초기화',
     elementLabel:'속성', weaponLabel:'무기', styleLabel:'스타일',
     lightLabel:'천', shadowLabel:'명',
+    provLabel:'임시', provTip:'공식 공지로 먼저 추가 — 위키 확인 전인 값', provFields:{element:'속성',weapon:'무기',ls:'천명',icon:'아이콘',date:'날짜',acq:'획득처'},
     acquireLabel:'획득처',
     acqFree:'배포', acqGacha:'몽견', acqBuddy:'버디', acqCustom:'커스텀',
     acq_free:'배포', acq_gacha:'몽견', acq_buddy:'버디', acqExcludeBuddy:'버디제외',
@@ -795,6 +797,7 @@ const I18N = {
     searchLabel:'Search', searchPlaceholder:'EN / KO', resetLabel:'Reset',
     elementLabel:'Element', weaponLabel:'Weapon', styleLabel:'Style',
     lightLabel:'Light', shadowLabel:'Shadow',
+    provLabel:'Tentative', provTip:'Added from the official notice — not yet confirmed on the wiki', provFields:{element:'Element',weapon:'Weapon',ls:'Light/Shadow',icon:'Icon',date:'Date',acq:'Acquire'},
     acquireLabel:'Acquire',
     acqFree:'Free', acqGacha:'Gacha', acqBuddy:'Buddy', acqCustom:'Custom',
     acq_free:'Free', acq_gacha:'Gacha', acq_buddy:'Buddy', acqExcludeBuddy:'No Buddy',
@@ -848,6 +851,9 @@ const I18N = {
   }
 };
 function T(k){ return I18N[lang][k] || I18N.en[k] || k; }
+// 2026-10-07 공지 자동 추가분 중 위키 확정 전 필드(c.provisional) — 배지 + 어떤 값이 임시인지
+function provText(c){ const f=T('provFields'); return (c.provisional||[]).map(k=>f[k]||k).join(' · '); }
+function provBadge(c){ return c.provisional && c.provisional.length ? `<span class="prov-badge" title="${esc(T('provTip')+': '+provText(c))}">${T('provLabel')}</span>` : ''; }
 
 /* ─── Segmented Control ─── */
 function initSegControl(el) {
@@ -1735,7 +1741,8 @@ function showTooltip(c, e) {
     (() => { const ps = parseStyle(c.style); const styleText = (ps.alter ? 'AC ' : '') + (ps.base || ''); return `<div class="tt-row">${styleText.trim()}${c.sa ? ' · SA' : ''}</div>`; })() +
     `<div class="tt-row">${c.elementKo || ''}${c.element2Ko ? '+'+c.element2Ko : ''} / ${c.weaponKo || ''}</div>` +
     (c.ls ? `<div class="tt-row">${c.ls==='light'?T('lightLabel'):T('shadowLabel')}</div>` : '') +
-    (c.date ? `<div class="tt-row">${c.date}</div>` : '');
+    (c.date ? `<div class="tt-row">${c.date}</div>` : '') +
+    (c.provisional && c.provisional.length ? `<div class="tt-row">${provBadge(c)} ${esc(provText(c))}</div>` : '');
   tt.style.display = 'block';
   moveTooltip(e);
 }
@@ -2331,7 +2338,7 @@ function renderTableView() {
 
     html += `<tr>
       <td><img class="tv-icon" src="${c.customImg || ('images/icons/' + c.icon)}" alt="${esc(charName(c))}" loading="lazy"></td>
-      <td class="tv-name">${esc(charName(c))}</td>
+      <td class="tv-name">${esc(charName(c))} ${provBadge(c)}</td>
       <td class="u-text-dim">${esc(lang==='ko'?c.nameEn:c.nameKo)}</td>
       <td>${elIcon}</td>
       <td>${wpIcon}</td>
@@ -2557,8 +2564,9 @@ function renderCardHTML(c, opts = {}) {
   if (!opts.compact) {
     const baseBadge = base ? `<span class="st-badge st-${base}">${base}</span>` : '';
     const alterBadge = alter ? `<span class="alter-badge">AC</span>` : '';
-    if (baseBadge || alterBadge) {
-      html += `<span class="card-sub">${alterBadge}${baseBadge}</span>`;
+    const pb = provBadge(c);
+    if (baseBadge || alterBadge || pb) {
+      html += `<span class="card-sub">${alterBadge}${baseBadge}${pb}</span>`;
     }
   }
   return html;
@@ -2576,6 +2584,7 @@ function showInfoToast(c) {
       <div class="it-name">${esc(c.nameKo)}</div>
       <div class="it-sub">${esc(c.nameEn)}</div>
       <div class="it-sub">${c.elementKo||''}${c.element2Ko?'+'+c.element2Ko:''} / ${c.weaponKo||''}${(()=>{const ps=parseStyle(c.style);const t=((ps.alter?'AC ':'')+(ps.base||'')).trim();return t?' | '+t:'';})()}${c.sa?' · SA':''}</div>
+      ${c.provisional && c.provisional.length ? `<div class="it-sub">${provBadge(c)} ${esc(provText(c))}</div>` : ''}
     </div>`;
   document.body.appendChild(el);
   _toastEl = el;
