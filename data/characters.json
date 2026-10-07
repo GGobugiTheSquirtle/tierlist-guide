@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "2026-09-23",
-    "total": 409,
+    "version": "2026-10-07",
+    "total": 410,
     "source": "anothereden.wiki",
     "generatedBy": "build_tierlist_data.py"
   },
@@ -5370,7 +5370,7 @@
       "nameEn": "Radica",
       "style": "NS",
       "rarity": 5,
-      "sa": false,
+      "sa": true,
       "element": "fire",
       "elementKo": "불",
       "element2": "",
@@ -7776,6 +7776,30 @@
       "acq": "gacha",
       "date": "2026-09-17",
       "icon": "101000451_rank5_command.webp"
+    },
+    {
+      "id": "darunis_as",
+      "nameKo": "다르니스 AS",
+      "nameEn": "Darunis AS",
+      "style": "AS",
+      "rarity": 5,
+      "sa": false,
+      "element": "wind",
+      "elementKo": "바람",
+      "element2": "",
+      "element2Ko": "",
+      "weapon": "bow",
+      "weaponKo": "활",
+      "attackType": "pierce",
+      "ls": "light",
+      "acq": "gacha",
+      "date": "2026-10-08",
+      "icon": "notice_868_darunis_as.webp",
+      "provisional": [
+        "date",
+        "icon"
+      ],
+      "notice": 868
     }
   ]
 }
