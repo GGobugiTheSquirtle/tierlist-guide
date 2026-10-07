@@ -7,8 +7,8 @@
 - 순수 HTML + inline CSS + vanilla JS (빌드 도구 없음)
 - Noto Serif KR + Cinzel 웹폰트
 - html2canvas (CDN) -- 티어표 이미지 내보내기
-- 외부 JSON 데이터 파일 (`data/characters.json`, 184KB / 409명)
-- GitHub Actions CI/CD (cloudscraper로 자동 데이터 수집)
+- 외부 JSON 데이터 파일 (`data/characters.json`, 410명)
+- 데이터 갱신: 공식 인게임 공지 자동 감지(로컬 작업 스케줄러) + 위키 원클릭 확정 — 아래 「데이터 흐름」
 
 ## 구조
 
@@ -16,9 +16,10 @@
 tierlist-guide/
 ├── index.html              # SPA 전체 (2,680줄)
 ├── data/
-│   ├── characters.json     # 캐릭터 데이터 (184KB, 409명)
+│   ├── characters.json     # 캐릭터 데이터 (410명)
 │   ├── ls_alter_cache.json # Light/Shadow + Alter 캐시
-│   └── name_ko.csv         # 한국어 이름 매핑
+│   ├── name_ko.csv         # 한국어 이름 매핑
+│   └── notice_state.json   # 공지 스캔 위치(last_id) · 확인 필요 목록
 ├── images/
 │   ├── banner.png          # 배너 이미지
 │   ├── banner_meta.json
@@ -29,11 +30,12 @@ tierlist-guide/
 │   ├── ls/
 │   └── weapons/
 ├── tools/
-│   └── build_data.py       # 데이터 빌드 스크립트
+│   ├── notice_sync.py      # 공식 공지 → 신규 캐릭터·SA (2026-10-07)
+│   ├── lbpcascade_animeface.xml  # 공지 입화 얼굴 크롭용 (MIT)
+│   └── build_data.py       # 구 위키 빌드 (CF 차단으로 미사용)
 ├── _tools/
 │   └── update_tierlist_banner.py  # 배너 업데이트 스크립트
 ├── .github/workflows/
-│   ├── weekly-update.yml   # 주간 자동 데이터 갱신
 │   └── update-banner.yml   # 배너 자동 업데이트
 └── docs/
     ├── plans/
@@ -43,10 +45,16 @@ tierlist-guide/
 ## 동작 방식
 
 ### 데이터 흐름
-1. `tools/build_data.py` -- 외부 소스(altema 등)에서 캐릭터 데이터 수집/빌드
-2. `data/characters.json`으로 출력 (184KB, 전체 캐릭터 정보)
-3. `index.html`에서 fetch로 JSON 로드 후 UI 렌더링
-4. GitHub Actions `weekly-update.yml`이 주 1회 자동 갱신 (cloudscraper로 Cloudflare 우회)
+2026-10-07 — 위키(anothereden.wiki)가 Cloudflare 로 막혀 2단 구조로 바꿨다.
+1. **감지 (자동, 클릭 0)** — `tools/notice_sync.py` 가 인게임 공지 웹뷰
+   (`news-ap.another-eden.games/asset/notice_v2/view/{id}?language=ko|en`)를 스캔해
+   「만남 캐릭터」·「신규 버디」·「성도 각성 캐릭터」를 반영. 공식 한글명·영문명은 같은 공지 id 의 ko/en 판으로 짝짓는다.
+   확정 못 한 값(무기·속성·명암·아이콘·날짜)은 추정해 넣고 엔트리의 `provisional` 에 적는다.
+   ⚠ 공지 서버가 해외 IP(GitHub Actions)에 403 → 워크스페이스 `_tools/tierlist/notice_sync_auto.bat` 를
+   작업 스케줄러 「AE tierlist notice sync」가 매일 12:30·20:30 실행, 신규가 있으면 커밋·푸시.
+2. **확정 (원클릭)** — 워크스페이스 `_tools/tierlist/tierlist_update.bat` 더블클릭 → 위키 Chrome 창(CF 체크박스가 뜨면 클릭)
+   → `provisional` 값을 위키 Cargo 값으로 덮고 공식 아이콘 다운로드 → Y 로 커밋·푸시.
+3. `index.html` 이 `data/characters.json` 을 fetch 해 렌더링
 
 ### 주요 기능
 - **티어 빌더**: 캐릭터를 드래그 앤 드롭으로 티어(S/A/B/C/...) 배치
@@ -61,12 +69,11 @@ tierlist-guide/
 ## 배포
 
 - **GitHub Pages**: 독립 repo로 배포 중
-- **GitHub Actions**: 주간 자동 데이터 갱신 + 배너 업데이트
+- **GitHub Actions**: 배너 업데이트(`update-banner.yml`, 위키 의존이라 CF 차단 중 무력)
 - 진입점: `index.html`
 
 ## 개발 노트
 
 - `tools/build_data.py`와 `_tools/update_tierlist_banner.py`로 스크립트가 두 곳에 분산됨
-- cloudscraper 의존성 -- Cloudflare 보호 사이트 스크래핑에 필요
-- 캐릭터 데이터 갱신: `build_data.py` 실행 또는 GitHub Actions 자동 실행
+- 캐릭터 데이터 갱신: 위 「데이터 흐름」. `build_data.py` 는 characters.json 을 통째로 재생성하므로 돌리지 말 것(정정분이 날아간다)
 - 모바일 UX 개선 진행 중 (`docs/plans/2026-03-27-mobile-ux-overhaul.md` 참조)

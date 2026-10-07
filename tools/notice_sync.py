@@ -6,6 +6,9 @@ anothereden.wiki 가 Cloudflare 로 막힌 뒤 자동 갱신이 멈췄다. 인�
 (news-ap.another-eden.games/asset/notice_v2/view/{id}?language=ko|en)는 CF 가 없고,
 같은 공지 id 의 ko/en 판이 1:1 로 대응해 공식 한글명 · 영문명을 짝지을 수 있다.
 
+⚠ 공지 서버는 해외(GitHub Actions) IP 에 403 — 2026-10-07 실측. 한국 PC 에서 돌린다
+  (워크스페이스 _tools/tierlist/notice_sync_auto.bat 를 작업 스케줄러가 하루 2회 실행).
+
 공지만으로 확정 못 하는 값은 추정해 넣고 `provisional` 목록에 적는다.
 위키 동기화(_tools/tierlist/sync_tierlist_wiki.py --apply)가 이 목록을 보고 확정값으로 덮는다.
   - 무기 · 공격유형 · 입수 : 같은 캐릭터의 기본형(NS · Alter)에서 상속 (AS/ES 는 무기가 같다)
@@ -274,7 +277,10 @@ def scan(state, local_doc, dry):
     return added, sa_set, unresolved
 
 
-def write(local_doc, added, state):
+def write(local_doc, added, sa_set, state):
+    if not added and not sa_set:                     # 변경 없으면 상태만 — version 날짜 갱신으로 빈 커밋 방지
+        STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        return
     local_doc['characters'].extend(added)
     local_doc['meta']['total'] = len(local_doc['characters'])
     local_doc['meta']['version'] = datetime.date.today().isoformat()
@@ -332,7 +338,7 @@ def main():
         print('  ?', u)
     state['unresolved'] = sorted(set(state.get('unresolved', [])) | set(unresolved))
     if not a.dry_run:
-        write(doc, added, state)
+        write(doc, added, sa_set, state)
 
 
 if __name__ == '__main__':
