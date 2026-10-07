@@ -318,6 +318,10 @@ def write_pending(path=PENDING_MD):
     out += ['', '→ 직접 확인 후 characters.json 을 고치고 notice_state.json 의 unresolved 에서 지운다.',
             '', f'## 3. 위키 대조 — {len(wiki.get("lines", []))}건', '']
     out += [f'- {x}' for x in wiki.get('lines', [])] or ['없음']
+    um_p = ROOT.parent / '_tmp' / 'skills_ko_unmapped.json'          # character-guide 공식 스킬 빌더가 남김
+    um = json.loads(um_p.read_text(encoding='utf-8')) if um_p.exists() else []
+    out += ['', f'## 4. 공식 스킬 — 캐릭터를 못 찾은 공지 블록 {len(um)}건', '']
+    out += [f'- {x}' for x in um] or ['없음']
     path.parent.mkdir(exist_ok=True)
     path.write_text('\n'.join(out) + '\n', encoding='utf-8')
     return path
