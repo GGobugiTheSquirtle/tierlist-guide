@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "2026-10-07",
-    "total": 410,
+    "version": "2026-10-21",
+    "total": 411,
     "source": "anothereden.wiki",
     "generatedBy": "build_tierlist_data.py"
   },
@@ -7800,6 +7800,33 @@
         "icon"
       ],
       "notice": 868
+    },
+    {
+      "id": "suzun",
+      "nameKo": "스즈누이",
+      "nameEn": "Suzuné",
+      "style": "NS",
+      "rarity": 5,
+      "sa": false,
+      "element": "shade",
+      "elementKo": "그림자",
+      "element2": "",
+      "element2Ko": "",
+      "weapon": "",
+      "weaponKo": "",
+      "attackType": "",
+      "ls": "shadow",
+      "acq": "gacha",
+      "date": "2026-10-21",
+      "icon": "notice_874_suzun.webp",
+      "provisional": [
+        "date",
+        "element",
+        "weapon",
+        "acq",
+        "icon"
+      ],
+      "notice": 874
     }
   ]
 }

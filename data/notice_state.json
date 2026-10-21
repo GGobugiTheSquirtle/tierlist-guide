@@ -1,6 +1,8 @@
 {
-  "last_id": 870,
-  "unresolved": [],
+  "last_id": 874,
+  "unresolved": [
+    "#874 SA 대상 모호: 라클레어 → ['라클레어 AS', '라클레어']"
+  ],
   "wiki_notes": {
     "date": "2026-10-07",
     "lines": [
