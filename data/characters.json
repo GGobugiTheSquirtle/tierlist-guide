@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "2026-10-21",
-    "total": 411,
+    "version": "2026-11-04",
+    "total": 412,
     "source": "anothereden.wiki",
     "generatedBy": "build_tierlist_data.py"
   },
@@ -7827,6 +7827,30 @@
         "icon"
       ],
       "notice": 874
+    },
+    {
+      "id": "vermillion_whip_alter_as",
+      "nameKo": "은주의 구미호 AS",
+      "nameEn": "Vermillion Whip AS",
+      "style": "Alter AS",
+      "rarity": 5,
+      "sa": false,
+      "element": "fire",
+      "elementKo": "불",
+      "element2": "",
+      "element2Ko": "",
+      "weapon": "lance",
+      "weaponKo": "창",
+      "attackType": "pierce",
+      "ls": "shadow",
+      "acq": "gacha",
+      "date": "2026-11-04",
+      "icon": "notice_879_vermillion_whip_alter_as.webp",
+      "provisional": [
+        "date",
+        "icon"
+      ],
+      "notice": 879
     }
   ]
 }
