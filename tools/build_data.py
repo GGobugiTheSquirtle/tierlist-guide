@@ -48,7 +48,7 @@ ELEMENT_ICON_MAP = {
     "Skill_Type_8_2.png":  ("earth",   "땅"),
     "Skill_Type_8_4.png":  ("wind",    "바람"),
     "Skill_Type_8_8.png":  ("water",   "물"),
-    "Skill_Type_8_16.png": ("thunder", "뇌"),
+    "Skill_Type_8_16.png": ("thunder", "번개"),
     "Skill_Type_8_32.png": ("shade",   "그림자"),
     "Skill_Type_8_64.png": ("crystal", "결정"),
 }

@@ -653,7 +653,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
         <option value="">-- 선택 --</option>
         <option value="fire">불 Fire</option><option value="water">물 Water</option>
         <option value="earth">땅 Earth</option><option value="wind">바람 Wind</option>
-        <option value="thunder">뇌 Thunder</option><option value="shade">그림자 Shade</option>
+        <option value="thunder">번개 Thunder</option><option value="shade">그림자 Shade</option>
         <option value="crystal">결정 Crystal</option><option value="null">무 None</option>
       </select>
     </div>
@@ -701,7 +701,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 let DB = { meta: {}, characters: [] };
 let DB_MAP = {}; // id -> character (O(1) lookup)
 const WEAPON_KO = {sword:'검',katana:'도',axe:'도끼',lance:'창',bow:'활',fist:'권갑',hammer:'망치',staff:'지팡이'};
-const ELEMENT_KO = {fire:'불',water:'물',earth:'땅',wind:'바람',thunder:'뇌',shade:'그림자',crystal:'결정',null:'무'};
+const ELEMENT_KO = {fire:'불',water:'물',earth:'땅',wind:'바람',thunder:'번개',shade:'그림자',crystal:'결정',null:'무'};
 const EL_ICON = {fire:'Skill_Type_8_1.png',water:'Skill_Type_8_8.png',earth:'Skill_Type_8_2.png',wind:'Skill_Type_8_4.png',thunder:'Skill_Type_8_16.png',shade:'Skill_Type_8_32.png',crystal:'Skill_Type_8_64.png',null:'Skill_Type_8_0.png'};
 const WP_ICON = {staff:'202000000_icon.png',sword:'202000001_icon.png',katana:'202000002_icon.png',axe:'202000003_icon.png',lance:'202000004_icon.png',bow:'202000005_icon.png',fist:'202000006_icon.png',hammer:'202000007_icon.png'};
 let currentView = 'tier'; // 'tier' | 'all' | 'table'
