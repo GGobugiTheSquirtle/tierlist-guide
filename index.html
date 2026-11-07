@@ -651,20 +651,12 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
       <label id="acm-lbl-el">속성</label>
       <select id="acm-element">
         <option value="">-- 선택 --</option>
-        <option value="fire">불 Fire</option><option value="water">물 Water</option>
-        <option value="earth">땅 Earth</option><option value="wind">바람 Wind</option>
-        <option value="thunder">번개 Thunder</option><option value="shade">그림자 Shade</option>
-        <option value="crystal">결정 Crystal</option><option value="null">무 None</option>
       </select>
     </div>
     <div class="acm-row">
       <label id="acm-lbl-wp">무기</label>
       <select id="acm-weapon">
         <option value="">-- 선택 --</option>
-        <option value="sword">검 Sword</option><option value="katana">도 Katana</option>
-        <option value="axe">도끼 Axe</option><option value="lance">창 Lance</option>
-        <option value="bow">활 Bow</option><option value="fist">권갑 Fist</option>
-        <option value="hammer">망치 Hammer</option><option value="staff">지팡이 Staff</option>
       </select>
     </div>
     <div class="acm-row">
@@ -694,20 +686,25 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   </div>
 </div>
 
+<script src="concepts.js"></script>
 <script>
 /* ═══════════════════════════════════════════
    DATA + STATE
    ═══════════════════════════════════════════ */
 let DB = { meta: {}, characters: [] };
 let DB_MAP = {}; // id -> character (O(1) lookup)
-const WEAPON_KO = {sword:'검',katana:'도',axe:'도끼',lance:'창',bow:'활',fist:'권갑',hammer:'망치',staff:'지팡이'};
-const ELEMENT_KO = {fire:'불',water:'물',earth:'땅',wind:'바람',thunder:'번개',shade:'그림자',crystal:'결정',null:'무'};
+// 속성 · 무기 데이터 키 → 한국어 · 순서 · 공격 종류 — 정본 = 개념 레지스트리 어휘(concepts.js, _tools/character/build_terms.py 생성물)
+const ELEMENTS = AETerms.slots('element').map(s => s.k), WEAPONS = AETerms.slots('weapon').map(s => s.k);
+const WEAPON_KO = Object.fromEntries(AETerms.slots('weapon').map(s => [s.k, s.ko]));
+const ELEMENT_KO = Object.fromEntries(AETerms.slots('element').map(s => [s.k, s.ko]));
+for (const [id, sub] of [['acm-element', 'element'], ['acm-weapon', 'weapon']])
+  document.getElementById(id).insertAdjacentHTML('beforeend', AETerms.slots(sub).map(s => `<option value="${s.k}">${s.ko} ${s.en}</option>`).join(''));
 const EL_ICON = {fire:'Skill_Type_8_1.png',water:'Skill_Type_8_8.png',earth:'Skill_Type_8_2.png',wind:'Skill_Type_8_4.png',thunder:'Skill_Type_8_16.png',shade:'Skill_Type_8_32.png',crystal:'Skill_Type_8_64.png',null:'Skill_Type_8_0.png'};
 const WP_ICON = {staff:'202000000_icon.png',sword:'202000001_icon.png',katana:'202000002_icon.png',axe:'202000003_icon.png',lance:'202000004_icon.png',bow:'202000005_icon.png',fist:'202000006_icon.png',hammer:'202000007_icon.png'};
 let currentView = 'tier'; // 'tier' | 'all' | 'table'
 let tableSort = {col:'nameKo', asc:true};
 let lang = 'ko'; // 'ko' | 'en'
-const ATK_TYPE = {sword:'slash',katana:'slash',axe:'slash',lance:'pierce',bow:'pierce',fist:'blunt',hammer:'blunt',staff:'magic'};
+const ATK_TYPE = Object.fromEntries(AETerms.slots('weapon').map(s => [s.k, s.atk]));
 
 /* ─── i18n ─── */
 const I18N = {
@@ -1885,12 +1882,12 @@ function renderPickerFilters() {
 
   let html = '';
   // 속성
-  ['fire','water','earth','wind','thunder','shade','crystal','null'].forEach(el => {
+  ELEMENTS.forEach(el => {
     html += `<button class="ftag ${f.elements.includes(el)?'on':''}" data-ftype="elements" data-fval="${el}"><img src="images/elements/${EL_ICON[el]}" width="24" height="24"></button>`;
   });
   html += '<span class="u-toolbar-spacer"></span>';
   // 무기
-  ['sword','katana','axe','lance','bow','fist','hammer','staff'].forEach(w => {
+  WEAPONS.forEach(w => {
     html += `<button class="ftag ${f.weapons.includes(w)?'on':''}" data-ftype="weapons" data-fval="${w}"><img src="images/weapons/${WP_ICON[w]}" width="24" height="24"></button>`;
   });
   html += '<span class="u-toolbar-spacer"></span>';
@@ -2041,13 +2038,13 @@ function renderFilterBar() {
       <div class="u-filter-pad">
         <div class="filter-row">
           <label>${T('elementLabel')}</label>
-          ${['fire','water','earth','wind','thunder','shade','crystal','null'].map(el =>
+          ${ELEMENTS.map(el =>
             `<button class="ftag ${f.elements.includes(el)?'on':''}" onclick="toggleFilter('elements','${el}')"><img src="images/elements/${EL_ICON[el]}" width="28" height="28"> ${ELEMENT_KO[el]}</button>`
           ).join('')}
         </div>
         <div class="filter-row">
           <label>${T('weaponLabel')}</label>
-          ${['sword','katana','axe','lance','bow','fist','hammer','staff'].map(w =>
+          ${WEAPONS.map(w =>
             `<button class="ftag ${f.weapons.includes(w)?'on':''}" onclick="toggleFilter('weapons','${w}')"><img src="images/weapons/${WP_ICON[w]}" width="28" height="28"> ${WEAPON_KO[w]}</button>`
           ).join('')}
         </div>
