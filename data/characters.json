@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "2026-11-04",
-    "total": 412,
+    "version": "2026-11-18",
+    "total": 413,
     "source": "anothereden.wiki",
     "generatedBy": "build_tierlist_data.py"
   },
@@ -7851,6 +7851,30 @@
         "icon"
       ],
       "notice": 879
+    },
+    {
+      "id": "mazrika_as",
+      "nameKo": "마츠리카 AS",
+      "nameEn": "Mazrika AS",
+      "style": "AS",
+      "rarity": 5,
+      "sa": false,
+      "element": "water",
+      "elementKo": "물",
+      "element2": "",
+      "element2Ko": "",
+      "weapon": "axe",
+      "weaponKo": "도끼",
+      "attackType": "slash",
+      "ls": "shadow",
+      "acq": "gacha",
+      "date": "2026-11-18",
+      "icon": "_pending.webp",
+      "provisional": [
+        "date",
+        "icon"
+      ],
+      "notice": 891
     }
   ]
 }
